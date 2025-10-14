@@ -317,6 +317,77 @@
             margin: 0 auto;
         }
 
+        /* MELHORIAS PARA MOBILE - CARDS MAIS ORGANIZADOS */
+        @media (max-width: 768px) {
+            .vehicles-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 0 10px;
+            }
+            
+            .vehicle-card {
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+            
+            .vehicle-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            }
+            
+            .vehicle-img {
+                height: 180px;
+                width: 100%;
+                object-fit: cover;
+            }
+            
+            .vehicle-info {
+                padding: 15px;
+            }
+            
+            .vehicle-title {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+                color: var(--preto);
+                line-height: 1.3;
+            }
+            
+            .vehicle-price {
+                font-size: 1.3rem;
+                font-weight: bold;
+                color: var(--vermelho);
+                margin-bottom: 10px;
+            }
+            
+            .vehicle-details {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 12px;
+                font-size: 0.85rem;
+                color: var(--cinza-escuro);
+            }
+            
+            .vehicle-btn {
+                display: block;
+                width: 100%;
+                background-color: var(--preto);
+                color: var(--branco);
+                text-align: center;
+                padding: 12px;
+                border-radius: 6px;
+                text-decoration: none;
+                font-weight: bold;
+                transition: background-color 0.3s;
+                font-size: 0.9rem;
+            }
+            
+            .vehicle-btn:hover {
+                background-color: var(--vermelho);
+            }
+        }
+
         .vehicle-card {
             background-color: var(--branco);
             border-radius: 10px;
@@ -395,6 +466,7 @@
             font-size: 14px;
             display: none;
             z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .btn-editar {
@@ -411,6 +483,7 @@
             font-size: 12px;
             display: none;
             z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .vehicle-card:hover .btn-excluir,
@@ -471,18 +544,21 @@
             height: 400px;
             overflow: hidden;
             border-radius: 10px 10px 0 0;
+            touch-action: pan-y pinch-zoom;
         }
 
         .carousel-inner {
             display: flex;
             transition: transform 0.5s ease;
             height: 100%;
+            width: 100%;
         }
 
         .carousel-item {
             min-width: 100%;
             height: 100%;
             position: relative;
+            flex-shrink: 0;
         }
 
         .carousel-item img,
@@ -1100,18 +1176,36 @@
             align-items: center;
             padding: 15px;
             border-bottom: 1px solid #555;
+            background: #444;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
 
         .moto-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .moto-thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .moto-details {
             flex: 1;
         }
 
         .moto-name {
             font-weight: bold;
             margin-bottom: 5px;
+            font-size: 16px;
         }
 
-        .moto-details {
+        .moto-specs {
             font-size: 14px;
             color: #ccc;
         }
@@ -1255,6 +1349,56 @@
             background: #fff3cd;
             color: #856404;
             border: 1px solid #ffeaa7;
+        }
+
+        /* ========== LOADING INDICATOR ========== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            display: none;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--laranja);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .loading-subtext {
+            font-size: 14px;
+            color: #666;
         }
 
         /* ========== PAINEL DE EDIÇÃO DE TEXTO ========== */
@@ -1468,6 +1612,13 @@
             .map-container {
                 height: 300px;
             }
+            
+            /* Botões sempre visíveis em mobile para admin */
+            .vehicle-card .btn-excluir,
+            .vehicle-card .btn-editar {
+                display: block !important;
+                opacity: 0.9;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1634,6 +1785,15 @@
                 <li><a href="#location">Localização</a></li>
             </ul>
         </nav>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Adicionando veículo...</div>
+            <div class="loading-subtext">Aguarde enquanto processamos as informações</div>
+        </div>
     </div>
 
     <!-- Hero Section -->
@@ -2202,6 +2362,8 @@
         let selectedFiles = [];
         let carouselInterval;
         let siteContent = {};
+        let touchStartX = 0;
+        let touchEndX = 0;
 
         // ========== ELEMENTOS DOM ==========
         const userInfo = document.getElementById('userInfo');
@@ -2249,6 +2411,7 @@
         const drawerDevType = document.getElementById('drawerDevType');
         const saveTextChangesBtn = document.getElementById('saveTextChanges');
         const cancelTextChangesBtn = document.getElementById('cancelTextChanges');
+        const loadingOverlay = document.getElementById('loadingOverlay');
 
         // ========== INICIALIZAÇÃO ==========
         document.addEventListener('DOMContentLoaded', function() {
@@ -2341,6 +2504,37 @@
             // Editor de texto
             saveTextChangesBtn.addEventListener('click', saveTextChanges);
             cancelTextChangesBtn.addEventListener('click', closeTextEditPanelFunc);
+            
+            // Eventos de touch para swipe
+            setupSwipeEvents();
+        }
+
+        // ========== CONFIGURAÇÃO DE SWIPE ==========
+        function setupSwipeEvents() {
+            const carousel = document.getElementById('carousel');
+            
+            carousel.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+            
+            carousel.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50; // Distância mínima para considerar um swipe
+            
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swipe para a esquerda - próxima imagem
+                showNextMedia();
+            }
+            
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Swipe para a direita - imagem anterior
+                showPrevMedia();
+            }
         }
 
         // ========== CARROSSEL AUTOMÁTICO ==========
@@ -2356,7 +2550,7 @@
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
-            }, 7000); // Alterado de 4000 para 7000 (7 segundos)
+            }, 7000);
         }
 
         // ========== SISTEMA DE CONTEÚDO DO SITE ==========
@@ -2720,6 +2914,9 @@
             // Atualizar drawer
             drawerLoginBtn.style.display = currentUser.type === 'guest' ? 'block' : 'none';
             drawerLogoutBtn.style.display = currentUser.type === 'guest' ? 'none' : 'block';
+            
+            // Atualizar botões de admin nos cards
+            renderVehicles();
         }
 
         function logout() {
@@ -2765,7 +2962,8 @@
                 vehicleCard.dataset.index = index;
                 
                 // Botões de admin (apenas para admin/dev)
-                const adminButtons = (currentUser.type === 'admin' || currentUser.type === 'dev') ? `
+                const isAdmin = (currentUser.type === 'admin' || currentUser.type === 'dev');
+                const adminButtons = isAdmin ? `
                     <button class="btn-excluir" onclick="deleteVehicle('${vehicle.id}', event)"><i class="fas fa-trash"></i></button>
                     <button class="btn-editar" onclick="editVehicle('${vehicle.id}', event)"><i class="fas fa-edit"></i></button>
                 ` : '';
@@ -2968,8 +3166,11 @@
                 medias: []
             };
             
-            // Fazer upload das imagens para o ImgBB
+            // Mostrar loading
+            loadingOverlay.style.display = 'flex';
+            
             try {
+                // Fazer upload das imagens para o ImgBB
                 const imageUrls = await uploadImagesToImgBB(selectedFiles);
                 vehicle.medias = imageUrls;
                 
@@ -2977,9 +3178,14 @@
                 const vehiclesRef = database.ref('vehicles');
                 await vehiclesRef.push(vehicle);
                 
+                // Esconder loading
+                loadingOverlay.style.display = 'none';
+                
                 showStatus('Veículo adicionado com sucesso!', 'success');
                 clearForm();
             } catch (error) {
+                // Esconder loading em caso de erro
+                loadingOverlay.style.display = 'none';
                 showStatus('Erro ao adicionar veículo: ' + error.message, 'error');
             }
         }
@@ -3110,8 +3316,11 @@
                 
                 motoItem.innerHTML = `
                     <div class="moto-info">
-                        <div class="moto-name">${vehicle.name}</div>
-                        <div class="moto-details">${getVehicleTypeName(vehicle.type)} • ${vehicle.year} • R$ ${formatPrice(vehicle.price)}</div>
+                        <img src="${vehicle.medias && vehicle.medias.length > 0 ? vehicle.medias[0] : 'https://via.placeholder.com/60x60/CCCCCC/666666?text=Sem+Imagem'}" alt="${vehicle.name}" class="moto-thumbnail">
+                        <div class="moto-details">
+                            <div class="moto-name">${vehicle.name}</div>
+                            <div class="moto-specs">${getVehicleTypeName(vehicle.type)} • ${vehicle.year} • R$ ${formatPrice(vehicle.price)}</div>
+                        </div>
                     </div>
                     <div class="moto-actions">
                         <button class="btn btn-primary" onclick="editVehicle('${vehicle.id}', event)">Editar</button>
