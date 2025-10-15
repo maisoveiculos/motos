@@ -30,6 +30,8 @@
             --verde: #28a745;
             --azul: #2196F3;
             --laranja: #ff9800;
+            --cinza-claro: #f8f9fa;
+            --cinza-medio: #e9ecef;
         }
 
         html {
@@ -279,9 +281,9 @@
             margin: 15px auto;
         }
 
-        /* ========== VEÍCULOS ========== */
+        /* ========== VEÍCULOS - LAYOUT WEB MOTORS ========== */
         .vehicles {
-            background-color: var(--cinza);
+            background-color: var(--cinza-claro);
         }
 
         .filter-container {
@@ -309,64 +311,109 @@
             border-color: var(--vermelho);
         }
 
+        /* LAYOUT WEB MOTORS - GRID HORIZONTAL COMPACTO */
         .vehicles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .vehicle-card {
             background-color: var(--branco);
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border: 1px solid var(--cinza-medio);
         }
 
         .vehicle-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .vehicle-img-container {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
         }
 
         .vehicle-img {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .vehicle-card:hover .vehicle-img {
+            transform: scale(1.05);
+        }
+
+        .vehicle-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--vermelho);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
 
         .vehicle-info {
-            padding: 20px;
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .vehicle-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
             color: var(--preto);
+            font-weight: 600;
+            line-height: 1.3;
         }
 
         .vehicle-price {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: var(--vermelho);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .vehicle-details {
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-bottom: 15px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--cinza-escuro);
+        }
+
+        .vehicle-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .vehicle-detail i {
+            color: var(--vermelho);
+            font-size: 0.9rem;
         }
 
         .vehicle-btn {
             display: block;
             width: 100%;
-            background-color: var(--preto);
+            background-color: var(--vermelho);
             color: var(--branco);
             text-align: center;
             padding: 10px;
@@ -374,10 +421,12 @@
             text-decoration: none;
             font-weight: bold;
             transition: background-color 0.3s;
+            margin-top: auto;
+            font-size: 0.9rem;
         }
 
         .vehicle-btn:hover {
-            background-color: var(--vermelho);
+            background-color: var(--vermelho-escuro);
         }
 
         /* ========== BOTÕES ADMIN ========== */
@@ -395,6 +444,7 @@
             font-size: 14px;
             display: none;
             z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .btn-editar {
@@ -411,6 +461,7 @@
             font-size: 12px;
             display: none;
             z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .vehicle-card:hover .btn-excluir,
@@ -418,7 +469,7 @@
             display: block;
         }
 
-        /* ========== MODAL DETALHES ========== */
+        /* ========== MODAL DETALHES - LAYOUT WEB MOTORS ========== */
         .modal {
             display: none;
             position: fixed;
@@ -435,7 +486,7 @@
         .modal-content {
             background-color: var(--branco);
             margin: 50px auto;
-            max-width: 900px;
+            max-width: 1000px;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
@@ -464,6 +515,117 @@
             flex-wrap: wrap;
         }
 
+        .carousel-container {
+            flex: 1;
+            min-width: 400px;
+        }
+
+        .modal-details {
+            flex: 1;
+            min-width: 400px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--preto);
+            font-weight: 600;
+        }
+
+        .modal-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--vermelho);
+            margin-bottom: 20px;
+        }
+
+        .modal-specs {
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .spec-name {
+            font-weight: 500;
+        }
+
+        .spec-value {
+            color: var(--cinza-escuro);
+        }
+
+        .payment-info {
+            background-color: var(--cinza);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .payment-info h3 {
+            margin-bottom: 15px;
+            color: var(--preto);
+            font-size: 1.2rem;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .payment-option {
+            background-color: var(--branco);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid var(--cinza-medio);
+        }
+
+        .payment-option i {
+            color: var(--vermelho);
+        }
+
+        .modal-contact {
+            background-color: var(--cinza);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-contact p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .whatsapp-button {
+            display: inline-block;
+            background-color: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-3px);
+        }
+
         /* ========== CARROSSEL ========== */
         .carousel {
             position: relative;
@@ -471,25 +633,32 @@
             height: 400px;
             overflow: hidden;
             border-radius: 10px 10px 0 0;
+            touch-action: pan-y pinch-zoom;
         }
 
         .carousel-inner {
             display: flex;
             transition: transform 0.5s ease;
             height: 100%;
+            width: 100%;
         }
 
         .carousel-item {
             min-width: 100%;
             height: 100%;
             position: relative;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
         }
 
         .carousel-item img,
         .carousel-item video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .carousel-control {
@@ -537,100 +706,6 @@
 
         .video-indicator {
             background-color: var(--azul) !important;
-        }
-
-        .modal-details {
-            flex: 1;
-            min-width: 300px;
-            padding: 30px;
-        }
-
-        .modal-title {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--preto);
-        }
-
-        .modal-price {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--vermelho);
-            margin-bottom: 20px;
-        }
-
-        .modal-specs {
-            margin-bottom: 30px;
-        }
-
-        .spec-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .spec-name {
-            font-weight: 500;
-        }
-
-        .spec-value {
-            color: var(--cinza-escuro);
-        }
-
-        .payment-info {
-            background-color: var(--cinza);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .payment-info h3 {
-            margin-bottom: 15px;
-            color: var(--preto);
-        }
-
-        .payment-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .payment-option {
-            background-color: var(--branco);
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .payment-option i {
-            color: var(--vermelho);
-        }
-
-        .modal-contact {
-            background-color: var(--cinza);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .whatsapp-button {
-            display: inline-block;
-            background-color: #25D366;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: all 0.3s;
-        }
-
-        .whatsapp-button:hover {
-            background-color: #128C7E;
-            transform: translateY(-3px);
         }
 
         /* ========== SOBRE A LOJA ========== */
@@ -1100,18 +1175,36 @@
             align-items: center;
             padding: 15px;
             border-bottom: 1px solid #555;
+            background: #444;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
 
         .moto-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .moto-thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .moto-details {
             flex: 1;
         }
 
         .moto-name {
             font-weight: bold;
             margin-bottom: 5px;
+            font-size: 16px;
         }
 
-        .moto-details {
+        .moto-specs {
             font-size: 14px;
             color: #ccc;
         }
@@ -1255,6 +1348,56 @@
             background: #fff3cd;
             color: #856404;
             border: 1px solid #ffeaa7;
+        }
+
+        /* ========== LOADING INDICATOR ========== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            display: none;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--laranja);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .loading-subtext {
+            font-size: 14px;
+            color: #666;
         }
 
         /* ========== PAINEL DE EDIÇÃO DE TEXTO ========== */
@@ -1409,6 +1552,93 @@
                 flex-direction: column;
             }
             
+            .carousel-container {
+                width: 100%;
+                min-width: 100%;
+            }
+            
+            .modal-details {
+                width: 100%;
+                min-width: 100%;
+                padding: 25px 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+                text-align: center;
+                width: 100%;
+            }
+            
+            .modal-price {
+                font-size: 1.5rem;
+                text-align: center;
+                width: 100%;
+            }
+            
+            .modal-specs {
+                width: 100%;
+                margin-bottom: 25px;
+            }
+            
+            .spec-item {
+                padding: 12px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .spec-name {
+                font-size: 0.95rem;
+            }
+            
+            .spec-value {
+                font-size: 0.95rem;
+                text-align: right;
+                max-width: 60%;
+                word-break: break-word;
+            }
+            
+            .payment-info {
+                width: 100%;
+                padding: 18px;
+                margin-bottom: 20px;
+            }
+            
+            .payment-info h3 {
+                text-align: center;
+                font-size: 1.1rem;
+            }
+            
+            .payment-options {
+                justify-content: center;
+            }
+            
+            .payment-option {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .modal-contact {
+                width: 100%;
+                padding: 18px;
+            }
+            
+            .modal-contact p {
+                text-align: center;
+                font-size: 0.95rem;
+            }
+            
+            .whatsapp-button {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+            }
+            
             .logo-image {
                 height: 40px;
             }
@@ -1468,6 +1698,13 @@
             .map-container {
                 height: 300px;
             }
+            
+            /* Botões sempre visíveis em mobile para admin */
+            .vehicle-card .btn-excluir,
+            .vehicle-card .btn-editar {
+                display: block !important;
+                opacity: 0.9;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1477,6 +1714,36 @@
             
             .hero {
                 height: 40vh;
+            }
+            
+            .modal-details {
+                padding: 20px 15px;
+            }
+            
+            .modal-title {
+                font-size: 1.4rem;
+            }
+            
+            .modal-price {
+                font-size: 1.4rem;
+            }
+            
+            .spec-item {
+                padding: 10px 0;
+            }
+            
+            .spec-name, .spec-value {
+                font-size: 0.9rem;
+            }
+            
+            .payment-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .payment-option {
+                width: 100%;
+                max-width: 200px;
             }
         }
     
@@ -1573,6 +1840,16 @@
                 display: none;
             }
         }
+
+        /* ========== SWIPE SUPPORT ========== */
+        .carousel {
+            touch-action: pan-y pinch-zoom;
+        }
+
+        .carousel-item {
+            user-select: none;
+            -webkit-user-drag: none;
+        }
     </style>
 </head>
 <body>
@@ -1634,6 +1911,15 @@
                 <li><a href="#location">Localização</a></li>
             </ul>
         </nav>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Adicionando veículo...</div>
+            <div class="loading-subtext">Aguarde enquanto processamos as informações</div>
+        </div>
     </div>
 
     <!-- Hero Section -->
@@ -1795,7 +2081,7 @@
                     </div>
                     <div class="modal-contact">
                         <p>Interessado neste veículo?</p>
-                        <a href="https://api.whatsapp.com/send?phone=5589981210995&fbclid=PAZXh0bgNhZW0CMTEAAafbDu0ZqkmVjFg3MlB3fwffg7yGJGjIK2oX5t0Kd7nYAbc5yO8VJMaV3cgpcQ_aem_SsEXTCGqzLkzyFb4NnDDnw" class="whatsapp-button" id="whatsappButton">
+                        <a href="#" class="whatsapp-button" id="whatsappButton">
                             <i class="fab fa-whatsapp"></i> Falar no WhatsApp
                         </a>
                     </div>
@@ -1859,7 +2145,7 @@
                         </div>
                         <div class="form-group">
                             <label for="vehicleYear">Ano</label>
-                            <input type="number" class="form-control" id="vehicleYear" required>
+                            <input type="text" class="form-control" id="vehicleYear" placeholder="Ex: 2024/2025" required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -2202,6 +2488,8 @@
         let selectedFiles = [];
         let carouselInterval;
         let siteContent = {};
+        let touchStartX = 0;
+        let touchEndX = 0;
 
         // ========== ELEMENTOS DOM ==========
         const userInfo = document.getElementById('userInfo');
@@ -2249,6 +2537,7 @@
         const drawerDevType = document.getElementById('drawerDevType');
         const saveTextChangesBtn = document.getElementById('saveTextChanges');
         const cancelTextChangesBtn = document.getElementById('cancelTextChanges');
+        const loadingOverlay = document.getElementById('loadingOverlay');
 
         // ========== INICIALIZAÇÃO ==========
         document.addEventListener('DOMContentLoaded', function() {
@@ -2341,6 +2630,37 @@
             // Editor de texto
             saveTextChangesBtn.addEventListener('click', saveTextChanges);
             cancelTextChangesBtn.addEventListener('click', closeTextEditPanelFunc);
+            
+            // Eventos de touch para swipe
+            setupSwipeEvents();
+        }
+
+        // ========== CONFIGURAÇÃO DE SWIPE ==========
+        function setupSwipeEvents() {
+            const carousel = document.getElementById('carousel');
+            
+            carousel.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+            
+            carousel.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50; // Distância mínima para considerar um swipe
+            
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swipe para a esquerda - próxima imagem
+                showNextMedia();
+            }
+            
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Swipe para a direita - imagem anterior
+                showPrevMedia();
+            }
         }
 
         // ========== CARROSSEL AUTOMÁTICO ==========
@@ -2356,7 +2676,7 @@
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
-            }, 7000); // Alterado de 4000 para 7000 (7 segundos)
+            }, 7000);
         }
 
         // ========== SISTEMA DE CONTEÚDO DO SITE ==========
@@ -2720,6 +3040,9 @@
             // Atualizar drawer
             drawerLoginBtn.style.display = currentUser.type === 'guest' ? 'block' : 'none';
             drawerLogoutBtn.style.display = currentUser.type === 'guest' ? 'none' : 'block';
+            
+            // Atualizar botões de admin nos cards
+            renderVehicles();
         }
 
         function logout() {
@@ -2765,20 +3088,34 @@
                 vehicleCard.dataset.index = index;
                 
                 // Botões de admin (apenas para admin/dev)
-                const adminButtons = (currentUser.type === 'admin' || currentUser.type === 'dev') ? `
+                const isAdmin = (currentUser.type === 'admin' || currentUser.type === 'dev');
+                const adminButtons = isAdmin ? `
                     <button class="btn-excluir" onclick="deleteVehicle('${vehicle.id}', event)"><i class="fas fa-trash"></i></button>
                     <button class="btn-editar" onclick="editVehicle('${vehicle.id}', event)"><i class="fas fa-edit"></i></button>
                 ` : '';
                 
                 vehicleCard.innerHTML = `
                     ${adminButtons}
-                    <img src="${vehicle.medias && vehicle.medias.length > 0 ? vehicle.medias[0] : 'https://via.placeholder.com/400x300/CCCCCC/666666?text=Sem+Imagem'}" alt="${vehicle.name}" class="vehicle-img">
+                    <div class="vehicle-img-container">
+                        <img src="${vehicle.medias && vehicle.medias.length > 0 ? vehicle.medias[0] : 'https://via.placeholder.com/400x300/CCCCCC/666666?text=Sem+Imagem'}" alt="${vehicle.name}" class="vehicle-img">
+                        <div class="vehicle-badge">${getVehicleTypeName(vehicle.type)}</div>
+                    </div>
                     <div class="vehicle-info">
                         <h3 class="vehicle-title">${vehicle.name}</h3>
                         <p class="vehicle-price">R$ ${formatPrice(vehicle.price)}</p>
                         <div class="vehicle-details">
-                            <span><i class="fas fa-calendar-alt"></i> ${vehicle.year}</span>
-                            <span><i class="fas fa-tachometer-alt"></i> ${vehicle.km ? formatKm(vehicle.km) + ' km' : 'N/A'}</span>
+                            <div class="vehicle-detail">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>${vehicle.year}</span>
+                            </div>
+                            <div class="vehicle-detail">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>${vehicle.km ? formatKm(vehicle.km) + ' km' : 'N/A'}</span>
+                            </div>
+                            <div class="vehicle-detail">
+                                <i class="fas fa-palette"></i>
+                                <span>${vehicle.color || 'N/A'}</span>
+                            </div>
                         </div>
                         <a href="#" class="vehicle-btn">${siteContent.vehicleBtn || 'Ver Detalhes'}</a>
                     </div>
@@ -2843,10 +3180,10 @@
                 </div>
             `;
             
-            // Atualizar link do WhatsApp
-            const message = `Olá, tenho interesse na ${vehicle.name} - R$ ${formatPrice(vehicle.price)}`;
+            // Atualizar link do WhatsApp com informações completas
+            const message = `Olá, tenho interesse na moto ${vehicle.name} - Ano: ${vehicle.year} - Cor: ${vehicle.color || 'N/A'} - Preço: R$ ${formatPrice(vehicle.price)}. Poderia me fornecer mais informações?`;
             const encodedMessage = encodeURIComponent(message);
-            whatsappButton.href = `https://api.whatsapp.com/send?phone=5589981210995&fbclid=PAZXh0bgNhZW0CMTEAAafbDu0ZqkmVjFg3MlB3fwffg7yGJGjIK2oX5t0Kd7nYAbc5yO8VJMaV3cgpcQ_aem_SsEXTCGqzLkzyFb4NnDDnw&text=${encodedMessage}`;
+            whatsappButton.href = `https://api.whatsapp.com/send?phone=5589981210995&text=${encodedMessage}`;
             
             // Atualizar carrossel
             updateCarousel(vehicle.medias || []);
@@ -2961,15 +3298,18 @@
                 name: document.getElementById('vehicleName').value,
                 type: document.getElementById('vehicleType').value,
                 price: parseFloat(document.getElementById('vehiclePrice').value),
-                year: parseInt(document.getElementById('vehicleYear').value),
+                year: document.getElementById('vehicleYear').value, // Agora aceita texto
                 km: document.getElementById('vehicleKm').value ? parseInt(document.getElementById('vehicleKm').value) : null,
                 color: document.getElementById('vehicleColor').value,
                 description: document.getElementById('vehicleDescription').value,
                 medias: []
             };
             
-            // Fazer upload das imagens para o ImgBB
+            // Mostrar loading
+            loadingOverlay.style.display = 'flex';
+            
             try {
+                // Fazer upload das imagens para o ImgBB
                 const imageUrls = await uploadImagesToImgBB(selectedFiles);
                 vehicle.medias = imageUrls;
                 
@@ -2977,9 +3317,14 @@
                 const vehiclesRef = database.ref('vehicles');
                 await vehiclesRef.push(vehicle);
                 
+                // Esconder loading
+                loadingOverlay.style.display = 'none';
+                
                 showStatus('Veículo adicionado com sucesso!', 'success');
                 clearForm();
             } catch (error) {
+                // Esconder loading em caso de erro
+                loadingOverlay.style.display = 'none';
                 showStatus('Erro ao adicionar veículo: ' + error.message, 'error');
             }
         }
@@ -3040,7 +3385,7 @@
             document.getElementById('vehicleName').value = vehicle.name;
             document.getElementById('vehicleType').value = vehicle.type;
             document.getElementById('vehiclePrice').value = vehicle.price;
-            document.getElementById('vehicleYear').value = vehicle.year;
+            document.getElementById('vehicleYear').value = vehicle.year; // Agora aceita texto
             document.getElementById('vehicleKm').value = vehicle.km || '';
             document.getElementById('vehicleColor').value = vehicle.color || '';
             document.getElementById('vehicleDescription').value = vehicle.description || '';
@@ -3070,7 +3415,7 @@
                 name: document.getElementById('vehicleName').value,
                 type: document.getElementById('vehicleType').value,
                 price: parseFloat(document.getElementById('vehiclePrice').value),
-                year: parseInt(document.getElementById('vehicleYear').value),
+                year: document.getElementById('vehicleYear').value, // Agora aceita texto
                 km: document.getElementById('vehicleKm').value ? parseInt(document.getElementById('vehicleKm').value) : null,
                 color: document.getElementById('vehicleColor').value,
                 description: document.getElementById('vehicleDescription').value
@@ -3110,8 +3455,11 @@
                 
                 motoItem.innerHTML = `
                     <div class="moto-info">
-                        <div class="moto-name">${vehicle.name}</div>
-                        <div class="moto-details">${getVehicleTypeName(vehicle.type)} • ${vehicle.year} • R$ ${formatPrice(vehicle.price)}</div>
+                        <img src="${vehicle.medias && vehicle.medias.length > 0 ? vehicle.medias[0] : 'https://via.placeholder.com/60x60/CCCCCC/666666?text=Sem+Imagem'}" alt="${vehicle.name}" class="moto-thumbnail">
+                        <div class="moto-details">
+                            <div class="moto-name">${vehicle.name}</div>
+                            <div class="moto-specs">${getVehicleTypeName(vehicle.type)} • ${vehicle.year} • R$ ${formatPrice(vehicle.price)}</div>
+                        </div>
                     </div>
                     <div class="moto-actions">
                         <button class="btn btn-primary" onclick="editVehicle('${vehicle.id}', event)">Editar</button>
