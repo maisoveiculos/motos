@@ -166,7 +166,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .drawer-logout-btn{ background:var(--red); color:var(--white); margin-top:8px; display:none; }
 
 /* =========================================================
-   HERO
+   HERO (foto única, sem carrossel)
 ========================================================= */
 .hero{
     position:relative; overflow:hidden; margin-top:var(--header-h);
@@ -175,12 +175,11 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 @media (min-width:769px){ .hero{ height:88vh; } }
 
-.hero-carousel{ position:absolute; inset:0; z-index:1; }
-.carousel-slide{
-    position:absolute; inset:0; opacity:0; transition:opacity 1.2s ease-in-out;
+.hero-image{
+    position:absolute; inset:0; z-index:1;
+    background-image:url('capa.jpg');
     background-size:cover; background-position:center; background-repeat:no-repeat;
 }
-.carousel-slide.active{ opacity:1; }
 .hero-overlay{
     position:absolute; inset:0; z-index:2;
     background:
@@ -230,6 +229,50 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .section-title p{
     color:var(--steel); max-width:560px; margin:14px auto 0; font-size:1rem;
 }
+
+/* =========================================================
+   FEATURED / DESTAQUES — carrossel horizontal de ofertas
+========================================================= */
+.featured{ background:var(--black); padding-bottom:80px; }
+.featured .section-eyebrow{ color:var(--red); }
+.featured .section-title h2{ color:var(--white); }
+.featured .section-title p{ color:rgba(255,255,255,.6); }
+
+.featured-carousel-wrap{ position:relative; max-width:1280px; margin:0 auto; }
+.featured-track{
+    display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:6px 4px 14px; scrollbar-width:none; -ms-overflow-style:none;
+}
+.featured-track::-webkit-scrollbar{ display:none; }
+
+.featured-card{
+    flex:0 0 auto; width:280px; scroll-snap-align:start;
+    background:var(--charcoal); border-radius:var(--radius-lg); overflow:hidden;
+    cursor:pointer; transition:transform .3s var(--ease); position:relative;
+    border:1px solid rgba(255,255,255,.06);
+}
+.featured-card:hover{ transform:translateY(-6px); }
+.featured-media{ position:relative; height:190px; overflow:hidden; background:var(--black); }
+.featured-media img{ width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease); }
+.featured-card:hover .featured-media img{ transform:scale(1.08); }
+.featured-tag{
+    position:absolute; top:10px; left:10px; background:var(--red); color:var(--white);
+    font-size:.65rem; font-weight:700; letter-spacing:.5px; text-transform:uppercase;
+    padding:5px 11px; border-radius:20px; z-index:2;
+}
+.featured-info{ padding:14px 16px 18px; }
+.featured-name{ color:var(--white); font-family:var(--font-display); font-weight:700; font-size:1.05rem; text-transform:uppercase; margin-bottom:4px; }
+.featured-price{ color:var(--red); font-family:var(--font-mono); font-weight:600; font-size:1.1rem; }
+
+.featured-nav{
+    position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.1);
+    color:var(--white); border:none; width:42px; height:42px; border-radius:50%; cursor:pointer;
+    z-index:5; transition:background .2s var(--ease); backdrop-filter:blur(4px);
+}
+.featured-nav:hover{ background:var(--red); }
+.featured-nav.prev{ left:-8px; }
+.featured-nav.next{ right:-8px; }
+@media (max-width:900px){ .featured-nav{ display:none; } }
 
 /* =========================================================
    VEHICLES — NOVO DESIGN (menos "lista", mais visual)
@@ -325,6 +368,10 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 /* quando é admin, empurra o tag de ano pra baixo dos botões de ação */
 .vehicle-card.has-admin-actions .vehicle-top-row{ padding-right:78px; }
+.featured-badge-mini{
+    position:absolute; top:12px; left:12px; background:var(--laranja); color:var(--black);
+    font-size:.6rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase; padding:4px 9px; border-radius:14px; z-index:4;
+}
 
 /* skeleton loading */
 .skeleton-card{ background:var(--white); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); }
@@ -533,6 +580,9 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .form-control:focus{ background:rgba(255,255,255,.08); }
 .form-row{ display:flex; gap:15px; margin-bottom:0; }
 .form-row .form-group{ flex:1; }
+.form-check-row{ display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+.form-check-row input[type="checkbox"]{ width:19px; height:19px; accent-color:var(--laranja); cursor:pointer; }
+.form-check-row label{ margin:0; font-weight:600; font-size:.9rem; color:rgba(255,255,255,.9); cursor:pointer; }
 
 .btn{ padding:12px 24px; border:none; border-radius:8px; cursor:pointer; font-weight:700; transition:all .25s var(--ease); font-size:.9rem; }
 .btn:disabled{ opacity:.6; cursor:wait; }
@@ -580,6 +630,10 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     position:absolute; top:5px; right:5px; background:rgba(220,53,69,.85); color:white; border:none;
     border-radius:50%; width:22px; height:22px; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center;
 }
+.preview-item .upload-progress{
+    position:absolute; left:0; right:0; bottom:0; height:4px; background:rgba(255,255,255,.2);
+}
+.preview-item .upload-progress span{ display:block; height:100%; background:var(--verde); width:0%; transition:width .2s linear; }
 .existing-media-item{ position:relative; border-radius:6px; overflow:hidden; height:96px; border:1px solid rgba(255,255,255,.15); }
 .existing-media-item img{ width:100%; height:100%; object-fit:cover; }
 .existing-media-item .delete-existing{
@@ -679,6 +733,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     .preview-container{ grid-template-columns:repeat(2, 1fr); }
     .about-image::before{ display:none; }
     .location-container{ flex-direction:column-reverse; }
+    .featured-card{ width:230px; }
 }
 @media (max-width:480px){
     .hero{ height:60vh; min-height:340px; }
@@ -754,13 +809,9 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- ================= HERO ================= -->
+<!-- ================= HERO (foto única) ================= -->
 <section class="hero">
-    <div class="hero-carousel" id="heroCarousel">
-        <div class="carousel-slide active" style="background-image:url('carrossel1.jpg');" data-slide="1"></div>
-        <div class="carousel-slide" style="background-image:url('carrossel2.jpg');" data-slide="2"></div>
-        <div class="carousel-slide" style="background-image:url('carrossel3.jpg');" data-slide="3"></div>
-    </div>
+    <div class="hero-image" id="heroImage"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <span class="hero-eyebrow">Motos seminovas selecionadas</span>
@@ -770,6 +821,20 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             <a href="#vehicles" class="hero-btn primary"><i class="fas fa-motorcycle"></i> Ver estoque</a>
             <a href="#location" class="hero-btn ghost"><i class="fas fa-map-marker-alt"></i> Como chegar</a>
         </div>
+    </div>
+</section>
+
+<!-- ================= FEATURED / DESTAQUES ================= -->
+<section class="section featured" id="featured" style="display:none;">
+    <div class="section-title">
+        <span class="section-eyebrow">Selecionados para você</span>
+        <h2 id="featuredTitle">Ofertas em Destaque</h2>
+        <p id="featuredSubtitle">As melhores oportunidades do momento, escolhidas pela nossa equipe.</p>
+    </div>
+    <div class="featured-carousel-wrap">
+        <button class="featured-nav prev" id="featuredPrev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+        <div class="featured-track" id="featuredTrack"></div>
+        <button class="featured-nav next" id="featuredNext" aria-label="Próximo"><i class="fas fa-chevron-right"></i></button>
     </div>
 </section>
 
@@ -1020,6 +1085,11 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     <textarea class="form-control" id="vehicleDescription" rows="3"></textarea>
                 </div>
 
+                <div class="form-check-row">
+                    <input type="checkbox" id="vehicleFeatured">
+                    <label for="vehicleFeatured">Destacar na vitrine de ofertas (carrossel do início do site)</label>
+                </div>
+
                 <div class="upload-section">
                     <h4>Fotos do Veículo (salvas no Google Drive)</h4>
                     <div id="existingMediaWrap" style="display:none; margin-bottom:16px;">
@@ -1029,7 +1099,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     <div class="upload-area" id="uploadArea">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <p>Arraste imagens aqui ou clique para selecionar</p>
-                        <p class="upload-info">Formatos suportados: JPG, PNG, WEBP (máx. 10MB cada)</p>
+                        <p class="upload-info">Formatos suportados: JPG, PNG, WEBP (máx. 10MB cada) — as fotos são otimizadas automaticamente para um envio mais rápido.</p>
                     </div>
                     <input type="file" class="file-input" id="fileInput" multiple accept="image/*">
                     <div class="media-counter" id="mediaCounter">0 novas fotos selecionadas</div>
@@ -1063,7 +1133,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             <div class="text-edit-section">
                 <h3>Imagens do Site</h3>
                 <div id="imageEditorContainer"></div>
-                <p class="upload-info">As imagens são enviadas direto para o Google Drive e o link é salvo automaticamente ao clicar em "Alterar".</p>
+                <p class="upload-info">As imagens são enviadas direto para o Google Drive (a imagem antiga é removida automaticamente) e o link é salvo ao clicar em "Salvar Todas as Alterações".</p>
             </div>
 
             <div class="text-edit-section">
@@ -1077,6 +1147,12 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 <div class="text-edit-item"><label for="editNavAbout">Link Sobre a Loja</label><input type="text" class="form-control" id="editNavAbout"></div>
                 <div class="text-edit-item"><label for="editNavTeam">Link Equipe</label><input type="text" class="form-control" id="editNavTeam"></div>
                 <div class="text-edit-item"><label for="editNavLocation">Link Localização</label><input type="text" class="form-control" id="editNavLocation"></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Seção Destaques</h3>
+                <div class="text-edit-item"><label for="editFeaturedTitle">Título da Seção</label><input type="text" class="form-control" id="editFeaturedTitle"></div>
+                <div class="text-edit-item"><label for="editFeaturedSubtitle">Subtítulo</label><input type="text" class="form-control" id="editFeaturedSubtitle"></div>
             </div>
 
             <div class="text-edit-section">
@@ -1175,6 +1251,10 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     // intervalo de atualização automática dos dados (ms). 0 = desliga.
     const AUTO_REFRESH_MS = 25000;
 
+    // compressão de imagens antes do envio (deixa o upload bem mais rápido)
+    const IMG_MAX_WIDTH = 1600;
+    const IMG_QUALITY = 0.8;
+
     // ========== CLIENTE DA API ==========
     async function apiGet(params) {
         const qs = new URLSearchParams(params).toString();
@@ -1189,19 +1269,49 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         });
         return res.json();
     }
-    function fileToBase64(file) {
+
+    // ---------- Compressão de imagem no navegador (canvas) ----------
+    // Reduz bastante o tamanho do arquivo antes de converter para base64,
+    // o que acelera muito o envio para o Drive.
+    function compressImageToDataURL(file, maxWidth = IMG_MAX_WIDTH, quality = IMG_QUALITY) {
         return new Promise((resolve, reject) => {
+            const img = new Image();
             const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
+            reader.onload = () => { img.src = reader.result; };
             reader.onerror = reject;
+            img.onload = () => {
+                try {
+                    let { width, height } = img;
+                    if (width > maxWidth) {
+                        height = Math.round(height * (maxWidth / width));
+                        width = maxWidth;
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    // PNG com transparência mantém formato; o resto vira JPEG para pesar menos
+                    const outType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+                    const dataUrl = canvas.toDataURL(outType, quality);
+                    resolve(dataUrl);
+                } catch (err) { reject(err); }
+            };
+            img.onerror = reject;
             reader.readAsDataURL(file);
         });
     }
+
     async function uploadFileToDrive(file) {
-        const base64 = await fileToBase64(file);
-        const result = await apiPost({ action: 'uploadImage', base64, filename: file.name, mimeType: file.type });
+        const dataUrl = await compressImageToDataURL(file);
+        const result = await apiPost({ action: 'uploadImage', base64: dataUrl, filename: file.name, mimeType: file.type });
         if (!result.success) throw new Error(result.message || 'Falha no upload');
         return result; // { id, url }
+    }
+    // Envia várias fotos em paralelo (bem mais rápido que uma de cada vez)
+    async function uploadFilesInParallel(files) {
+        const urls = await Promise.all(files.map(f => uploadFileToDrive(f)));
+        return urls.map(u => u.url);
     }
     function extractDriveId(url) {
         const m = String(url || '').match(/id=([a-zA-Z0-9_-]+)/);
@@ -1216,17 +1326,15 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     let selectedFiles = [];
     let existingMediaForEdit = [];
     let editingVehicleId = null;
-    let carouselInterval = null;
     let siteContent = {};
     let currentFilter = 'all';
     let touchStartX = 0, touchEndX = 0;
+    let featuredAutoplayInterval = null;
 
     // campos de imagem editáveis no modo dev: chave no siteContent, seletor do elemento <img> no site, e um rótulo amigável
     const IMAGE_FIELDS = [
         { key: 'logoUrl',        selector: '#logoImg',    label: 'Logo (header)' },
-        { key: 'heroSlide1Url',  selector: '[data-slide="1"]', label: 'Banner do topo — slide 1', isBg: true },
-        { key: 'heroSlide2Url',  selector: '[data-slide="2"]', label: 'Banner do topo — slide 2', isBg: true },
-        { key: 'heroSlide3Url',  selector: '[data-slide="3"]', label: 'Banner do topo — slide 3', isBg: true },
+        { key: 'heroImageUrl',   selector: '#heroImage',  label: 'Foto de capa (topo do site)', isBg: true },
         { key: 'aboutImageUrl',  selector: '#aboutImg',   label: 'Foto — Sobre a loja' },
         { key: 'member1PhotoUrl',selector: '#member1Img', label: 'Foto — Equipe 1' },
         { key: 'member2PhotoUrl',selector: '#member2Img', label: 'Foto — Equipe 2' },
@@ -1244,7 +1352,8 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         'fileInput','previewContainer','mediaCounter','clearForm','menuToggle','drawer',
         'overlay','drawerLoginBtn','drawerLogoutBtn','drawerUserName','drawerUserType','drawerDevType',
         'saveTextChanges','cancelTextChanges','loadingOverlay','loadingText','drawerClose',
-        'submitBtn','formTitle','existingMediaWrap','existingMediaContainer','imageEditorContainer'
+        'submitBtn','formTitle','existingMediaWrap','existingMediaContainer','imageEditorContainer',
+        'featured','featuredTrack','featuredPrev','featuredNext'
     ].forEach(id => els[id] = document.getElementById(id));
     const filterBtns = document.querySelectorAll('.filter-btn');
 
@@ -1254,7 +1363,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         loadSiteContent();
         setupEventListeners();
         checkSavedUser();
-        startCarousel();
         if (AUTO_REFRESH_MS > 0) {
             setInterval(() => { loadVehicles(); loadSiteContent(); }, AUTO_REFRESH_MS);
         }
@@ -1313,6 +1421,12 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.saveTextChanges.addEventListener('click', saveTextChanges);
         els.cancelTextChanges.addEventListener('click', closeTextEditPanelFunc);
 
+        els.featuredPrev.addEventListener('click', () => scrollFeatured(-1));
+        els.featuredNext.addEventListener('click', () => scrollFeatured(1));
+        els.featuredTrack.addEventListener('mouseenter', stopFeaturedAutoplay);
+        els.featuredTrack.addEventListener('mouseleave', startFeaturedAutoplay);
+        els.featuredTrack.addEventListener('touchstart', stopFeaturedAutoplay, { passive: true });
+
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 closeVehicleModal(); closeLoginModal(); closeDrawer();
@@ -1332,19 +1446,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         const threshold = 50;
         if (touchEndX < touchStartX - threshold) showNextMedia();
         if (touchEndX > touchStartX + threshold) showPrevMedia();
-    }
-
-    // ========== HERO CAROUSEL ==========
-    function startCarousel() {
-        const slides = document.querySelectorAll('.carousel-slide');
-        if (!slides.length) return;
-        let current = 0;
-        if (carouselInterval) clearInterval(carouselInterval);
-        carouselInterval = setInterval(() => {
-            slides[current].classList.remove('active');
-            current = (current + 1) % slides.length;
-            slides[current].classList.add('active');
-        }, 7000);
     }
 
     // ========== SITE CONTENT (Google Sheets via Apps Script) ==========
@@ -1367,6 +1468,9 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 document.querySelectorAll(`a[href="${href}"]`).forEach(el => { el.textContent = siteContent[key]; });
             }
         });
+
+        setText('featuredTitle', siteContent.featuredTitle);
+        setText('featuredSubtitle', siteContent.featuredSubtitle);
 
         setText('vehiclesTitle', siteContent.vehiclesTitle);
         if (siteContent.filterAll) document.querySelector('.filter-btn[data-filter="all"]').textContent = siteContent.filterAll;
@@ -1436,6 +1540,8 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             editNavAbout: siteContent.navAbout || 'Sobre a Loja',
             editNavTeam: siteContent.navTeam || 'Equipe',
             editNavLocation: siteContent.navLocation || 'Localização',
+            editFeaturedTitle: siteContent.featuredTitle || 'Ofertas em Destaque',
+            editFeaturedSubtitle: siteContent.featuredSubtitle || 'As melhores oportunidades do momento, escolhidas pela nossa equipe.',
             editVehiclesTitle: siteContent.vehiclesTitle || 'Nossos Veículos',
             editFilterAll: siteContent.filterAll || 'Todos',
             editFilter110cc: siteContent.filter110cc || 'Até 110cc',
@@ -1511,6 +1617,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             input.addEventListener('change', async () => {
                 const file = input.files[0];
                 if (!file) return;
+                const previousUrl = siteContent[field.key];
                 chooseBtn.disabled = true;
                 status.textContent = 'Enviando para o Drive...';
                 try {
@@ -1518,6 +1625,9 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     siteContent[field.key] = url;
                     thumb.src = url;
                     status.textContent = 'Imagem atualizada (clique em "Salvar Todas as Alterações" para publicar)';
+                    // remove a imagem antiga do Drive para não deixar arquivos órfãos
+                    const oldId = extractDriveId(previousUrl);
+                    if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
                 } catch (err) {
                     status.textContent = 'Erro no upload: ' + err.message;
                 } finally {
@@ -1536,6 +1646,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 
     async function saveTextChanges() {
         const ids = ['editUserName','editNavVehicles','editNavAbout','editNavTeam','editNavLocation',
+            'editFeaturedTitle','editFeaturedSubtitle',
             'editVehiclesTitle','editFilterAll','editFilter110cc','editFilter150cc','editFilter160cc','editVehicleBtn',
             'editAboutTitle','editAboutSubtitle','editAboutText1','editAboutText2','editAboutText3',
             'editTeamTitle','editMember1Name','editMember1Role','editMember1Desc','editMember2Name','editMember2Role',
@@ -1681,6 +1792,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     <i class="fas fa-motorcycle"></i>
                     <p>Nenhum veículo cadastrado no momento. Volte em breve!</p>
                 </div>`;
+            renderFeaturedCarousel();
             return;
         }
 
@@ -1702,10 +1814,13 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     <button class="btn-excluir" title="Excluir" aria-label="Excluir veículo" onclick="deleteVehicle('${vehicle.id}', event)"><i class="fas fa-trash"></i></button>
                 </div>` : '';
 
+            const featuredMini = vehicle.featured ? '<span class="featured-badge-mini">Destaque</span>' : '';
+
             card.innerHTML = `
                 <div class="vehicle-media">
                     <img src="${thumb}" alt="${vehicle.name}" class="vehicle-img" loading="lazy">
                     <div class="vehicle-media-fade"></div>
+                    ${featuredMini}
                     <div class="vehicle-top-row">
                         <span class="vehicle-badge">${getVehicleTypeName(vehicle.type)}</span>
                         <span class="vehicle-year-tag">${vehicle.year || ''}</span>
@@ -1734,6 +1849,65 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         });
 
         applyCurrentFilter();
+        renderFeaturedCarousel();
+    }
+
+    // ========== CARROSSEL DE DESTAQUES (OFERTAS) ==========
+    function renderFeaturedCarousel() {
+        const featuredVehicles = vehicles.filter(v => v.featured);
+        stopFeaturedAutoplay();
+
+        if (featuredVehicles.length === 0) {
+            els.featured.style.display = 'none';
+            els.featuredTrack.innerHTML = '';
+            return;
+        }
+
+        els.featured.style.display = 'block';
+        els.featuredTrack.innerHTML = '';
+
+        featuredVehicles.forEach(vehicle => {
+            const realIndex = vehicles.findIndex(v => v.id === vehicle.id);
+            const thumb = (vehicle.medias && vehicle.medias.length > 0)
+                ? vehicle.medias[0]
+                : 'https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';
+
+            const card = document.createElement('div');
+            card.className = 'featured-card';
+            card.innerHTML = `
+                <div class="featured-media">
+                    <span class="featured-tag">Oferta</span>
+                    <img src="${thumb}" alt="${escapeHtml(vehicle.name)}" loading="lazy">
+                </div>
+                <div class="featured-info">
+                    <div class="featured-name">${escapeHtml(vehicle.name)}</div>
+                    <div class="featured-price">R$ ${formatPrice(vehicle.price)}</div>
+                </div>
+            `;
+            card.addEventListener('click', () => showVehicleDetails(realIndex));
+            els.featuredTrack.appendChild(card);
+        });
+
+        startFeaturedAutoplay();
+    }
+
+    function scrollFeatured(direction) {
+        const cardWidth = els.featuredTrack.querySelector('.featured-card')?.offsetWidth || 280;
+        els.featuredTrack.scrollBy({ left: direction * (cardWidth + 20), behavior: 'smooth' });
+    }
+
+    function startFeaturedAutoplay() {
+        stopFeaturedAutoplay();
+        if (!els.featuredTrack.querySelector('.featured-card')) return;
+        featuredAutoplayInterval = setInterval(() => {
+            const track = els.featuredTrack;
+            const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
+            if (atEnd) { track.scrollTo({ left: 0, behavior: 'smooth' }); }
+            else { scrollFeatured(1); }
+        }, 3500);
+    }
+    function stopFeaturedAutoplay() {
+        if (featuredAutoplayInterval) { clearInterval(featuredAutoplayInterval); featuredAutoplayInterval = null; }
     }
 
     function applyCurrentFilter() {
@@ -1837,11 +2011,11 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         if (selectedFiles.length === 0) { showStatusIn(els.formStatus, 'Adicione pelo menos uma foto do veículo.', 'error'); return; }
 
         const vehicle = readFormFields();
-        els.loadingText.textContent = 'Enviando fotos para o Google Drive...';
+        els.loadingText.textContent = 'Otimizando e enviando fotos...';
         els.loadingOverlay.style.display = 'flex';
 
         try {
-            vehicle.medias = await uploadFilesSequentially(selectedFiles);
+            vehicle.medias = await uploadFilesInParallel(selectedFiles);
             els.loadingText.textContent = 'Salvando veículo na planilha...';
             const res = await apiPost({ action: 'addVehicle', data: vehicle });
             els.loadingOverlay.style.display = 'none';
@@ -1867,8 +2041,8 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         try {
             let medias = [...existingMediaForEdit];
             if (selectedFiles.length > 0) {
-                els.loadingText.textContent = 'Enviando novas fotos para o Google Drive...';
-                const newUrls = await uploadFilesSequentially(selectedFiles);
+                els.loadingText.textContent = 'Otimizando e enviando novas fotos...';
+                const newUrls = await uploadFilesInParallel(selectedFiles);
                 medias = medias.concat(newUrls);
             }
             updated.medias = medias;
@@ -1890,15 +2064,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         }
     }
 
-    async function uploadFilesSequentially(files) {
-        const urls = [];
-        for (const file of files) {
-            const { url } = await uploadFileToDrive(file);
-            urls.push(url);
-        }
-        return urls;
-    }
-
     function readFormFields() {
         return {
             name: document.getElementById('vehicleName').value,
@@ -1907,13 +2072,14 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             year: document.getElementById('vehicleYear').value,
             km: document.getElementById('vehicleKm').value ? parseInt(document.getElementById('vehicleKm').value) : null,
             color: document.getElementById('vehicleColor').value,
-            description: document.getElementById('vehicleDescription').value
+            description: document.getElementById('vehicleDescription').value,
+            featured: document.getElementById('vehicleFeatured').checked
         };
     }
 
     async function deleteVehicle(vehicleId, event) {
         event.stopPropagation();
-        if (!confirm('Tem certeza que deseja excluir este veículo?')) return;
+        if (!confirm('Tem certeza que deseja excluir este veículo? As fotos também serão removidas do Drive.')) return;
         try {
             const res = await apiPost({ action: 'deleteVehicle', id: vehicleId });
             if (res.success) { showStatusIn(els.formStatus, 'Veículo excluído com sucesso!', 'success'); loadVehicles(); }
@@ -1938,6 +2104,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         document.getElementById('vehicleKm').value = vehicle.km || '';
         document.getElementById('vehicleColor').value = vehicle.color || '';
         document.getElementById('vehicleDescription').value = vehicle.description || '';
+        document.getElementById('vehicleFeatured').checked = !!vehicle.featured;
 
         clearFileSelection();
         renderExistingMedia();
@@ -1967,6 +2134,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         });
     }
 
+    // Ao remover uma foto já cadastrada, ela some do site E é apagada do Drive.
     async function removeExistingMedia(idx) {
         const url = existingMediaForEdit[idx];
         const fileId = extractDriveId(url);
@@ -2000,7 +2168,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 <div class="moto-info">
                     <img src="${thumb}" alt="${vehicle.name}" class="moto-thumbnail">
                     <div class="moto-details">
-                        <div class="moto-name">${escapeHtml(vehicle.name)}</div>
+                        <div class="moto-name">${escapeHtml(vehicle.name)} ${vehicle.featured ? '⭐' : ''}</div>
                         <div class="moto-specs">${getVehicleTypeName(vehicle.type)} • ${vehicle.year} • R$ ${formatPrice(vehicle.price)}</div>
                     </div>
                 </div>
