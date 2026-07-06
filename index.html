@@ -11,11 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
-
 <style>
 /* =========================================================
    TOKENS
@@ -75,7 +70,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 
 /* =========================================================
-   HEADER (single unified bar — fixes double fixed-bar bug)
+   HEADER
 ========================================================= */
 .site-header{
     position:fixed; top:0; left:0; width:100%;
@@ -128,7 +123,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     display:none; background:none; border:none; color:var(--white); font-size:22px; cursor:pointer; padding:6px;
 }
 
-/* status indicators, sit right under header */
 .mode-indicator{
     position:fixed; top:var(--header-h); left:0; width:100%;
     color:var(--black); padding:7px; text-align:center; font-size:.8rem; font-weight:600;
@@ -236,10 +230,9 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .section-title p{
     color:var(--steel); max-width:560px; margin:14px auto 0; font-size:1rem;
 }
-.section-title::after{ content:none; }
 
 /* =========================================================
-   VEHICLES
+   VEHICLES — NOVO DESIGN (menos "lista", mais visual)
 ========================================================= */
 .vehicles{ background:var(--gray-100); }
 
@@ -252,7 +245,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .filter-btn.active, .filter-btn:hover{ background:var(--black); color:var(--white); border-color:var(--black); }
 
 .vehicles-grid{
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:26px;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:30px;
     max-width:1280px; margin:0 auto;
 }
 .vehicles-empty, .vehicles-loading{
@@ -260,60 +253,57 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 .vehicles-empty i, .vehicles-loading i{ font-size:2.4rem; color:var(--gray-200); margin-bottom:14px; display:block; }
 
-/* --- signature vehicle card: dashboard-style spec strip --- */
+/* --- signature vehicle card v2: foto em destaque, texto sobreposto --- */
 .vehicle-card{
-    background:var(--white); border-radius:var(--radius); overflow:hidden;
-    box-shadow:var(--shadow-sm); transition:transform .3s var(--ease), box-shadow .3s var(--ease);
-    cursor:pointer; position:relative; display:flex; flex-direction:column; height:100%;
-    border:1px solid var(--gray-200);
+    background:var(--white); border-radius:var(--radius-lg); overflow:hidden;
+    box-shadow:var(--shadow-sm); transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+    cursor:pointer; position:relative; display:flex; flex-direction:column;
 }
-.vehicle-card::before{
-    content:''; position:absolute; top:0; left:0; right:0; height:3px;
-    background:var(--red); transform:scaleX(0); transform-origin:left; transition:transform .35s var(--ease); z-index:2;
+.vehicle-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-lg); }
+
+.vehicle-media{ position:relative; height:250px; overflow:hidden; background:var(--charcoal); }
+.vehicle-img{ width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
+.vehicle-card:hover .vehicle-img{ transform:scale(1.08); }
+
+.vehicle-media-fade{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(11,11,13,0) 35%, rgba(11,11,13,.55) 75%, rgba(11,11,13,.92) 100%);
 }
-.vehicle-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-md); }
-.vehicle-card:hover::before{ transform:scaleX(1); }
-
-.vehicle-img-container{ position:relative; height:200px; overflow:hidden; background:var(--gray-100); }
-.vehicle-img{ width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease); }
-.vehicle-card:hover .vehicle-img{ transform:scale(1.06); }
-
+.vehicle-top-row{ position:absolute; top:12px; left:12px; right:12px; display:flex; justify-content:space-between; align-items:flex-start; z-index:3; }
 .vehicle-badge{
-    position:absolute; top:12px; left:0; background:var(--black); color:var(--white);
-    padding:5px 14px 5px 12px; font-size:.72rem; font-weight:700; letter-spacing:.5px; text-transform:uppercase;
-    clip-path:polygon(0 0,100% 0,88% 100%,0% 100%);
+    background:var(--red); color:var(--white);
+    padding:6px 14px; font-size:.7rem; font-weight:700; letter-spacing:.6px; text-transform:uppercase;
+    border-radius:20px;
 }
 .vehicle-year-tag{
-    position:absolute; top:12px; right:12px; background:rgba(11,11,13,.75); backdrop-filter:blur(3px);
-    color:var(--white); font-family:var(--font-mono); font-size:.72rem; padding:4px 10px; border-radius:4px; font-weight:600;
+    background:rgba(255,255,255,.92); color:var(--black);
+    font-family:var(--font-mono); font-size:.72rem; padding:5px 11px; border-radius:20px; font-weight:700;
 }
-
-.vehicle-info{ padding:18px 18px 20px; flex-grow:1; display:flex; flex-direction:column; }
+.vehicle-overlay-text{
+    position:absolute; left:16px; right:16px; bottom:14px; z-index:3; color:var(--white);
+}
 .vehicle-title{
-    font-size:1.15rem; margin-bottom:6px; color:var(--black); font-weight:700; line-height:1.3;
+    font-size:1.25rem; color:var(--white); font-weight:700; line-height:1.25;
     font-family:var(--font-display); text-transform:uppercase; letter-spacing:.2px;
+    text-shadow:0 2px 10px rgba(0,0,0,.5);
 }
 .vehicle-price{
-    font-family:var(--font-mono); font-size:1.4rem; font-weight:600; color:var(--red); margin-bottom:14px;
+    font-family:var(--font-mono); font-size:1.3rem; font-weight:600; color:var(--white); margin-top:2px;
+    text-shadow:0 2px 10px rgba(0,0,0,.5);
 }
-.vehicle-price small{ font-size:.65rem; color:var(--steel); font-weight:500; display:block; font-family:var(--font-body); text-transform:uppercase; letter-spacing:.5px; }
+.vehicle-price small{ font-size:.62rem; opacity:.8; font-weight:500; display:block; font-family:var(--font-body); text-transform:uppercase; letter-spacing:.5px; }
 
-.vehicle-specs-strip{
-    display:flex; align-items:center; border-top:1px dashed var(--gray-200); border-bottom:1px dashed var(--gray-200);
-    padding:11px 0; margin-bottom:16px;
-}
-.vehicle-spec{ flex:1; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px; position:relative; }
-.vehicle-spec:not(:last-child)::after{
-    content:''; position:absolute; right:0; top:10%; height:80%; width:1px; background:var(--gray-200);
-}
+.vehicle-info{ padding:16px 18px 18px; display:flex; flex-direction:column; gap:14px; }
+
+.vehicle-specs-row{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.vehicle-spec{ display:flex; align-items:center; gap:6px; color:var(--steel); font-size:.82rem; font-weight:600; }
 .vehicle-spec i{ color:var(--red); font-size:.85rem; }
-.vehicle-spec span{ font-family:var(--font-mono); font-size:.72rem; color:var(--steel-light); font-weight:600; }
 
 .vehicle-btn{
     display:flex; align-items:center; justify-content:center; gap:8px; width:100%;
     background:var(--black); color:var(--white); text-align:center; padding:13px; border-radius:8px;
     text-decoration:none; font-weight:700; font-size:.85rem; letter-spacing:.3px; text-transform:uppercase;
-    transition:background .25s var(--ease); margin-top:auto;
+    transition:background .25s var(--ease);
 }
 .vehicle-btn:hover{ background:var(--red); }
 .vehicle-btn i{ transition:transform .25s var(--ease); }
@@ -329,14 +319,16 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .btn-excluir:hover{ background:#dc3545; }
 .btn-editar:hover{ background:var(--azul); }
 .vehicle-card:hover .btn-excluir, .vehicle-card:hover .btn-editar{ opacity:1; transform:translateY(0); }
-
+.vehicle-top-row .vehicle-badge{ opacity:1; }
 @media (max-width:768px){
     .btn-excluir, .btn-editar{ opacity:1; transform:none; }
 }
+/* quando é admin, empurra o tag de ano pra baixo dos botões de ação */
+.vehicle-card.has-admin-actions .vehicle-top-row{ padding-right:78px; }
 
 /* skeleton loading */
-.skeleton-card{ background:var(--white); border-radius:var(--radius); overflow:hidden; border:1px solid var(--gray-200); }
-.skeleton-img{ height:200px; background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); background-size:300% 100%; animation:shimmer 1.4s infinite; }
+.skeleton-card{ background:var(--white); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); }
+.skeleton-img{ height:250px; background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); background-size:300% 100%; animation:shimmer 1.4s infinite; }
 .skeleton-line{ height:12px; margin:16px 18px; border-radius:4px; background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); background-size:300% 100%; animation:shimmer 1.4s infinite; }
 .skeleton-line.short{ width:50%; }
 @keyframes shimmer{ 0%{background-position:100% 0} 100%{background-position:-100% 0} }
@@ -392,7 +384,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 .whatsapp-button:hover{ background:#1ea952; transform:translateY(-2px); box-shadow:0 10px 24px rgba(37,211,102,.35); }
 
-/* carousel inside modal */
 .carousel{ position:relative; width:100%; height:420px; overflow:hidden; touch-action:pan-y pinch-zoom; background:var(--black); }
 .carousel-inner{ display:flex; transition:transform .45s var(--ease); height:100%; width:100%; }
 .carousel-item{ min-width:100%; height:100%; position:relative; flex-shrink:0; display:flex; justify-content:center; align-items:center; user-select:none; -webkit-user-drag:none; }
@@ -408,7 +399,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .carousel-indicators{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; }
 .carousel-indicator{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.4); border:none; cursor:pointer; transition:all .2s var(--ease); }
 .carousel-indicator.active{ background:var(--red); width:20px; border-radius:4px; }
-.video-indicator.active{ background:var(--azul); }
 
 /* =========================================================
    ABOUT
@@ -513,6 +503,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     cursor:pointer; font-size:15px; font-weight:700; margin-top:10px; width:100%; transition:background .25s var(--ease);
 }
 .modal-submit-btn:hover{ background:var(--red-dark); }
+.modal-submit-btn:disabled{ opacity:.6; cursor:wait; }
 .login-error{ color:#ff6b6b; margin-top:12px; display:none; font-size:.85rem; }
 .user-type-info{ font-size:12px; color:rgba(255,255,255,.45); margin-top:16px; }
 
@@ -525,6 +516,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 .admin-header, .text-edit-header{
     background:var(--laranja); padding:22px 28px; display:flex; justify-content:space-between; align-items:center;
+    position:sticky; top:0; z-index:2;
 }
 .text-edit-header{ background:var(--azul); }
 .admin-header h2, .text-edit-header h2{ color:var(--black); margin:0; font-size:1.3rem; text-transform:uppercase; }
@@ -543,6 +535,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .form-row .form-group{ flex:1; }
 
 .btn{ padding:12px 24px; border:none; border-radius:8px; cursor:pointer; font-weight:700; transition:all .25s var(--ease); font-size:.9rem; }
+.btn:disabled{ opacity:.6; cursor:wait; }
 .btn-primary{ background:var(--azul); color:var(--white); }
 .btn-primary:hover{ background:#1976d2; }
 .btn-secondary{ background:rgba(255,255,255,.12); color:var(--white); }
@@ -611,6 +604,19 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     padding:16px 0; border-top:1px solid rgba(255,255,255,.1);
 }
 .text-edit-actions .btn{ flex:1; }
+
+/* editor de imagens (modo dev) */
+.image-edit-item{
+    display:flex; align-items:center; gap:14px; padding:12px; border:1px solid rgba(255,255,255,.08);
+    border-radius:8px; background:rgba(255,255,255,.03); margin-bottom:12px; flex-wrap:wrap;
+}
+.image-edit-thumb{ width:70px; height:70px; border-radius:8px; object-fit:cover; background:var(--black); flex-shrink:0; }
+.image-edit-meta{ flex:1; min-width:140px; }
+.image-edit-meta b{ display:block; font-size:.85rem; margin-bottom:4px; }
+.image-edit-meta span{ font-size:.75rem; color:rgba(255,255,255,.45); }
+.image-edit-actions{ display:flex; gap:8px; }
+.image-edit-actions .btn{ padding:8px 14px; font-size:.75rem; }
+.image-edit-input{ display:none; }
 
 .status-message{ margin-top:16px; padding:12px 14px; border-radius:8px; display:none; font-size:.88rem; font-weight:500; }
 .status-success{ background:rgba(29,185,84,.15); color:#1DB954; border:1px solid rgba(29,185,84,.3); }
@@ -687,7 +693,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 <header class="site-header">
     <div class="header-container">
         <div class="logo">
-            <img src="logo.png" alt="Maiso Veículos" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <img src="logo.png" alt="Maiso Veículos" class="logo-image" id="logoImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
             <span class="logo-fallback" style="display:none;">MAISO<span>VEÍCULOS</span></span>
         </div>
 
@@ -716,7 +722,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 </header>
 
 <div class="mode-indicator" id="adminIndicator"><i class="fas fa-shield-alt"></i> Modo Administrador Ativo</div>
-<div class="mode-indicator" id="devIndicator"><i class="fas fa-code"></i> Modo Desenvolvedor Ativo</div>
+<div class="mode-indicator" id="devIndicator"><i class="fas fa-code"></i> Modo Desenvolvedor Ativo — tudo é editável</div>
 
 <!-- ================= MOBILE DRAWER ================= -->
 <div class="overlay" id="overlay"></div>
@@ -743,17 +749,17 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-content">
         <div class="loading-spinner"></div>
-        <div class="loading-text" id="loadingText">Adicionando veículo...</div>
+        <div class="loading-text" id="loadingText">Enviando...</div>
         <div class="loading-subtext">Aguarde enquanto processamos as informações</div>
     </div>
 </div>
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-    <div class="hero-carousel">
-        <div class="carousel-slide active" style="background-image:url('carrossel1.jpg');"></div>
-        <div class="carousel-slide" style="background-image:url('carrossel2.jpg');"></div>
-        <div class="carousel-slide" style="background-image:url('carrossel3.jpg');"></div>
+    <div class="hero-carousel" id="heroCarousel">
+        <div class="carousel-slide active" style="background-image:url('carrossel1.jpg');" data-slide="1"></div>
+        <div class="carousel-slide" style="background-image:url('carrossel2.jpg');" data-slide="2"></div>
+        <div class="carousel-slide" style="background-image:url('carrossel3.jpg');" data-slide="3"></div>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -806,7 +812,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             </div>
         </div>
         <div class="about-image">
-            <img src="loja.jpg" alt="Loja Maiso Veículos" onerror="this.parentElement.style.display='none';">
+            <img src="loja.jpg" alt="Loja Maiso Veículos" id="aboutImg" onerror="this.parentElement.style.display='none';">
         </div>
     </div>
 </section>
@@ -819,7 +825,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
     <div class="team-grid">
         <div class="team-member">
-            <div class="member-img-wrap"><img src="vendedor1.jpg" alt="Vendedor" class="member-img" onerror="this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Foto';"></div>
+            <div class="member-img-wrap"><img src="vendedor1.jpg" alt="Vendedor" class="member-img" id="member1Img" onerror="this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Foto';"></div>
             <div class="member-info">
                 <h3 class="member-name" id="member1Name">João Silva</h3>
                 <p class="member-role" id="member1Role">Vendedor</p>
@@ -827,7 +833,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             </div>
         </div>
         <div class="team-member">
-            <div class="member-img-wrap"><img src="vendedor2.jpg" alt="Vendedor" class="member-img" onerror="this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Foto';"></div>
+            <div class="member-img-wrap"><img src="vendedor2.jpg" alt="Vendedor" class="member-img" id="member2Img" onerror="this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Foto';"></div>
             <div class="member-info">
                 <h3 class="member-name" id="member2Name">Maria Santos</h3>
                 <p class="member-role" id="member2Role">Vendedora</p>
@@ -835,7 +841,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             </div>
         </div>
         <div class="team-member">
-            <div class="member-img-wrap"><img src="gerente.jpg" alt="Gerente" class="member-img" onerror="this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Foto';"></div>
+            <div class="member-img-wrap"><img src="gerente.jpg" alt="Gerente" class="member-img" id="member3Img" onerror="this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Foto';"></div>
             <div class="member-info">
                 <h3 class="member-name" id="member3Name">Carlos Oliveira</h3>
                 <p class="member-role" id="member3Role">Gerente</p>
@@ -920,17 +926,17 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 <p class="modal-price" id="modalPrice"></p>
                 <div class="modal-specs" id="modalSpecs"></div>
                 <div class="payment-info">
-                    <h3>Opções de Pagamento</h3>
+                    <h3 id="paymentTitle">Opções de Pagamento</h3>
                     <div class="payment-options">
-                        <div class="payment-option"><i class="fas fa-money-bill-wave"></i> À Vista</div>
-                        <div class="payment-option"><i class="fas fa-credit-card"></i> Cartão</div>
-                        <div class="payment-option"><i class="fas fa-file-invoice-dollar"></i> Financiamento</div>
+                        <div class="payment-option"><i class="fas fa-money-bill-wave"></i> <span id="paymentCash">À Vista</span></div>
+                        <div class="payment-option"><i class="fas fa-credit-card"></i> <span id="paymentCard">Cartão</span></div>
+                        <div class="payment-option"><i class="fas fa-file-invoice-dollar"></i> <span id="paymentFinancing">Financiamento</span></div>
                     </div>
                 </div>
                 <div class="modal-contact">
-                    <p>Interessado neste veículo?</p>
+                    <p id="modalContactText">Interessado neste veículo?</p>
                     <a href="#" class="whatsapp-button" id="whatsappButton" target="_blank" rel="noopener">
-                        <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+                        <i class="fab fa-whatsapp"></i> <span id="whatsappButtonText">Falar no WhatsApp</span>
                     </a>
                 </div>
             </div>
@@ -1015,7 +1021,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 </div>
 
                 <div class="upload-section">
-                    <h4>Fotos do Veículo</h4>
+                    <h4>Fotos do Veículo (salvas no Google Drive)</h4>
                     <div id="existingMediaWrap" style="display:none; margin-bottom:16px;">
                         <div class="upload-info" style="margin-bottom:8px;">Fotos já cadastradas (clique no X para remover):</div>
                         <div class="preview-container" id="existingMediaContainer"></div>
@@ -1045,14 +1051,21 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- ================= TEXT EDIT PANEL ================= -->
+<!-- ================= TEXT/IMAGE EDIT PANEL (MODO DEV) ================= -->
 <div class="text-edit-panel" id="textEditPanel">
     <div class="text-edit-content">
         <div class="text-edit-header">
-            <h2>Editor de Conteúdo - Todos os Textos</h2>
+            <h2>Editor Completo do Site (Dev)</h2>
             <button class="btn-close" id="closeTextEditPanel" aria-label="Fechar">&times;</button>
         </div>
         <div class="text-edit-body">
+
+            <div class="text-edit-section">
+                <h3>Imagens do Site</h3>
+                <div id="imageEditorContainer"></div>
+                <p class="upload-info">As imagens são enviadas direto para o Google Drive e o link é salvo automaticamente ao clicar em "Alterar".</p>
+            </div>
+
             <div class="text-edit-section">
                 <h3>Header</h3>
                 <div class="text-edit-item"><label for="editUserName">Nome do Usuário (Header)</label><input type="text" class="form-control" id="editUserName"></div>
@@ -1151,26 +1164,49 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     <i class="fas fa-edit"></i>
 </button>
 
-<!-- ================= FIREBASE CONFIG ================= -->
-<script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyAe_ZhRjTOwgClsoVJDomSJrF-cmxD9Sp4",
-        authDomain: "maiso-veiculoss.firebaseapp.com",
-        databaseURL: "https://maiso-veiculoss-default-rtdb.firebaseio.com",
-        projectId: "maiso-veiculoss",
-        storageBucket: "maiso-veiculoss.firebasestorage.app",
-        messagingSenderId: "859256877327",
-        appId: "1:859256877327:web:335abeda3d6be76a350e7a"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-</script>
-
 <!-- ================= APP LOGIC ================= -->
 <script>
-    // ========== CONFIG ==========
-    const IMGBB_API_KEY = '278fd1063d941d72decaedb073eea80e';
-    const IMGBB_UPLOAD_URL = 'https://api.imgbb.com/1/upload';
+    /* =========================================================
+       CONFIGURAÇÃO — cole aqui a URL do seu Web App do Apps Script
+       (Implantar > Nova implantação > Aplicativo da Web > copiar URL)
+    ========================================================= */
+    const API_URL = 'https://script.google.com/macros/s/AKfycbylM3okLvWcV7sZMFeuZBuKB8_Z1hNdEhPKk_hK9cAkIgtRXalpaD4YfsD6pCpuypZJ/exec';
+
+    // intervalo de atualização automática dos dados (ms). 0 = desliga.
+    const AUTO_REFRESH_MS = 25000;
+
+    // ========== CLIENTE DA API ==========
+    async function apiGet(params) {
+        const qs = new URLSearchParams(params).toString();
+        const res = await fetch(`${API_URL}?${qs}`);
+        return res.json();
+    }
+    async function apiPost(payload) {
+        const res = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // evita preflight CORS
+            body: JSON.stringify(payload)
+        });
+        return res.json();
+    }
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+    async function uploadFileToDrive(file) {
+        const base64 = await fileToBase64(file);
+        const result = await apiPost({ action: 'uploadImage', base64, filename: file.name, mimeType: file.type });
+        if (!result.success) throw new Error(result.message || 'Falha no upload');
+        return result; // { id, url }
+    }
+    function extractDriveId(url) {
+        const m = String(url || '').match(/id=([a-zA-Z0-9_-]+)/);
+        return m ? m[1] : null;
+    }
 
     // ========== STATE ==========
     let currentUser = { name: 'Visitante', type: 'guest' };
@@ -1178,12 +1214,24 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     let currentVehicleIndex = 0;
     let currentMediaIndex = 0;
     let selectedFiles = [];
-    let existingMediaForEdit = [];      // medias already stored, editable while editing
-    let editingVehicleId = null;        // null = creating a new vehicle
+    let existingMediaForEdit = [];
+    let editingVehicleId = null;
     let carouselInterval = null;
     let siteContent = {};
-    let currentFilter = 'all';          // fix: keep filter applied across re-renders
+    let currentFilter = 'all';
     let touchStartX = 0, touchEndX = 0;
+
+    // campos de imagem editáveis no modo dev: chave no siteContent, seletor do elemento <img> no site, e um rótulo amigável
+    const IMAGE_FIELDS = [
+        { key: 'logoUrl',        selector: '#logoImg',    label: 'Logo (header)' },
+        { key: 'heroSlide1Url',  selector: '[data-slide="1"]', label: 'Banner do topo — slide 1', isBg: true },
+        { key: 'heroSlide2Url',  selector: '[data-slide="2"]', label: 'Banner do topo — slide 2', isBg: true },
+        { key: 'heroSlide3Url',  selector: '[data-slide="3"]', label: 'Banner do topo — slide 3', isBg: true },
+        { key: 'aboutImageUrl',  selector: '#aboutImg',   label: 'Foto — Sobre a loja' },
+        { key: 'member1PhotoUrl',selector: '#member1Img', label: 'Foto — Equipe 1' },
+        { key: 'member2PhotoUrl',selector: '#member2Img', label: 'Foto — Equipe 2' },
+        { key: 'member3PhotoUrl',selector: '#member3Img', label: 'Foto — Equipe 3' }
+    ];
 
     // ========== DOM ==========
     const els = {};
@@ -1196,7 +1244,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         'fileInput','previewContainer','mediaCounter','clearForm','menuToggle','drawer',
         'overlay','drawerLoginBtn','drawerLogoutBtn','drawerUserName','drawerUserType','drawerDevType',
         'saveTextChanges','cancelTextChanges','loadingOverlay','loadingText','drawerClose',
-        'submitBtn','formTitle','existingMediaWrap','existingMediaContainer'
+        'submitBtn','formTitle','existingMediaWrap','existingMediaContainer','imageEditorContainer'
     ].forEach(id => els[id] = document.getElementById(id));
     const filterBtns = document.querySelectorAll('.filter-btn');
 
@@ -1207,6 +1255,9 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         setupEventListeners();
         checkSavedUser();
         startCarousel();
+        if (AUTO_REFRESH_MS > 0) {
+            setInterval(() => { loadVehicles(); loadSiteContent(); }, AUTO_REFRESH_MS);
+        }
     });
 
     // ========== EVENTS ==========
@@ -1288,7 +1339,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         const slides = document.querySelectorAll('.carousel-slide');
         if (!slides.length) return;
         let current = 0;
-        if (carouselInterval) clearInterval(carouselInterval); // fix: avoid duplicate intervals
+        if (carouselInterval) clearInterval(carouselInterval);
         carouselInterval = setInterval(() => {
             slides[current].classList.remove('active');
             current = (current + 1) % slides.length;
@@ -1296,12 +1347,12 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         }, 7000);
     }
 
-    // ========== SITE CONTENT (Firebase) ==========
-    function loadSiteContent() {
-        database.ref('siteContent').on('value', snapshot => {
-            const data = snapshot.val();
-            if (data) { siteContent = data; updateSiteContent(); }
-        });
+    // ========== SITE CONTENT (Google Sheets via Apps Script) ==========
+    async function loadSiteContent() {
+        try {
+            const res = await apiGet({ action: 'getSiteContent' });
+            if (res.success) { siteContent = res.content || {}; updateSiteContent(); }
+        } catch (err) { console.error('Erro ao carregar conteúdo do site:', err); }
     }
 
     function setText(id, value) { const el = document.getElementById(id); if (el && value) el.textContent = value; }
@@ -1322,7 +1373,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         if (siteContent.filter110cc) document.querySelector('.filter-btn[data-filter="ate-110cc"]').textContent = siteContent.filter110cc;
         if (siteContent.filter150cc) document.querySelector('.filter-btn[data-filter="ate-150cc"]').textContent = siteContent.filter150cc;
         if (siteContent.filter160cc) document.querySelector('.filter-btn[data-filter="acima-160cc"]').textContent = siteContent.filter160cc;
-        if (siteContent.vehicleBtn) document.querySelectorAll('.vehicle-btn span.btn-label').forEach(el => { el.textContent = siteContent.vehicleBtn; });
 
         setText('aboutTitle', siteContent.aboutTitle);
         setText('aboutSubtitle', siteContent.aboutSubtitle);
@@ -1359,14 +1409,24 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         setText('footerHours', siteContent.footerHours);
         setText('footerCopyright', siteContent.footerCopyright);
 
-        if (siteContent.paymentTitle) document.querySelector('.payment-info h3').textContent = siteContent.paymentTitle;
-        if (siteContent.paymentCash) document.querySelector('.payment-options .payment-option:nth-child(1)').lastChild.textContent = ' ' + siteContent.paymentCash;
-        if (siteContent.paymentCard) document.querySelector('.payment-options .payment-option:nth-child(2)').lastChild.textContent = ' ' + siteContent.paymentCard;
-        if (siteContent.paymentFinancing) document.querySelector('.payment-options .payment-option:nth-child(3)').lastChild.textContent = ' ' + siteContent.paymentFinancing;
-        if (siteContent.modalContact) document.querySelector('.modal-contact p').textContent = siteContent.modalContact;
-        if (siteContent.whatsappButton) document.querySelector('#whatsappButton').lastChild.textContent = ' ' + siteContent.whatsappButton;
+        setText('paymentTitle', siteContent.paymentTitle);
+        setText('paymentCash', siteContent.paymentCash);
+        setText('paymentCard', siteContent.paymentCard);
+        setText('paymentFinancing', siteContent.paymentFinancing);
+        setText('modalContactText', siteContent.modalContact);
+        setText('whatsappButtonText', siteContent.whatsappButton);
 
-        renderVehicles(); // reflect vehicleBtn text change on cards too
+        // imagens do site
+        IMAGE_FIELDS.forEach(field => {
+            const url = siteContent[field.key];
+            if (!url) return;
+            const el = document.querySelector(field.selector);
+            if (!el) return;
+            if (field.isBg) el.style.backgroundImage = `url('${url}')`;
+            else el.src = url;
+        });
+
+        renderVehicles(); // reflete o texto do botão nos cards também
     }
 
     function openTextEditPanel() {
@@ -1421,7 +1481,52 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             editWhatsappButton: siteContent.whatsappButton || 'Falar no WhatsApp'
         };
         Object.entries(map).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.value = val; });
+        renderImageEditor();
         els.textEditPanel.style.display = 'block';
+    }
+
+    function renderImageEditor() {
+        els.imageEditorContainer.innerHTML = '';
+        IMAGE_FIELDS.forEach(field => {
+            const currentUrl = siteContent[field.key] || '';
+            const row = document.createElement('div');
+            row.className = 'image-edit-item';
+            row.innerHTML = `
+                <img class="image-edit-thumb" src="${currentUrl || 'https://via.placeholder.com/100x100/1B1C20/9CA3AF?text=%3F'}" alt="${field.label}">
+                <div class="image-edit-meta">
+                    <b>${field.label}</b>
+                    <span class="img-status">${currentUrl ? 'Imagem definida' : 'Usando imagem padrão do arquivo'}</span>
+                </div>
+                <div class="image-edit-actions">
+                    <button type="button" class="btn btn-primary btn-choose-img">Alterar imagem</button>
+                    <input type="file" class="image-edit-input" accept="image/*">
+                </div>
+            `;
+            const input = row.querySelector('.image-edit-input');
+            const chooseBtn = row.querySelector('.btn-choose-img');
+            const thumb = row.querySelector('.image-edit-thumb');
+            const status = row.querySelector('.img-status');
+
+            chooseBtn.addEventListener('click', () => input.click());
+            input.addEventListener('change', async () => {
+                const file = input.files[0];
+                if (!file) return;
+                chooseBtn.disabled = true;
+                status.textContent = 'Enviando para o Drive...';
+                try {
+                    const { url } = await uploadFileToDrive(file);
+                    siteContent[field.key] = url;
+                    thumb.src = url;
+                    status.textContent = 'Imagem atualizada (clique em "Salvar Todas as Alterações" para publicar)';
+                } catch (err) {
+                    status.textContent = 'Erro no upload: ' + err.message;
+                } finally {
+                    chooseBtn.disabled = false;
+                }
+            });
+
+            els.imageEditorContainer.appendChild(row);
+        });
     }
 
     function closeTextEditPanelFunc() {
@@ -1429,7 +1534,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.textEditStatus.style.display = 'none';
     }
 
-    function saveTextChanges() {
+    async function saveTextChanges() {
         const ids = ['editUserName','editNavVehicles','editNavAbout','editNavTeam','editNavLocation',
             'editVehiclesTitle','editFilterAll','editFilter110cc','editFilter150cc','editFilter160cc','editVehicleBtn',
             'editAboutTitle','editAboutSubtitle','editAboutText1','editAboutText2','editAboutText3',
@@ -1441,20 +1546,28 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             'editFooterPhone','editFooterEmail','editFooterHours','editFooterCopyright',
             'editPaymentTitle','editPaymentCash','editPaymentCard','editPaymentFinancing','editModalContact','editWhatsappButton'];
 
-        const keyMap = {}; // strip "edit" prefix, lower-case first char
-        ids.forEach(id => { keyMap[id] = id.replace(/^edit/, ''); });
-        const updatedContent = {};
+        const updatedContent = { ...siteContent }; // preserva as URLs de imagem já definidas
         ids.forEach(id => {
             const key = id.charAt(4).toLowerCase() + id.slice(5);
             updatedContent[key] = document.getElementById(id).value;
         });
 
-        database.ref('siteContent').set(updatedContent)
-            .then(() => {
-                showStatusIn(els.textEditStatus, 'Todos os textos foram atualizados com sucesso!', 'success');
+        els.saveTextChanges.disabled = true;
+        try {
+            const res = await apiPost({ action: 'saveSiteContent', data: updatedContent });
+            if (res.success) {
+                siteContent = updatedContent;
+                updateSiteContent();
+                showStatusIn(els.textEditStatus, 'Todo o conteúdo (textos e imagens) foi publicado no site!', 'success');
                 setTimeout(closeTextEditPanelFunc, 1800);
-            })
-            .catch(error => showStatusIn(els.textEditStatus, 'Erro ao atualizar conteúdo: ' + error.message, 'error'));
+            } else {
+                showStatusIn(els.textEditStatus, 'Erro ao salvar: ' + res.message, 'error');
+            }
+        } catch (err) {
+            showStatusIn(els.textEditStatus, 'Erro ao salvar: ' + err.message, 'error');
+        } finally {
+            els.saveTextChanges.disabled = false;
+        }
     }
 
     function showStatusIn(el, message, type) {
@@ -1468,7 +1581,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         try {
             const saved = localStorage.getItem('currentUser');
             if (saved) { currentUser = JSON.parse(saved); updateUserInterface(); }
-        } catch (e) { /* corrupted storage, ignore */ }
+        } catch (e) { /* dados corrompidos, ignora */ }
     }
 
     function openLoginModal() { els.loginModal.style.display = 'flex'; closeDrawer(); }
@@ -1491,19 +1604,27 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         const name = document.getElementById('userNameInput').value.trim();
         if (name) { currentUser = { name, type: 'user' }; saveUser(); closeLoginModal(); }
     }
-    // NOTE: as in the original project, admin/dev access is gated by a password compared
-    // on the client. This is convenient but not secure — anyone can read the password from
-    // the page source. For real protection, move this check to Firebase Authentication +
-    // server-side rules before going to production.
-    function loginAsAdmin() {
+
+    // A senha agora é validada no servidor (Apps Script), não fica exposta no HTML.
+    async function loginAsAdmin() {
         const password = document.getElementById('adminPassword').value;
-        if (password === 'souza27') { currentUser = { name: 'Administrador', type: 'admin' }; saveUser(); closeLoginModal(); }
-        else document.getElementById('loginError').style.display = 'block';
+        const btn = document.getElementById('adminLoginBtn');
+        btn.disabled = true;
+        try {
+            const res = await apiPost({ action: 'login', type: 'admin', password });
+            if (res.success) { currentUser = { name: 'Administrador', type: 'admin' }; saveUser(); closeLoginModal(); }
+            else document.getElementById('loginError').style.display = 'block';
+        } finally { btn.disabled = false; }
     }
-    function loginAsDev() {
+    async function loginAsDev() {
         const password = document.getElementById('devPassword').value;
-        if (password === 'carvalho27') { currentUser = { name: 'Desenvolvedor', type: 'dev' }; saveUser(); closeLoginModal(); }
-        else document.getElementById('loginError').style.display = 'block';
+        const btn = document.getElementById('devLoginBtn');
+        btn.disabled = true;
+        try {
+            const res = await apiPost({ action: 'login', type: 'dev', password });
+            if (res.success) { currentUser = { name: 'Desenvolvedor', type: 'dev' }; saveUser(); closeLoginModal(); }
+            else document.getElementById('loginError').style.display = 'block';
+        } finally { btn.disabled = false; }
     }
 
     function saveUser() { localStorage.setItem('currentUser', JSON.stringify(currentUser)); updateUserInterface(); }
@@ -1539,15 +1660,16 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         closeDrawer();
     }
 
-    // ========== VEHICLES ==========
-    function loadVehicles() {
-        database.ref('vehicles').on('value', snapshot => {
-            vehicles = [];
-            const data = snapshot.val();
-            if (data) Object.keys(data).forEach(key => vehicles.push({ id: key, ...data[key] }));
-            renderVehicles();
-            renderMotoList();
-        });
+    // ========== VEHICLES (Google Sheets via Apps Script) ==========
+    async function loadVehicles() {
+        try {
+            const res = await apiGet({ action: 'getVehicles' });
+            if (res.success) {
+                vehicles = res.vehicles || [];
+                renderVehicles();
+                renderMotoList();
+            }
+        } catch (err) { console.error('Erro ao carregar veículos:', err); }
     }
 
     function renderVehicles() {
@@ -1567,12 +1689,12 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 
         vehicles.forEach((vehicle, index) => {
             const card = document.createElement('div');
-            card.className = `vehicle-card ${vehicle.type}`;
+            card.className = `vehicle-card ${vehicle.type} ${isAdmin ? 'has-admin-actions' : ''}`;
             card.dataset.index = index;
 
             const thumb = (vehicle.medias && vehicle.medias.length > 0)
                 ? vehicle.medias[0]
-                : 'https://via.placeholder.com/400x300/E9EAEE/6B7280?text=Sem+Imagem';
+                : 'https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';
 
             const adminButtons = isAdmin ? `
                 <div class="card-admin-actions">
@@ -1581,19 +1703,23 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 </div>` : '';
 
             card.innerHTML = `
-                ${adminButtons}
-                <div class="vehicle-img-container">
+                <div class="vehicle-media">
                     <img src="${thumb}" alt="${vehicle.name}" class="vehicle-img" loading="lazy">
-                    <div class="vehicle-badge">${getVehicleTypeName(vehicle.type)}</div>
-                    <div class="vehicle-year-tag">${vehicle.year || ''}</div>
+                    <div class="vehicle-media-fade"></div>
+                    <div class="vehicle-top-row">
+                        <span class="vehicle-badge">${getVehicleTypeName(vehicle.type)}</span>
+                        <span class="vehicle-year-tag">${vehicle.year || ''}</span>
+                    </div>
+                    ${adminButtons}
+                    <div class="vehicle-overlay-text">
+                        <div class="vehicle-title">${escapeHtml(vehicle.name)}</div>
+                        <div class="vehicle-price"><small>Valor</small>R$ ${formatPrice(vehicle.price)}</div>
+                    </div>
                 </div>
                 <div class="vehicle-info">
-                    <h3 class="vehicle-title">${escapeHtml(vehicle.name)}</h3>
-                    <p class="vehicle-price"><small>Valor</small>R$ ${formatPrice(vehicle.price)}</p>
-                    <div class="vehicle-specs-strip">
-                        <div class="vehicle-spec"><i class="fas fa-tachometer-alt"></i><span>${vehicle.km ? formatKm(vehicle.km) + ' km' : 'N/D'}</span></div>
-                        <div class="vehicle-spec"><i class="fas fa-palette"></i><span>${vehicle.color ? escapeHtml(vehicle.color) : 'N/D'}</span></div>
-                        <div class="vehicle-spec"><i class="fas fa-calendar-alt"></i><span>${vehicle.year || 'N/D'}</span></div>
+                    <div class="vehicle-specs-row">
+                        <span class="vehicle-spec"><i class="fas fa-tachometer-alt"></i>${vehicle.km ? formatKm(vehicle.km) + ' km' : 'N/D'}</span>
+                        <span class="vehicle-spec"><i class="fas fa-palette"></i>${vehicle.color ? escapeHtml(vehicle.color) : 'N/D'}</span>
                     </div>
                     <a href="#" class="vehicle-btn"><span class="btn-label">${btnLabel}</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
@@ -1607,7 +1733,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             els.vehiclesGrid.appendChild(card);
         });
 
-        applyCurrentFilter(); // fix: keep the active filter applied after any re-render
+        applyCurrentFilter();
     }
 
     function applyCurrentFilter() {
@@ -1639,7 +1765,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         `;
 
         const message = `Olá, tenho interesse na moto ${vehicle.name} - Ano: ${vehicle.year} - Cor: ${vehicle.color || 'N/A'} - Preço: R$ ${formatPrice(vehicle.price)}. Poderia me fornecer mais informações?`;
-        els.whatsappButton.href = `https://api.whatsapp.com/send?phone=5589981210995&text=${encodeURIComponent(message)}`;
+        els.whatsappButton.href = `https://api.whatsapp.com/send?phone=5589981067904&text=${encodeURIComponent(message)}`;
 
         updateCarousel(vehicle.medias || []);
         els.vehicleModal.style.display = 'block';
@@ -1662,18 +1788,14 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             els.carouselIndicators.appendChild(indicator);
         } else {
             medias.forEach((media, index) => {
-                const isVideo = /\.(mp4|mov|webm)(\?|$)/i.test(media);
-
                 const item = document.createElement('div');
                 item.className = 'carousel-item';
-                item.innerHTML = isVideo
-                    ? `<video controls playsinline><source src="${media}">Seu navegador não suporta vídeo.</video>`
-                    : `<img src="${media}" alt="Imagem do veículo" loading="lazy">`;
+                item.innerHTML = `<img src="${media}" alt="Imagem do veículo" loading="lazy">`;
                 els.carouselInner.appendChild(item);
 
                 const indicator = document.createElement('button');
-                indicator.className = `carousel-indicator ${isVideo ? 'video-indicator' : ''} ${index === 0 ? 'active' : ''}`;
-                indicator.setAttribute('aria-label', `Ir para mídia ${index + 1}`);
+                indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
+                indicator.setAttribute('aria-label', `Ir para imagem ${index + 1}`);
                 indicator.addEventListener('click', () => showMedia(index));
                 els.carouselIndicators.appendChild(indicator);
             });
@@ -1715,15 +1837,21 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         if (selectedFiles.length === 0) { showStatusIn(els.formStatus, 'Adicione pelo menos uma foto do veículo.', 'error'); return; }
 
         const vehicle = readFormFields();
-        els.loadingText.textContent = 'Adicionando veículo...';
+        els.loadingText.textContent = 'Enviando fotos para o Google Drive...';
         els.loadingOverlay.style.display = 'flex';
 
         try {
-            vehicle.medias = await uploadImagesToImgBB(selectedFiles);
-            await database.ref('vehicles').push(vehicle);
+            vehicle.medias = await uploadFilesSequentially(selectedFiles);
+            els.loadingText.textContent = 'Salvando veículo na planilha...';
+            const res = await apiPost({ action: 'addVehicle', data: vehicle });
             els.loadingOverlay.style.display = 'none';
-            showStatusIn(els.formStatus, 'Veículo adicionado com sucesso!', 'success');
-            clearForm();
+            if (res.success) {
+                showStatusIn(els.formStatus, 'Veículo adicionado com sucesso!', 'success');
+                clearForm();
+                loadVehicles();
+            } else {
+                showStatusIn(els.formStatus, 'Erro ao adicionar veículo: ' + res.message, 'error');
+            }
         } catch (error) {
             els.loadingOverlay.style.display = 'none';
             showStatusIn(els.formStatus, 'Erro ao adicionar veículo: ' + error.message, 'error');
@@ -1739,20 +1867,36 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         try {
             let medias = [...existingMediaForEdit];
             if (selectedFiles.length > 0) {
-                const newUrls = await uploadImagesToImgBB(selectedFiles);
+                els.loadingText.textContent = 'Enviando novas fotos para o Google Drive...';
+                const newUrls = await uploadFilesSequentially(selectedFiles);
                 medias = medias.concat(newUrls);
             }
             updated.medias = medias;
 
-            await database.ref(`vehicles/${vehicleId}`).update(updated);
+            els.loadingText.textContent = 'Salvando alterações na planilha...';
+            const res = await apiPost({ action: 'updateVehicle', id: vehicleId, data: updated });
             els.loadingOverlay.style.display = 'none';
-            showStatusIn(els.formStatus, 'Veículo atualizado com sucesso!', 'success');
-            resetFormToCreateMode();
-            clearForm();
+            if (res.success) {
+                showStatusIn(els.formStatus, 'Veículo atualizado com sucesso!', 'success');
+                resetFormToCreateMode();
+                clearForm();
+                loadVehicles();
+            } else {
+                showStatusIn(els.formStatus, 'Erro ao atualizar veículo: ' + res.message, 'error');
+            }
         } catch (error) {
             els.loadingOverlay.style.display = 'none';
             showStatusIn(els.formStatus, 'Erro ao atualizar veículo: ' + error.message, 'error');
         }
+    }
+
+    async function uploadFilesSequentially(files) {
+        const urls = [];
+        for (const file of files) {
+            const { url } = await uploadFileToDrive(file);
+            urls.push(url);
+        }
+        return urls;
     }
 
     function readFormFields() {
@@ -1767,25 +1911,15 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         };
     }
 
-    async function uploadImagesToImgBB(files) {
-        const urls = [];
-        for (const file of files) {
-            const formData = new FormData();
-            formData.append('image', file);
-            const response = await fetch(`${IMGBB_UPLOAD_URL}?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-            const data = await response.json();
-            if (data.success) urls.push(data.data.url);
-            else throw new Error(data.error?.message || 'Falha no upload da imagem');
-        }
-        return urls;
-    }
-
-    function deleteVehicle(vehicleId, event) {
+    async function deleteVehicle(vehicleId, event) {
         event.stopPropagation();
-        if (confirm('Tem certeza que deseja excluir este veículo?')) {
-            database.ref(`vehicles/${vehicleId}`).remove()
-                .then(() => showStatusIn(els.formStatus, 'Veículo excluído com sucesso!', 'success'))
-                .catch(error => showStatusIn(els.formStatus, 'Erro ao excluir veículo: ' + error.message, 'error'));
+        if (!confirm('Tem certeza que deseja excluir este veículo?')) return;
+        try {
+            const res = await apiPost({ action: 'deleteVehicle', id: vehicleId });
+            if (res.success) { showStatusIn(els.formStatus, 'Veículo excluído com sucesso!', 'success'); loadVehicles(); }
+            else showStatusIn(els.formStatus, 'Erro ao excluir veículo: ' + res.message, 'error');
+        } catch (error) {
+            showStatusIn(els.formStatus, 'Erro ao excluir veículo: ' + error.message, 'error');
         }
     }
 
@@ -1833,9 +1967,14 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         });
     }
 
-    function removeExistingMedia(idx) {
+    async function removeExistingMedia(idx) {
+        const url = existingMediaForEdit[idx];
+        const fileId = extractDriveId(url);
         existingMediaForEdit.splice(idx, 1);
         renderExistingMedia();
+        if (fileId) {
+            try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) { /* melhor esforço */ }
+        }
     }
 
     function resetFormToCreateMode() {
@@ -1880,7 +2019,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.formStatus.style.display = 'none';
     }
 
-    // ========== MEDIA UPLOAD (new files) ==========
+    // ========== UPLOAD DE FOTOS (novos arquivos, ainda não enviados) ==========
     function handleDragOver(e) { e.preventDefault(); els.uploadArea.classList.add('highlight'); }
     function handleDragLeave(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); }
     function handleDrop(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); handleFiles(e.dataTransfer.files); }
