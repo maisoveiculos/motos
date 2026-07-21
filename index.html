@@ -275,6 +275,46 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 @media (max-width:900px){ .featured-nav{ display:none; } }
 
 /* =========================================================
+   TESTIMONIALS / DEPOIMENTOS — carrossel de clientes satisfeitos
+========================================================= */
+.testimonials{ background:var(--gray-100); }
+.testimonials .section-eyebrow{ color:var(--red); }
+
+.testimonials-carousel-wrap{ position:relative; max-width:1000px; margin:0 auto; }
+.testimonials-track{
+    display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:6px 4px 20px; scrollbar-width:none; -ms-overflow-style:none;
+}
+.testimonials-track::-webkit-scrollbar{ display:none; }
+
+.testimonial-card{
+    flex:0 0 auto; width:320px; scroll-snap-align:start;
+    background:var(--white); border-radius:var(--radius-lg); overflow:hidden;
+    box-shadow:var(--shadow-sm); border:1px solid var(--gray-200);
+    display:flex; flex-direction:column;
+}
+.testimonial-media{ position:relative; height:220px; overflow:hidden; background:var(--charcoal); }
+.testimonial-media img{ width:100%; height:100%; object-fit:cover; }
+.testimonial-quote-icon{
+    position:absolute; top:12px; left:12px; width:34px; height:34px; border-radius:50%;
+    background:var(--red); color:var(--white); display:flex; align-items:center; justify-content:center;
+    font-size:.85rem; z-index:2; box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+.testimonial-body{ padding:20px 20px 22px; display:flex; flex-direction:column; gap:10px; flex:1; }
+.testimonial-text{ color:var(--steel); font-size:.92rem; font-style:italic; line-height:1.55; flex:1; }
+.testimonial-name{ font-family:var(--font-display); font-weight:700; color:var(--black); font-size:1.05rem; text-transform:uppercase; }
+
+.testimonials-nav{
+    position:absolute; top:44%; transform:translateY(-50%); background:var(--white);
+    color:var(--black); border:1px solid var(--gray-200); width:42px; height:42px; border-radius:50%; cursor:pointer;
+    z-index:5; transition:all .2s var(--ease); box-shadow:var(--shadow-sm);
+}
+.testimonials-nav:hover{ background:var(--red); color:var(--white); border-color:var(--red); }
+.testimonials-nav.prev{ left:-8px; }
+.testimonials-nav.next{ right:-8px; }
+@media (max-width:900px){ .testimonials-nav{ display:none; } }
+
+/* =========================================================
    VEHICLES — NOVO DESIGN (menos "lista", mais visual)
 ========================================================= */
 .vehicles{ background:var(--gray-100); }
@@ -571,6 +611,16 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .admin-body, .text-edit-body{ padding:30px 28px; color:var(--white); }
 .text-edit-body{ max-height:80vh; overflow-y:auto; }
 
+.admin-tabs{ display:flex; gap:8px; margin-bottom:26px; border-bottom:1px solid rgba(255,255,255,.12); flex-wrap:wrap; }
+.admin-tab-btn{
+    background:none; border:none; color:rgba(255,255,255,.55); padding:10px 6px; cursor:pointer;
+    font-weight:700; font-size:.9rem; text-transform:uppercase; letter-spacing:.3px;
+    border-bottom:3px solid transparent; transition:all .2s var(--ease);
+}
+.admin-tab-btn.active{ color:var(--laranja); border-bottom-color:var(--laranja); }
+.admin-tab-panel{ display:none; }
+.admin-tab-panel.active{ display:block; }
+
 .form-group{ margin-bottom:18px; }
 .form-group label{ display:block; margin-bottom:7px; font-weight:600; font-size:.85rem; color:rgba(255,255,255,.85); }
 .form-control{
@@ -734,6 +784,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     .about-image::before{ display:none; }
     .location-container{ flex-direction:column-reverse; }
     .featured-card{ width:230px; }
+    .testimonial-card{ width:260px; }
 }
 @media (max-width:480px){
     .hero{ height:60vh; min-height:340px; }
@@ -855,6 +906,20 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
         <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
         <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+    </div>
+</section>
+
+<!-- ================= TESTIMONIALS / CLIENTES SATISFEITOS ================= -->
+<section class="section testimonials" id="testimonials" style="display:none;">
+    <div class="section-title">
+        <span class="section-eyebrow">Depoimentos</span>
+        <h2 id="testimonialsTitle">Clientes Satisfeitos</h2>
+        <p id="testimonialsSubtitle">Quem já comprou com a gente conta como foi a experiência.</p>
+    </div>
+    <div class="testimonials-carousel-wrap">
+        <button class="testimonials-nav prev" id="testimonialsPrev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+        <div class="testimonials-track" id="testimonialsTrack"></div>
+        <button class="testimonials-nav next" id="testimonialsNext" aria-label="Próximo"><i class="fas fa-chevron-right"></i></button>
     </div>
 </section>
 
@@ -1041,82 +1106,134 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             <button class="btn-close" id="closeAdminPanel" aria-label="Fechar">&times;</button>
         </div>
         <div class="admin-body">
-            <h3 style="margin-bottom:20px; text-transform:uppercase; font-size:1.05rem;" id="formTitle">Adicionar Novo Veículo</h3>
-            <form id="addVehicleForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="vehicleName">Nome do Veículo</label>
-                        <input type="text" class="form-control" id="vehicleName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicleType">Categoria</label>
-                        <select class="form-control" id="vehicleType" required>
-                            <option value="ate-110cc">Até 110cc</option>
-                            <option value="ate-150cc">Até 150cc</option>
-                            <option value="acima-160cc">Acima de 160cc</option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="vehiclePrice">Preço (R$)</label>
-                        <input type="number" class="form-control" id="vehiclePrice" min="0" step="0.01" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicleYear">Ano</label>
-                        <input type="text" class="form-control" id="vehicleYear" placeholder="Ex: 2024/2025" required>
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="vehicleKm">Quilometragem</label>
-                        <input type="number" class="form-control" id="vehicleKm" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicleColor">Cor</label>
-                        <input type="text" class="form-control" id="vehicleColor">
-                    </div>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="vehicleDescription">Descrição</label>
-                    <textarea class="form-control" id="vehicleDescription" rows="3"></textarea>
-                </div>
 
-                <div class="form-check-row">
-                    <input type="checkbox" id="vehicleFeatured">
-                    <label for="vehicleFeatured">Destacar na vitrine de ofertas (carrossel do início do site)</label>
-                </div>
-
-                <div class="upload-section">
-                    <h4>Fotos do Veículo (salvas no Google Drive)</h4>
-                    <div id="existingMediaWrap" style="display:none; margin-bottom:16px;">
-                        <div class="upload-info" style="margin-bottom:8px;">Fotos já cadastradas (clique no X para remover):</div>
-                        <div class="preview-container" id="existingMediaContainer"></div>
-                    </div>
-                    <div class="upload-area" id="uploadArea">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Arraste imagens aqui ou clique para selecionar</p>
-                        <p class="upload-info">Formatos suportados: JPG, PNG, WEBP (máx. 10MB cada) — as fotos são otimizadas automaticamente para um envio mais rápido.</p>
-                    </div>
-                    <input type="file" class="file-input" id="fileInput" multiple accept="image/*">
-                    <div class="media-counter" id="mediaCounter">0 novas fotos selecionadas</div>
-                    <div class="preview-container" id="previewContainer"></div>
-                </div>
-
-                <div class="admin-actions">
-                    <button type="submit" class="btn btn-success" id="submitBtn">Adicionar Veículo</button>
-                    <button type="button" class="btn btn-secondary" id="clearForm">Limpar Formulário</button>
-                </div>
-            </form>
-
-            <div class="status-message" id="formStatus"></div>
-
-            <div class="moto-list" id="motoList">
-                <h3>Veículos Cadastrados</h3>
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" data-admin-tab="vehicles">Veículos</button>
+                <button class="admin-tab-btn" data-admin-tab="testimonials">Depoimentos</button>
             </div>
+
+            <!-- ---- ABA: VEÍCULOS ---- -->
+            <div class="admin-tab-panel active" id="adminTabVehicles">
+                <h3 style="margin-bottom:20px; text-transform:uppercase; font-size:1.05rem;" id="formTitle">Adicionar Novo Veículo</h3>
+                <form id="addVehicleForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehicleName">Nome do Veículo</label>
+                            <input type="text" class="form-control" id="vehicleName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleType">Categoria</label>
+                            <select class="form-control" id="vehicleType" required>
+                                <option value="ate-110cc">Até 110cc</option>
+                                <option value="ate-150cc">Até 150cc</option>
+                                <option value="acima-160cc">Acima de 160cc</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehiclePrice">Preço (R$)</label>
+                            <input type="number" class="form-control" id="vehiclePrice" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleYear">Ano</label>
+                            <input type="text" class="form-control" id="vehicleYear" placeholder="Ex: 2024/2025" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehicleKm">Quilometragem</label>
+                            <input type="number" class="form-control" id="vehicleKm" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleColor">Cor</label>
+                            <input type="text" class="form-control" id="vehicleColor">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="vehicleDescription">Descrição</label>
+                        <textarea class="form-control" id="vehicleDescription" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-check-row">
+                        <input type="checkbox" id="vehicleFeatured">
+                        <label for="vehicleFeatured">Destacar na vitrine de ofertas (carrossel do início do site)</label>
+                    </div>
+
+                    <div class="upload-section">
+                        <h4>Fotos do Veículo (salvas no Google Drive)</h4>
+                        <div id="existingMediaWrap" style="display:none; margin-bottom:16px;">
+                            <div class="upload-info" style="margin-bottom:8px;">Fotos já cadastradas (clique no X para remover):</div>
+                            <div class="preview-container" id="existingMediaContainer"></div>
+                        </div>
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arraste imagens aqui ou clique para selecionar</p>
+                            <p class="upload-info">Formatos suportados: JPG, PNG, WEBP (máx. 10MB cada) — as fotos são otimizadas automaticamente para um envio mais rápido.</p>
+                        </div>
+                        <input type="file" class="file-input" id="fileInput" multiple accept="image/*">
+                        <div class="media-counter" id="mediaCounter">0 novas fotos selecionadas</div>
+                        <div class="preview-container" id="previewContainer"></div>
+                    </div>
+
+                    <div class="admin-actions">
+                        <button type="submit" class="btn btn-success" id="submitBtn">Adicionar Veículo</button>
+                        <button type="button" class="btn btn-secondary" id="clearForm">Limpar Formulário</button>
+                    </div>
+                </form>
+
+                <div class="status-message" id="formStatus"></div>
+
+                <div class="moto-list" id="motoList">
+                    <h3>Veículos Cadastrados</h3>
+                </div>
+            </div>
+
+            <!-- ---- ABA: DEPOIMENTOS ---- -->
+            <div class="admin-tab-panel" id="adminTabTestimonials">
+                <h3 style="margin-bottom:20px; text-transform:uppercase; font-size:1.05rem;" id="testimonialFormTitle">Adicionar Depoimento</h3>
+                <form id="addTestimonialForm">
+                    <div class="form-group">
+                        <label for="testimonialName">Nome do Cliente</label>
+                        <input type="text" class="form-control" id="testimonialName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="testimonialText">Depoimento</label>
+                        <textarea class="form-control" id="testimonialText" rows="3" placeholder="Ex: Ótimo atendimento, comprei minha moto com total segurança!" required></textarea>
+                    </div>
+
+                    <div class="upload-section">
+                        <h4>Foto do Cliente (salva no Google Drive)</h4>
+                        <div id="existingTestimonialPhotoWrap" style="display:none; margin-bottom:16px;">
+                            <div class="upload-info" style="margin-bottom:8px;">Foto atual (clique no X para remover):</div>
+                            <div class="preview-container" id="existingTestimonialPhotoContainer"></div>
+                        </div>
+                        <div class="upload-area" id="testimonialUploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arraste uma foto aqui ou clique para selecionar</p>
+                            <p class="upload-info">Formatos suportados: JPG, PNG, WEBP (máx. 10MB). Apenas 1 foto por depoimento.</p>
+                        </div>
+                        <input type="file" class="file-input" id="testimonialFileInput" accept="image/*">
+                        <div class="media-counter" id="testimonialMediaCounter">Nenhuma foto selecionada</div>
+                        <div class="preview-container" id="testimonialPreviewContainer"></div>
+                    </div>
+
+                    <div class="admin-actions">
+                        <button type="submit" class="btn btn-success" id="testimonialSubmitBtn">Adicionar Depoimento</button>
+                        <button type="button" class="btn btn-secondary" id="clearTestimonialForm">Limpar Formulário</button>
+                    </div>
+                </form>
+
+                <div class="status-message" id="testimonialFormStatus"></div>
+
+                <div class="moto-list" id="testimonialList">
+                    <h3>Depoimentos Cadastrados</h3>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -1163,6 +1280,12 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 <div class="text-edit-item"><label for="editFilter150cc">Filtro - Até 150cc</label><input type="text" class="form-control" id="editFilter150cc"></div>
                 <div class="text-edit-item"><label for="editFilter160cc">Filtro - Acima de 160cc</label><input type="text" class="form-control" id="editFilter160cc"></div>
                 <div class="text-edit-item"><label for="editVehicleBtn">Texto do Botão Ver Detalhes</label><input type="text" class="form-control" id="editVehicleBtn"></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Seção Depoimentos</h3>
+                <div class="text-edit-item"><label for="editTestimonialsTitle">Título da Seção</label><input type="text" class="form-control" id="editTestimonialsTitle"></div>
+                <div class="text-edit-item"><label for="editTestimonialsSubtitle">Subtítulo</label><input type="text" class="form-control" id="editTestimonialsSubtitle"></div>
             </div>
 
             <div class="text-edit-section">
@@ -1318,18 +1441,32 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         return m ? m[1] : null;
     }
 
+    // Interpreta valores "featured"/booleanos que podem vir do Google Sheets
+    // como boolean nativo, string "true"/"false", "TRUE"/"FALSE", 1/0, etc.
+    function isTruthy(val) {
+        if (val === true) return true;
+        if (val === false || val === undefined || val === null || val === '') return false;
+        const s = String(val).trim().toLowerCase();
+        return s === 'true' || s === 'verdadeiro' || s === '1' || s === 'sim' || s === 'yes';
+    }
+
     // ========== STATE ==========
     let currentUser = { name: 'Visitante', type: 'guest' };
     let vehicles = [];
+    let testimonials = [];
     let currentVehicleIndex = 0;
     let currentMediaIndex = 0;
     let selectedFiles = [];
     let existingMediaForEdit = [];
     let editingVehicleId = null;
+    let selectedTestimonialFile = null;
+    let existingTestimonialPhoto = null;
+    let editingTestimonialId = null;
     let siteContent = {};
     let currentFilter = 'all';
     let touchStartX = 0, touchEndX = 0;
     let featuredAutoplayInterval = null;
+    let testimonialsAutoplayInterval = null;
 
     // campos de imagem editáveis no modo dev: chave no siteContent, seletor do elemento <img> no site, e um rótulo amigável
     const IMAGE_FIELDS = [
@@ -1353,18 +1490,24 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         'overlay','drawerLoginBtn','drawerLogoutBtn','drawerUserName','drawerUserType','drawerDevType',
         'saveTextChanges','cancelTextChanges','loadingOverlay','loadingText','drawerClose',
         'submitBtn','formTitle','existingMediaWrap','existingMediaContainer','imageEditorContainer',
-        'featured','featuredTrack','featuredPrev','featuredNext'
+        'featured','featuredTrack','featuredPrev','featuredNext',
+        'testimonials','testimonialsTrack','testimonialsPrev','testimonialsNext',
+        'addTestimonialForm','testimonialName','testimonialText','testimonialUploadArea',
+        'testimonialFileInput','testimonialPreviewContainer','testimonialMediaCounter',
+        'existingTestimonialPhotoWrap','existingTestimonialPhotoContainer','testimonialSubmitBtn',
+        'testimonialFormTitle','clearTestimonialForm','testimonialFormStatus','testimonialList'
     ].forEach(id => els[id] = document.getElementById(id));
     const filterBtns = document.querySelectorAll('.filter-btn');
 
     // ========== INIT ==========
     document.addEventListener('DOMContentLoaded', function () {
         loadVehicles();
+        loadTestimonials();
         loadSiteContent();
         setupEventListeners();
         checkSavedUser();
         if (AUTO_REFRESH_MS > 0) {
-            setInterval(() => { loadVehicles(); loadSiteContent(); }, AUTO_REFRESH_MS);
+            setInterval(() => { loadVehicles(); loadTestimonials(); loadSiteContent(); }, AUTO_REFRESH_MS);
         }
     });
 
@@ -1395,6 +1538,10 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.floatBtn.addEventListener('click', () => openAdminPanel());
         els.textEditBtn.addEventListener('click', openTextEditPanel);
 
+        document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchAdminTab(btn.dataset.adminTab));
+        });
+
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function () {
                 currentFilter = this.dataset.filter;
@@ -1415,6 +1562,20 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.uploadArea.addEventListener('drop', handleDrop);
         els.fileInput.addEventListener('change', handleFileSelect);
 
+        // depoimentos
+        els.addTestimonialForm.addEventListener('submit', handleTestimonialFormSubmit);
+        els.clearTestimonialForm.addEventListener('click', clearTestimonialForm);
+        els.testimonialUploadArea.addEventListener('click', () => els.testimonialFileInput.click());
+        els.testimonialUploadArea.addEventListener('dragover', e => { e.preventDefault(); els.testimonialUploadArea.classList.add('highlight'); });
+        els.testimonialUploadArea.addEventListener('dragleave', e => { e.preventDefault(); els.testimonialUploadArea.classList.remove('highlight'); });
+        els.testimonialUploadArea.addEventListener('drop', e => {
+            e.preventDefault(); els.testimonialUploadArea.classList.remove('highlight');
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) handleTestimonialFile(e.dataTransfer.files[0]);
+        });
+        els.testimonialFileInput.addEventListener('change', e => {
+            if (e.target.files && e.target.files[0]) handleTestimonialFile(e.target.files[0]);
+        });
+
         els.menuToggle.addEventListener('click', toggleDrawer);
         els.overlay.addEventListener('click', closeDrawer);
 
@@ -1427,6 +1588,12 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.featuredTrack.addEventListener('mouseleave', startFeaturedAutoplay);
         els.featuredTrack.addEventListener('touchstart', stopFeaturedAutoplay, { passive: true });
 
+        els.testimonialsPrev.addEventListener('click', () => scrollTestimonials(-1));
+        els.testimonialsNext.addEventListener('click', () => scrollTestimonials(1));
+        els.testimonialsTrack.addEventListener('mouseenter', stopTestimonialsAutoplay);
+        els.testimonialsTrack.addEventListener('mouseleave', startTestimonialsAutoplay);
+        els.testimonialsTrack.addEventListener('touchstart', stopTestimonialsAutoplay, { passive: true });
+
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 closeVehicleModal(); closeLoginModal(); closeDrawer();
@@ -1434,6 +1601,12 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         });
 
         setupSwipeEvents();
+    }
+
+    function switchAdminTab(tab) {
+        document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.adminTab === tab));
+        document.getElementById('adminTabVehicles').classList.toggle('active', tab === 'vehicles');
+        document.getElementById('adminTabTestimonials').classList.toggle('active', tab === 'testimonials');
     }
 
     // ========== SWIPE ==========
@@ -1477,6 +1650,9 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         if (siteContent.filter110cc) document.querySelector('.filter-btn[data-filter="ate-110cc"]').textContent = siteContent.filter110cc;
         if (siteContent.filter150cc) document.querySelector('.filter-btn[data-filter="ate-150cc"]').textContent = siteContent.filter150cc;
         if (siteContent.filter160cc) document.querySelector('.filter-btn[data-filter="acima-160cc"]').textContent = siteContent.filter160cc;
+
+        setText('testimonialsTitle', siteContent.testimonialsTitle);
+        setText('testimonialsSubtitle', siteContent.testimonialsSubtitle);
 
         setText('aboutTitle', siteContent.aboutTitle);
         setText('aboutSubtitle', siteContent.aboutSubtitle);
@@ -1548,6 +1724,8 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             editFilter150cc: siteContent.filter150cc || 'Até 150cc',
             editFilter160cc: siteContent.filter160cc || 'Acima de 160cc',
             editVehicleBtn: siteContent.vehicleBtn || 'Ver Detalhes',
+            editTestimonialsTitle: siteContent.testimonialsTitle || 'Clientes Satisfeitos',
+            editTestimonialsSubtitle: siteContent.testimonialsSubtitle || 'Quem já comprou com a gente conta como foi a experiência.',
             editAboutTitle: siteContent.aboutTitle || 'Sobre a Loja',
             editAboutSubtitle: siteContent.aboutSubtitle || 'Mais de 10 anos no mercado',
             editAboutText1: siteContent.aboutText1 || 'A Maiso Veículos é referência no mercado de motos seminovas, oferecendo produtos de qualidade com procedência garantida.',
@@ -1648,6 +1826,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         const ids = ['editUserName','editNavVehicles','editNavAbout','editNavTeam','editNavLocation',
             'editFeaturedTitle','editFeaturedSubtitle',
             'editVehiclesTitle','editFilterAll','editFilter110cc','editFilter150cc','editFilter160cc','editVehicleBtn',
+            'editTestimonialsTitle','editTestimonialsSubtitle',
             'editAboutTitle','editAboutSubtitle','editAboutText1','editAboutText2','editAboutText3',
             'editTeamTitle','editMember1Name','editMember1Role','editMember1Desc','editMember2Name','editMember2Role',
             'editMember2Desc','editMember3Name','editMember3Role','editMember3Desc',
@@ -1762,6 +1941,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.drawerLogoutBtn.style.display = currentUser.type === 'guest' ? 'none' : 'block';
 
         renderVehicles();
+        renderTestimonials();
     }
 
     function logout() {
@@ -1814,7 +1994,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     <button class="btn-excluir" title="Excluir" aria-label="Excluir veículo" onclick="deleteVehicle('${vehicle.id}', event)"><i class="fas fa-trash"></i></button>
                 </div>` : '';
 
-            const featuredMini = vehicle.featured ? '<span class="featured-badge-mini">Destaque</span>' : '';
+            const featuredMini = isTruthy(vehicle.featured) ? '<span class="featured-badge-mini">Destaque</span>' : '';
 
             card.innerHTML = `
                 <div class="vehicle-media">
@@ -1854,7 +2034,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 
     // ========== CARROSSEL DE DESTAQUES (OFERTAS) ==========
     function renderFeaturedCarousel() {
-        const featuredVehicles = vehicles.filter(v => v.featured);
+        const featuredVehicles = vehicles.filter(v => isTruthy(v.featured));
         stopFeaturedAutoplay();
 
         if (featuredVehicles.length === 0) {
@@ -1908,6 +2088,260 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     }
     function stopFeaturedAutoplay() {
         if (featuredAutoplayInterval) { clearInterval(featuredAutoplayInterval); featuredAutoplayInterval = null; }
+    }
+
+    // ========== TESTIMONIALS (Depoimentos — Google Sheets via Apps Script) ==========
+    async function loadTestimonials() {
+        try {
+            const res = await apiGet({ action: 'getTestimonials' });
+            if (res.success) {
+                testimonials = res.testimonials || [];
+                renderTestimonials();
+                renderTestimonialList();
+            }
+        } catch (err) { console.error('Erro ao carregar depoimentos:', err); }
+    }
+
+    function renderTestimonials() {
+        stopTestimonialsAutoplay();
+        els.testimonialsTrack.innerHTML = '';
+
+        if (testimonials.length === 0) {
+            els.testimonials.style.display = 'none';
+            return;
+        }
+        els.testimonials.style.display = 'block';
+
+        testimonials.forEach(t => {
+            const photo = t.photo || 'https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Cliente';
+            const card = document.createElement('div');
+            card.className = 'testimonial-card';
+            card.innerHTML = `
+                <div class="testimonial-media">
+                    <span class="testimonial-quote-icon"><i class="fas fa-quote-right"></i></span>
+                    <img src="${photo}" alt="${escapeHtml(t.name)}" loading="lazy">
+                </div>
+                <div class="testimonial-body">
+                    <p class="testimonial-text">"${escapeHtml(t.text)}"</p>
+                    <div class="testimonial-name">${escapeHtml(t.name)}</div>
+                </div>
+            `;
+            els.testimonialsTrack.appendChild(card);
+        });
+
+        startTestimonialsAutoplay();
+    }
+
+    function scrollTestimonials(direction) {
+        const cardWidth = els.testimonialsTrack.querySelector('.testimonial-card')?.offsetWidth || 320;
+        els.testimonialsTrack.scrollBy({ left: direction * (cardWidth + 20), behavior: 'smooth' });
+    }
+    function startTestimonialsAutoplay() {
+        stopTestimonialsAutoplay();
+        if (!els.testimonialsTrack.querySelector('.testimonial-card')) return;
+        testimonialsAutoplayInterval = setInterval(() => {
+            const track = els.testimonialsTrack;
+            const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
+            if (atEnd) { track.scrollTo({ left: 0, behavior: 'smooth' }); }
+            else { scrollTestimonials(1); }
+        }, 4000);
+    }
+    function stopTestimonialsAutoplay() {
+        if (testimonialsAutoplayInterval) { clearInterval(testimonialsAutoplayInterval); testimonialsAutoplayInterval = null; }
+    }
+
+    async function handleTestimonialFormSubmit(e) {
+        e.preventDefault();
+        if (editingTestimonialId) await updateTestimonial(editingTestimonialId);
+        else await addTestimonial();
+    }
+
+    async function addTestimonial() {
+        if (!selectedTestimonialFile) { showStatusIn(els.testimonialFormStatus, 'Selecione uma foto do cliente.', 'error'); return; }
+
+        const data = readTestimonialFormFields();
+        els.loadingText.textContent = 'Enviando foto do depoimento...';
+        els.loadingOverlay.style.display = 'flex';
+
+        try {
+            const { url } = await uploadFileToDrive(selectedTestimonialFile);
+            data.photo = url;
+            els.loadingText.textContent = 'Salvando depoimento na planilha...';
+            const res = await apiPost({ action: 'addTestimonial', data });
+            els.loadingOverlay.style.display = 'none';
+            if (res.success) {
+                showStatusIn(els.testimonialFormStatus, 'Depoimento adicionado com sucesso!', 'success');
+                clearTestimonialForm();
+                loadTestimonials();
+            } else {
+                showStatusIn(els.testimonialFormStatus, 'Erro ao adicionar depoimento: ' + res.message, 'error');
+            }
+        } catch (error) {
+            els.loadingOverlay.style.display = 'none';
+            showStatusIn(els.testimonialFormStatus, 'Erro ao adicionar depoimento: ' + error.message, 'error');
+        }
+    }
+
+    async function updateTestimonial(testimonialId) {
+        const data = readTestimonialFormFields();
+        els.loadingText.textContent = 'Atualizando depoimento...';
+        els.loadingOverlay.style.display = 'flex';
+
+        try {
+            let photo = existingTestimonialPhoto;
+            if (selectedTestimonialFile) {
+                els.loadingText.textContent = 'Enviando nova foto...';
+                const { url } = await uploadFileToDrive(selectedTestimonialFile);
+                photo = url;
+                const oldId = extractDriveId(existingTestimonialPhoto);
+                if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
+            }
+            data.photo = photo;
+
+            els.loadingText.textContent = 'Salvando alterações...';
+            const res = await apiPost({ action: 'updateTestimonial', id: testimonialId, data });
+            els.loadingOverlay.style.display = 'none';
+            if (res.success) {
+                showStatusIn(els.testimonialFormStatus, 'Depoimento atualizado com sucesso!', 'success');
+                resetTestimonialFormToCreateMode();
+                clearTestimonialForm();
+                loadTestimonials();
+            } else {
+                showStatusIn(els.testimonialFormStatus, 'Erro ao atualizar depoimento: ' + res.message, 'error');
+            }
+        } catch (error) {
+            els.loadingOverlay.style.display = 'none';
+            showStatusIn(els.testimonialFormStatus, 'Erro ao atualizar depoimento: ' + error.message, 'error');
+        }
+    }
+
+    function readTestimonialFormFields() {
+        return {
+            name: els.testimonialName.value,
+            text: els.testimonialText.value
+        };
+    }
+
+    async function deleteTestimonial(testimonialId, event) {
+        if (event) event.stopPropagation();
+        if (!confirm('Tem certeza que deseja excluir este depoimento? A foto também será removida do Drive.')) return;
+        try {
+            const res = await apiPost({ action: 'deleteTestimonial', id: testimonialId });
+            if (res.success) { showStatusIn(els.testimonialFormStatus, 'Depoimento excluído com sucesso!', 'success'); loadTestimonials(); }
+            else showStatusIn(els.testimonialFormStatus, 'Erro ao excluir depoimento: ' + res.message, 'error');
+        } catch (error) {
+            showStatusIn(els.testimonialFormStatus, 'Erro ao excluir depoimento: ' + error.message, 'error');
+        }
+    }
+
+    function editTestimonial(testimonialId, event) {
+        if (event) event.stopPropagation();
+        const t = testimonials.find(x => x.id === testimonialId);
+        if (!t) return;
+
+        editingTestimonialId = testimonialId;
+        existingTestimonialPhoto = t.photo || null;
+
+        els.testimonialName.value = t.name || '';
+        els.testimonialText.value = t.text || '';
+
+        clearTestimonialFileSelection();
+        renderExistingTestimonialPhoto();
+
+        els.testimonialFormTitle.textContent = 'Editar Depoimento';
+        els.testimonialSubmitBtn.textContent = 'Atualizar Depoimento';
+        els.testimonialSubmitBtn.className = 'btn btn-primary';
+
+        openAdminPanel();
+        switchAdminTab('testimonials');
+        els.addTestimonialForm.scrollIntoView({ behavior: 'smooth' });
+        showStatusIn(els.testimonialFormStatus, 'Altere os campos necessários e clique em "Atualizar Depoimento".', 'warning');
+    }
+
+    function renderExistingTestimonialPhoto() {
+        if (!existingTestimonialPhoto) {
+            els.existingTestimonialPhotoWrap.style.display = 'none';
+            els.existingTestimonialPhotoContainer.innerHTML = '';
+            return;
+        }
+        els.existingTestimonialPhotoWrap.style.display = 'block';
+        els.existingTestimonialPhotoContainer.innerHTML = `
+            <div class="existing-media-item">
+                <img src="${existingTestimonialPhoto}" alt="Foto atual">
+                <button type="button" class="delete-existing" onclick="removeExistingTestimonialPhoto()">&times;</button>
+            </div>`;
+    }
+
+    async function removeExistingTestimonialPhoto() {
+        const fileId = extractDriveId(existingTestimonialPhoto);
+        existingTestimonialPhoto = null;
+        renderExistingTestimonialPhoto();
+        if (fileId) { try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) { /* melhor esforço */ } }
+    }
+
+    function resetTestimonialFormToCreateMode() {
+        editingTestimonialId = null;
+        existingTestimonialPhoto = null;
+        els.testimonialFormTitle.textContent = 'Adicionar Depoimento';
+        els.testimonialSubmitBtn.textContent = 'Adicionar Depoimento';
+        els.testimonialSubmitBtn.className = 'btn btn-success';
+        els.existingTestimonialPhotoWrap.style.display = 'none';
+    }
+
+    function renderTestimonialList() {
+        els.testimonialList.innerHTML = '<h3>Depoimentos Cadastrados</h3>';
+        if (testimonials.length === 0) {
+            els.testimonialList.insertAdjacentHTML('beforeend', '<p style="color:rgba(255,255,255,.5)">Nenhum depoimento cadastrado.</p>');
+            return;
+        }
+        testimonials.forEach(t => {
+            const thumb = t.photo || 'https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';
+            const item = document.createElement('div');
+            item.className = 'moto-item';
+            item.innerHTML = `
+                <div class="moto-info">
+                    <img src="${thumb}" alt="${escapeHtml(t.name)}" class="moto-thumbnail">
+                    <div class="moto-details">
+                        <div class="moto-name">${escapeHtml(t.name)}</div>
+                        <div class="moto-specs">${escapeHtml((t.text || '').slice(0, 60))}${(t.text || '').length > 60 ? '…' : ''}</div>
+                    </div>
+                </div>
+                <div class="moto-actions">
+                    <button class="btn btn-primary" onclick="editTestimonial('${t.id}', event)">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteTestimonial('${t.id}', event)">Excluir</button>
+                </div>`;
+            els.testimonialList.appendChild(item);
+        });
+    }
+
+    function clearTestimonialForm() {
+        els.addTestimonialForm.reset();
+        clearTestimonialFileSelection();
+        resetTestimonialFormToCreateMode();
+        els.testimonialFormStatus.style.display = 'none';
+    }
+
+    function handleTestimonialFile(file) {
+        if (!file.type.match('image.*')) { alert('Por favor, selecione apenas imagens.'); return; }
+        if (file.size > 10 * 1024 * 1024) { alert('O arquivo é muito grande. Máximo: 10MB.'); return; }
+        selectedTestimonialFile = file;
+        els.testimonialPreviewContainer.innerHTML = '';
+        const reader = new FileReader();
+        reader.onload = e => {
+            const item = document.createElement('div');
+            item.className = 'preview-item';
+            item.innerHTML = `<img src="${e.target.result}" alt="Pré-visualização"><button type="button" class="remove-btn" onclick="clearTestimonialFileSelection()">&times;</button>`;
+            els.testimonialPreviewContainer.appendChild(item);
+        };
+        reader.readAsDataURL(file);
+        els.testimonialMediaCounter.textContent = '1 foto selecionada';
+    }
+
+    function clearTestimonialFileSelection() {
+        selectedTestimonialFile = null;
+        els.testimonialPreviewContainer.innerHTML = '';
+        els.testimonialMediaCounter.textContent = 'Nenhuma foto selecionada';
+        els.testimonialFileInput.value = '';
     }
 
     function applyCurrentFilter() {
@@ -2104,7 +2538,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         document.getElementById('vehicleKm').value = vehicle.km || '';
         document.getElementById('vehicleColor').value = vehicle.color || '';
         document.getElementById('vehicleDescription').value = vehicle.description || '';
-        document.getElementById('vehicleFeatured').checked = !!vehicle.featured;
+        document.getElementById('vehicleFeatured').checked = isTruthy(vehicle.featured);
 
         clearFileSelection();
         renderExistingMedia();
@@ -2114,6 +2548,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.submitBtn.className = 'btn btn-primary';
 
         openAdminPanel();
+        switchAdminTab('vehicles');
         document.getElementById('addVehicleForm').scrollIntoView({ behavior: 'smooth' });
         showStatusIn(els.formStatus, 'Altere os campos necessários e clique em "Atualizar Veículo".', 'warning');
     }
@@ -2168,7 +2603,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 <div class="moto-info">
                     <img src="${thumb}" alt="${vehicle.name}" class="moto-thumbnail">
                     <div class="moto-details">
-                        <div class="moto-name">${escapeHtml(vehicle.name)} ${vehicle.featured ? '⭐' : ''}</div>
+                        <div class="moto-name">${escapeHtml(vehicle.name)} ${isTruthy(vehicle.featured) ? '⭐' : ''}</div>
                         <div class="moto-specs">${getVehicleTypeName(vehicle.type)} • ${vehicle.year} • R$ ${formatPrice(vehicle.price)}</div>
                     </div>
                 </div>
