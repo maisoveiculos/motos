@@ -2057,7 +2057,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             card.innerHTML = `
                 <div class="featured-media">
                     <span class="featured-tag">Oferta</span>
-                    <img src="${thumb}" alt="${escapeHtml(vehicle.name)}" loading="lazy">
+                    <img src="${thumb}" alt="${escapeHtml(vehicle.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';">
                 </div>
                 <div class="featured-info">
                     <div class="featured-name">${escapeHtml(vehicle.name)}</div>
@@ -2119,7 +2119,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             card.innerHTML = `
                 <div class="testimonial-media">
                     <span class="testimonial-quote-icon"><i class="fas fa-quote-right"></i></span>
-                    <img src="${photo}" alt="${escapeHtml(t.name)}" loading="lazy">
+                    <img src="${photo}" alt="${escapeHtml(t.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Cliente';">
                 </div>
                 <div class="testimonial-body">
                     <p class="testimonial-text">"${escapeHtml(t.text)}"</p>
@@ -2398,7 +2398,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             medias.forEach((media, index) => {
                 const item = document.createElement('div');
                 item.className = 'carousel-item';
-                item.innerHTML = `<img src="${media}" alt="Imagem do veículo" loading="lazy">`;
+                item.innerHTML = `<img src="${media}" alt="Imagem do veículo" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem';">`;
                 els.carouselInner.appendChild(item);
 
                 const indicator = document.createElement('button');
@@ -2564,7 +2564,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         existingMediaForEdit.forEach((url, idx) => {
             const div = document.createElement('div');
             div.className = 'existing-media-item';
-            div.innerHTML = `<img src="${url}" alt="Foto atual ${idx + 1}"><button type="button" class="delete-existing" onclick="removeExistingMedia(${idx})">&times;</button>`;
+            div.innerHTML = `<img src="${url}" alt="Foto atual ${idx + 1}" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100/2A2B30/9CA3AF?text=Erro';"><button type="button" class="delete-existing" onclick="removeExistingMedia(${idx})">&times;</button>`;
             els.existingMediaContainer.appendChild(div);
         });
     }
@@ -2601,7 +2601,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             item.className = 'moto-item';
             item.innerHTML = `
                 <div class="moto-info">
-                    <img src="${thumb}" alt="${vehicle.name}" class="moto-thumbnail">
+                    <img src="${thumb}" alt="${vehicle.name}" class="moto-thumbnail" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';">
                     <div class="moto-details">
                         <div class="moto-name">${escapeHtml(vehicle.name)} ${isTruthy(vehicle.featured) ? '⭐' : ''}</div>
                         <div class="moto-specs">${getVehicleTypeName(vehicle.type)} • ${vehicle.year} • R$ ${formatPrice(vehicle.price)}</div>
