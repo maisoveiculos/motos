@@ -1998,7 +1998,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 
             card.innerHTML = `
                 <div class="vehicle-media">
-                    <img src="${thumb}" alt="${vehicle.name}" class="vehicle-img" loading="lazy">
+                    <img src="${thumb}" alt="${vehicle.name}" class="vehicle-img" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';">
                     <div class="vehicle-media-fade"></div>
                     ${featuredMini}
                     <div class="vehicle-top-row">
