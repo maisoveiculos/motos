@@ -362,6 +362,17 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     background:rgba(255,255,255,.92); color:var(--black);
     font-family:var(--font-mono); font-size:.72rem; padding:5px 11px; border-radius:20px; font-weight:700;
 }
+
+/* BADGE DESTAQUE REPOSICIONADO - agora fica ao lado da tag de ano, sem cobrir nada */
+.vehicle-featured-tag{
+    background:var(--laranja); color:var(--black);
+    font-size:.6rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase;
+    padding:5px 11px; border-radius:20px;
+    font-family:var(--font-mono);
+    display:inline-block;
+    margin-left:6px;
+}
+
 .vehicle-overlay-text{
     position:absolute; left:16px; right:16px; bottom:14px; z-index:3; color:var(--white);
 }
@@ -408,10 +419,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 /* quando é admin, empurra o tag de ano pra baixo dos botões de ação */
 .vehicle-card.has-admin-actions .vehicle-top-row{ padding-right:78px; }
-.featured-badge-mini{
-    position:absolute; top:12px; left:12px; background:var(--laranja); color:var(--black);
-    font-size:.6rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase; padding:4px 9px; border-radius:14px; z-index:4;
-}
 
 /* skeleton loading */
 .skeleton-card{ background:var(--white); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); }
@@ -1387,15 +1394,12 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     async function apiPost(payload) {
         const res = await fetch(API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // evita preflight CORS
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(payload)
         });
         return res.json();
     }
 
-    // ---------- Compressão de imagem no navegador (canvas) ----------
-    // Reduz bastante o tamanho do arquivo antes de converter para base64,
-    // o que acelera muito o envio para o Drive.
     function compressImageToDataURL(file, maxWidth = IMG_MAX_WIDTH, quality = IMG_QUALITY) {
         return new Promise((resolve, reject) => {
             const img = new Image();
@@ -1414,7 +1418,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    // PNG com transparência mantém formato; o resto vira JPEG para pesar menos
                     const outType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
                     const dataUrl = canvas.toDataURL(outType, quality);
                     resolve(dataUrl);
@@ -1429,20 +1432,19 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         const dataUrl = await compressImageToDataURL(file);
         const result = await apiPost({ action: 'uploadImage', base64: dataUrl, filename: file.name, mimeType: file.type });
         if (!result.success) throw new Error(result.message || 'Falha no upload');
-        return result; // { id, url }
+        return result;
     }
-    // Envia várias fotos em paralelo (bem mais rápido que uma de cada vez)
+
     async function uploadFilesInParallel(files) {
         const urls = await Promise.all(files.map(f => uploadFileToDrive(f)));
         return urls.map(u => u.url);
     }
+
     function extractDriveId(url) {
         const m = String(url || '').match(/id=([a-zA-Z0-9_-]+)/);
         return m ? m[1] : null;
     }
 
-    // Interpreta valores "featured"/booleanos que podem vir do Google Sheets
-    // como boolean nativo, string "true"/"false", "TRUE"/"FALSE", 1/0, etc.
     function isTruthy(val) {
         if (val === true) return true;
         if (val === false || val === undefined || val === null || val === '') return false;
@@ -1468,7 +1470,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     let featuredAutoplayInterval = null;
     let testimonialsAutoplayInterval = null;
 
-    // campos de imagem editáveis no modo dev: chave no siteContent, seletor do elemento <img> no site, e um rótulo amigável
     const IMAGE_FIELDS = [
         { key: 'logoUrl',        selector: '#logoImg',    label: 'Logo (header)' },
         { key: 'heroImageUrl',   selector: '#heroImage',  label: 'Foto de capa (topo do site)', isBg: true },
@@ -1562,7 +1563,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.uploadArea.addEventListener('drop', handleDrop);
         els.fileInput.addEventListener('change', handleFileSelect);
 
-        // depoimentos
         els.addTestimonialForm.addEventListener('submit', handleTestimonialFormSubmit);
         els.clearTestimonialForm.addEventListener('click', clearTestimonialForm);
         els.testimonialUploadArea.addEventListener('click', () => els.testimonialFileInput.click());
@@ -1621,7 +1621,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         if (touchEndX > touchStartX + threshold) showPrevMedia();
     }
 
-    // ========== SITE CONTENT (Google Sheets via Apps Script) ==========
+    // ========== SITE CONTENT ==========
     async function loadSiteContent() {
         try {
             const res = await apiGet({ action: 'getSiteContent' });
@@ -1696,7 +1696,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         setText('modalContactText', siteContent.modalContact);
         setText('whatsappButtonText', siteContent.whatsappButton);
 
-        // imagens do site
         IMAGE_FIELDS.forEach(field => {
             const url = siteContent[field.key];
             if (!url) return;
@@ -1706,7 +1705,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             else el.src = url;
         });
 
-        renderVehicles(); // reflete o texto do botão nos cards também
+        renderVehicles();
     }
 
     function openTextEditPanel() {
@@ -1803,7 +1802,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     siteContent[field.key] = url;
                     thumb.src = url;
                     status.textContent = 'Imagem atualizada (clique em "Salvar Todas as Alterações" para publicar)';
-                    // remove a imagem antiga do Drive para não deixar arquivos órfãos
                     const oldId = extractDriveId(previousUrl);
                     if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
                 } catch (err) {
@@ -1836,7 +1834,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             'editFooterPhone','editFooterEmail','editFooterHours','editFooterCopyright',
             'editPaymentTitle','editPaymentCash','editPaymentCard','editPaymentFinancing','editModalContact','editWhatsappButton'];
 
-        const updatedContent = { ...siteContent }; // preserva as URLs de imagem já definidas
+        const updatedContent = { ...siteContent };
         ids.forEach(id => {
             const key = id.charAt(4).toLowerCase() + id.slice(5);
             updatedContent[key] = document.getElementById(id).value;
@@ -1871,7 +1869,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         try {
             const saved = localStorage.getItem('currentUser');
             if (saved) { currentUser = JSON.parse(saved); updateUserInterface(); }
-        } catch (e) { /* dados corrompidos, ignora */ }
+        } catch (e) {}
     }
 
     function openLoginModal() { els.loginModal.style.display = 'flex'; closeDrawer(); }
@@ -1895,7 +1893,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         if (name) { currentUser = { name, type: 'user' }; saveUser(); closeLoginModal(); }
     }
 
-    // A senha agora é validada no servidor (Apps Script), não fica exposta no HTML.
     async function loginAsAdmin() {
         const password = document.getElementById('adminPassword').value;
         const btn = document.getElementById('adminLoginBtn');
@@ -1906,6 +1903,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             else document.getElementById('loginError').style.display = 'block';
         } finally { btn.disabled = false; }
     }
+
     async function loginAsDev() {
         const password = document.getElementById('devPassword').value;
         const btn = document.getElementById('devLoginBtn');
@@ -1951,7 +1949,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         closeDrawer();
     }
 
-    // ========== VEHICLES (Google Sheets via Apps Script) ==========
+    // ========== VEHICLES ==========
     async function loadVehicles() {
         try {
             const res = await apiGet({ action: 'getVehicles' });
@@ -1994,16 +1992,16 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     <button class="btn-excluir" title="Excluir" aria-label="Excluir veículo" onclick="deleteVehicle('${vehicle.id}', event)"><i class="fas fa-trash"></i></button>
                 </div>` : '';
 
-            const featuredMini = isTruthy(vehicle.featured) ? '<span class="featured-badge-mini">Destaque</span>' : '';
+            // BADGE DESTAQUE REPOSICIONADO - agora fica ao lado do ano, não cobre nada
+            const featuredTag = isTruthy(vehicle.featured) ? '<span class="vehicle-featured-tag">⭐ Destaque</span>' : '';
 
             card.innerHTML = `
                 <div class="vehicle-media">
                     <img src="${thumb}" alt="${vehicle.name}" class="vehicle-img" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';">
                     <div class="vehicle-media-fade"></div>
-                    ${featuredMini}
                     <div class="vehicle-top-row">
                         <span class="vehicle-badge">${getVehicleTypeName(vehicle.type)}</span>
-                        <span class="vehicle-year-tag">${vehicle.year || ''}</span>
+                        <span class="vehicle-year-tag">${vehicle.year || ''} ${featuredTag}</span>
                     </div>
                     ${adminButtons}
                     <div class="vehicle-overlay-text">
@@ -2032,7 +2030,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         renderFeaturedCarousel();
     }
 
-    // ========== CARROSSEL DE DESTAQUES (OFERTAS) ==========
+    // ========== FEATURED CAROUSEL ==========
     function renderFeaturedCarousel() {
         const featuredVehicles = vehicles.filter(v => isTruthy(v.featured));
         stopFeaturedAutoplay();
@@ -2086,11 +2084,12 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             else { scrollFeatured(1); }
         }, 3500);
     }
+
     function stopFeaturedAutoplay() {
         if (featuredAutoplayInterval) { clearInterval(featuredAutoplayInterval); featuredAutoplayInterval = null; }
     }
 
-    // ========== TESTIMONIALS (Depoimentos — Google Sheets via Apps Script) ==========
+    // ========== TESTIMONIALS ==========
     async function loadTestimonials() {
         try {
             const res = await apiGet({ action: 'getTestimonials' });
@@ -2136,6 +2135,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         const cardWidth = els.testimonialsTrack.querySelector('.testimonial-card')?.offsetWidth || 320;
         els.testimonialsTrack.scrollBy({ left: direction * (cardWidth + 20), behavior: 'smooth' });
     }
+
     function startTestimonialsAutoplay() {
         stopTestimonialsAutoplay();
         if (!els.testimonialsTrack.querySelector('.testimonial-card')) return;
@@ -2146,6 +2146,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             else { scrollTestimonials(1); }
         }, 4000);
     }
+
     function stopTestimonialsAutoplay() {
         if (testimonialsAutoplayInterval) { clearInterval(testimonialsAutoplayInterval); testimonialsAutoplayInterval = null; }
     }
@@ -2267,7 +2268,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.existingTestimonialPhotoWrap.style.display = 'block';
         els.existingTestimonialPhotoContainer.innerHTML = `
             <div class="existing-media-item">
-                <img src="${existingTestimonialPhoto}" alt="Foto atual">
+                <img src="${existingTestimonialPhoto}" alt="Foto atual" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100/2A2B30/9CA3AF?text=Erro';">
                 <button type="button" class="delete-existing" onclick="removeExistingTestimonialPhoto()">&times;</button>
             </div>`;
     }
@@ -2276,7 +2277,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         const fileId = extractDriveId(existingTestimonialPhoto);
         existingTestimonialPhoto = null;
         renderExistingTestimonialPhoto();
-        if (fileId) { try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) { /* melhor esforço */ } }
+        if (fileId) { try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) {} }
     }
 
     function resetTestimonialFormToCreateMode() {
@@ -2300,7 +2301,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
             item.className = 'moto-item';
             item.innerHTML = `
                 <div class="moto-info">
-                    <img src="${thumb}" alt="${escapeHtml(t.name)}" class="moto-thumbnail">
+                    <img src="${thumb}" alt="${escapeHtml(t.name)}" class="moto-thumbnail" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';">
                     <div class="moto-details">
                         <div class="moto-name">${escapeHtml(t.name)}</div>
                         <div class="moto-specs">${escapeHtml((t.text || '').slice(0, 60))}${(t.text || '').length > 60 ? '…' : ''}</div>
@@ -2569,14 +2570,13 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         });
     }
 
-    // Ao remover uma foto já cadastrada, ela some do site E é apagada do Drive.
     async function removeExistingMedia(idx) {
         const url = existingMediaForEdit[idx];
         const fileId = extractDriveId(url);
         existingMediaForEdit.splice(idx, 1);
         renderExistingMedia();
         if (fileId) {
-            try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) { /* melhor esforço */ }
+            try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) {}
         }
     }
 
@@ -2622,7 +2622,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         els.formStatus.style.display = 'none';
     }
 
-    // ========== UPLOAD DE FOTOS (novos arquivos, ainda não enviados) ==========
+    // ========== UPLOAD ==========
     function handleDragOver(e) { e.preventDefault(); els.uploadArea.classList.add('highlight'); }
     function handleDragLeave(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); }
     function handleDrop(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); handleFiles(e.dataTransfer.files); }
