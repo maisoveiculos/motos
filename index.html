@@ -258,16 +258,19 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     position:relative; 
     height:190px; 
     overflow:hidden; 
-    background:var(--black);
+    background:var(--charcoal);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 .featured-media img{ 
     width:100%; 
     height:100%; 
-    object-fit:cover;
+    object-fit:contain;
     object-position: center center;
     transition:transform .5s var(--ease); 
 }
-.featured-card:hover .featured-media img{ transform:scale(1.08); }
+.featured-card:hover .featured-media img{ transform:scale(1.04); }
 .featured-tag{
     position:absolute; top:10px; left:10px; background:var(--red); color:var(--white);
     font-size:.65rem; font-weight:700; letter-spacing:.5px; text-transform:uppercase;
@@ -371,19 +374,23 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     height:250px; 
     overflow:hidden; 
     background:var(--charcoal);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 .vehicle-img{ 
     width:100%; 
     height:100%; 
-    object-fit:cover;
+    object-fit:contain;
     object-position: center center;
     transition:transform .6s var(--ease); 
 }
-.vehicle-card:hover .vehicle-img{ transform:scale(1.08); }
+.vehicle-card:hover .vehicle-img{ transform:scale(1.04); }
 
 .vehicle-media-fade{
     position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(11,11,13,0) 35%, rgba(11,11,13,.55) 75%, rgba(11,11,13,.92) 100%);
+    pointer-events:none;
 }
 .vehicle-top-row{ 
     position:absolute; 
