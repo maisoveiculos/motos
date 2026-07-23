@@ -464,7 +464,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 @keyframes shimmer{ 0%{background-position:100% 0} 100%{background-position:-100% 0} }
 
 /* =========================================================
-   VEHICLE MODAL - CORRIGIDO
+   VEHICLE MODAL - CORRIGIDO (IMAGEM PREENCHE TODO O ESPAÇO)
 ========================================================= */
 .modal{
     display:none; position:fixed; inset:0; background:rgba(8,8,9,.9);
@@ -540,13 +540,14 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     -webkit-user-drag:none; 
 }
 /* =========================================================
-   CORREÇÃO: IMAGEM OCUPA TODO O ESPAÇO
+   CORREÇÃO: IMAGEM PREENCHE TODO O ESPAÇO SEM BORDAS PRETAS
 ========================================================= */
 .carousel-item img, 
 .carousel-item video{ 
-    width:100%;
-    height:100%;
+    width:100%; 
+    height:100%; 
     object-fit:cover;
+    display:block;
 }
 .carousel-control{
     position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.12);
@@ -561,7 +562,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .carousel-indicator.active{ background:var(--red); width:20px; border-radius:4px; }
 
 /* =========================================================
-   RESPONSIVE - MOBILE (IMAGEM PREENCHE TUDO)
+   RESPONSIVE - MOBILE (MESMA COISA, IMAGEM PREENCHE TUDO)
 ========================================================= */
 @media (max-width:768px){
     .modal{ padding:0; }
@@ -570,9 +571,10 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     .carousel{ height:380px; }
     .carousel-item img, 
     .carousel-item video{ 
-        width:100%;
-        height:100%;
+        width:100%; 
+        height:100%; 
         object-fit:cover;
+        display:block;
     }
     .modal-details{ padding:20px; }
     .modal-title, .modal-price{ text-align:center; }
