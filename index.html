@@ -469,7 +469,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 @keyframes shimmer{ 0%{background-position:100% 0} 100%{background-position:-100% 0} }
 
 /* =========================================================
-   VEHICLE MODAL - CARROSSEL CORRIGIDO (baseado no site antigo)
+   VEHICLE MODAL - CARROSSEL CORRIGIDO
 ========================================================= */
 .modal{
     display:none; position:fixed; inset:0; background:rgba(8,8,9,.9);
@@ -519,116 +519,73 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 .whatsapp-button:hover{ background:#1ea952; transform:translateY(-2px); box-shadow:0 10px 24px rgba(37,211,102,.35); }
 
-/* CARROSSEL - IGUAL AO SITE ANTIGO (funciona perfeitamente) */
-.carousel {
-    position: relative;
-    width: 100%;
-    height: 420px;
-    overflow: hidden;
-    border-radius: 10px 10px 0 0;
-    touch-action: pan-y pinch-zoom;
-    background: #f5f5f5;
+/* CARROSSEL - IMAGEM INTEIRA, SEM ZOOM, SEM BARRAS PRETAS */
+.carousel{ 
+    position:relative; 
+    width:100%; 
+    aspect-ratio:1/1;
+    overflow:hidden; 
+    touch-action:pan-y pinch-zoom; 
+    background:#f5f5f5; 
 }
-
-.carousel-inner {
-    display: flex;
-    transition: transform 0.5s ease;
-    height: 100%;
-    width: 100%;
+.carousel-inner{ 
+    display:flex; 
+    transition:transform .45s var(--ease); 
+    height:100%; 
+    width:100%; 
 }
-
-.carousel-item {
-    min-width: 100%;
-    height: 100%;
-    position: relative;
-    flex-shrink: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
-    -webkit-user-drag: none;
-    background: #f5f5f5;
+.carousel-item{ 
+    min-width:100%; 
+    height:100%; 
+    position:relative; 
+    flex-shrink:0; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    user-select:none; 
+    -webkit-user-drag:none; 
+    overflow:hidden;
+    background:#f5f5f5;
 }
-
-.carousel-item img,
-.carousel-item video {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+.carousel-item img, 
+.carousel-item video{ 
+    width:100%; 
+    height:100%; 
+    object-fit:contain;
+    object-position: center center;
+    display:block;
 }
-
-.carousel-control {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    z-index: 10;
-    border-radius: 50%;
+.carousel-control{
+    position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.4);
+    color:white; border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; font-size:1.1rem; z-index:10;
+    transition:background .2s var(--ease);
 }
+.carousel-control:hover{ background:var(--red); }
+.carousel-control.prev{ left:14px; }
+.carousel-control.next{ right:14px; }
+.carousel-indicators{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; z-index:5; }
+.carousel-indicator{ width:8px; height:8px; border-radius:50%; background:rgba(0,0,0,.3); border:none; cursor:pointer; transition:all .2s var(--ease); }
+.carousel-indicator.active{ background:var(--red); width:20px; border-radius:4px; }
 
-.carousel-control.prev {
-    left: 10px;
-}
-
-.carousel-control.next {
-    right: 10px;
-}
-
-.carousel-control:hover {
-    background: rgba(0, 0, 0, 0.8);
-}
-
-.carousel-indicators {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 5px;
-    z-index: 5;
-}
-
-.carousel-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.carousel-indicator.active {
-    background: var(--red);
-    width: 20px;
-    border-radius: 4px;
-}
-
-.carousel-indicator.video-indicator {
-    background: var(--azul) !important;
-}
-
-@media (max-width: 768px) {
+/* RESPONSIVE - MOBILE */
+@media (max-width:768px){
     .modal{ padding:0; }
     .modal-content{ margin:0; min-height:100vh; border-radius:0; }
     .modal-body{ flex-direction:column; }
-    
-    .carousel {
-        height: 300px;
+    .carousel{ 
+        width:100%; 
+        aspect-ratio:1/1;
+        height:auto;
+        background:#f5f5f5;
     }
-    
-    .carousel-item img,
-    .carousel-item video {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
+    .carousel-item img, 
+    .carousel-item video{ 
+        width:100%; 
+        height:100%; 
+        object-fit:contain;
+        object-position: center center;
+        display:block;
     }
-    
     .modal-details{ padding:20px; }
     .modal-title, .modal-price{ text-align:center; }
     .spec-value{ max-width:60%; word-break:break-word; }
@@ -1005,6 +962,579 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     .payment-options{ flex-direction:column; }
     .payment-option{ width:100%; justify-content:center; }
 }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+    <div class="header-container">
+        <div class="logo">
+            <img src="logo.png" alt="Maiso Veículos" class="logo-image" id="logoImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span class="logo-fallback" style="display:none;">MAISO<span>VEÍCULOS</span></span>
+        </div>
+
+        <nav class="main-nav">
+            <ul class="nav-menu">
+                <li><a href="#vehicles">Veículos</a></li>
+                <li><a href="#about">Sobre a Loja</a></li>
+                <li><a href="#team">Equipe</a></li>
+                <li><a href="#location">Localização</a></li>
+            </ul>
+        </nav>
+
+        <div class="user-menu">
+            <div class="user-info" id="userInfo">
+                <span id="userName">Visitante</span>
+                <span id="userType" class="admin-badge" style="display:none;">Admin</span>
+                <span id="devType" class="dev-badge" style="display:none;">Dev</span>
+            </div>
+            <button class="header-login-btn" id="loginBtn">Entrar</button>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</header>
+
+<div class="mode-indicator" id="adminIndicator"><i class="fas fa-shield-alt"></i> Modo Administrador Ativo</div>
+<div class="mode-indicator" id="devIndicator"><i class="fas fa-code"></i> Modo Desenvolvedor Ativo — tudo é editável</div>
+
+<!-- ================= MOBILE DRAWER ================= -->
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+    <button class="drawer-close" id="drawerClose" aria-label="Fechar menu">&times;</button>
+    <ul class="drawer-links">
+        <li><a href="#vehicles">Veículos</a></li>
+        <li><a href="#about">Sobre a Loja</a></li>
+        <li><a href="#team">Equipe</a></li>
+        <li><a href="#location">Localização</a></li>
+    </ul>
+    <div class="drawer-bottom">
+        <div class="drawer-user">
+            <span id="drawerUserName">Visitante</span>
+            <span id="drawerUserType" class="admin-badge" style="display:none;">Admin</span>
+            <span id="drawerDevType" class="dev-badge" style="display:none;">Dev</span>
+        </div>
+        <button class="drawer-login-btn" id="drawerLoginBtn">Entrar</button>
+        <button class="drawer-logout-btn" id="drawerLogoutBtn">Sair</button>
+    </div>
+</div>
+
+<!-- ================= LOADING OVERLAY ================= -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" id="loadingText">Enviando...</div>
+        <div class="loading-subtext">Aguarde enquanto processamos as informações</div>
+    </div>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="hero-image" id="heroImage"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <span class="hero-eyebrow">Motos seminovas selecionadas</span>
+        <h1 class="hero-title">Encontre a moto <em>certa</em> para sua próxima jornada</h1>
+        <p class="hero-sub">Procedência garantida, revisão completa e as melhores condições de pagamento da região.</p>
+        <div class="hero-actions">
+            <a href="#vehicles" class="hero-btn primary"><i class="fas fa-motorcycle"></i> Ver estoque</a>
+            <a href="#location" class="hero-btn ghost"><i class="fas fa-map-marker-alt"></i> Como chegar</a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FEATURED ================= -->
+<section class="section featured" id="featured" style="display:none;">
+    <div class="section-title">
+        <span class="section-eyebrow">Selecionados para você</span>
+        <h2 id="featuredTitle">Ofertas em Destaque</h2>
+        <p id="featuredSubtitle">As melhores oportunidades do momento, escolhidas pela nossa equipe.</p>
+    </div>
+    <div class="featured-carousel-wrap">
+        <button class="featured-nav prev" id="featuredPrev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+        <div class="featured-track" id="featuredTrack"></div>
+        <button class="featured-nav next" id="featuredNext" aria-label="Próximo"><i class="fas fa-chevron-right"></i></button>
+    </div>
+</section>
+
+<!-- ================= VEHICLES ================= -->
+<section class="section vehicles" id="vehicles">
+    <div class="section-title">
+        <span class="section-eyebrow">Estoque atualizado</span>
+        <h2 id="vehiclesTitle">Nossos Veículos</h2>
+        <p>Selecione a categoria ideal para o seu perfil de uso e compare especificações em segundos.</p>
+    </div>
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="ate-110cc">Até 110cc</button>
+        <button class="filter-btn" data-filter="ate-150cc">Até 150cc</button>
+        <button class="filter-btn" data-filter="acima-160cc">Acima de 160cc</button>
+    </div>
+    <div class="vehicles-grid" id="vehiclesGrid">
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+    </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="section testimonials" id="testimonials" style="display:none;">
+    <div class="section-title">
+        <span class="section-eyebrow">Depoimentos</span>
+        <h2 id="testimonialsTitle">Clientes Satisfeitos</h2>
+        <p id="testimonialsSubtitle">Quem já comprou com a gente conta como foi a experiência.</p>
+    </div>
+    <div class="testimonials-carousel-wrap">
+        <button class="testimonials-nav prev" id="testimonialsPrev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+        <div class="testimonials-track" id="testimonialsTrack"></div>
+        <button class="testimonials-nav next" id="testimonialsNext" aria-label="Próximo"><i class="fas fa-chevron-right"></i></button>
+    </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="section about" id="about">
+    <div class="section-title">
+        <span class="section-eyebrow">Quem somos</span>
+        <h2 id="aboutTitle">Sobre a Loja</h2>
+    </div>
+    <div class="about-content">
+        <div class="about-text">
+            <h3 id="aboutSubtitle">Mais de 10 anos no mercado</h3>
+            <p id="aboutText1">A Maiso Veículos é referência no mercado de motos seminovas, oferecendo produtos de qualidade com procedência garantida.</p>
+            <p id="aboutText2">Nossa missão é proporcionar a melhor experiência de compra, com transparência, segurança e atendimento personalizado.</p>
+            <p id="aboutText3">Trabalhamos com as melhores marcas do mercado e oferecemos garantia em todos os nossos veículos.</p>
+            <div class="about-stats">
+                <div class="about-stat"><b>10+</b><span>Anos de mercado</span></div>
+                <div class="about-stat"><b>100%</b><span>Procedência verificada</span></div>
+                <div class="about-stat"><b>3x</b><span>Opções de pagamento</span></div>
+            </div>
+        </div>
+        <div class="about-image">
+            <img src="loja.jpg" alt="Loja Maiso Veículos" id="aboutImg" onerror="this.parentElement.style.display='none';">
+        </div>
+    </div>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section class="section team" id="team">
+    <div class="section-title">
+        <span class="section-eyebrow">Time</span>
+        <h2 id="teamTitle">Nossa Equipe</h2>
+    </div>
+    <div class="team-grid">
+        <div class="team-member">
+            <div class="member-img-wrap"><img src="vendedor1.jpg" alt="Vendedor" class="member-img" id="member1Img" onerror="this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Foto';"></div>
+            <div class="member-info">
+                <h3 class="member-name" id="member1Name">João Silva</h3>
+                <p class="member-role" id="member1Role">Vendedor</p>
+                <p class="member-desc" id="member1Desc">Especialista em motos esportivas e custom, com mais de 8 anos de experiência.</p>
+            </div>
+        </div>
+        <div class="team-member">
+            <div class="member-img-wrap"><img src="vendedor2.jpg" alt="Vendedor" class="member-img" id="member2Img" onerror="this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Foto';"></div>
+            <div class="member-info">
+                <h3 class="member-name" id="member2Name">Maria Santos</h3>
+                <p class="member-role" id="member2Role">Vendedora</p>
+                <p class="member-desc" id="member2Desc">Especialista em scooters e motos urbanas, sempre pronta para ajudar.</p>
+            </div>
+        </div>
+        <div class="team-member">
+            <div class="member-img-wrap"><img src="gerente.jpg" alt="Gerente" class="member-img" id="member3Img" onerror="this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Foto';"></div>
+            <div class="member-info">
+                <h3 class="member-name" id="member3Name">Carlos Oliveira</h3>
+                <p class="member-role" id="member3Role">Gerente</p>
+                <p class="member-desc" id="member3Desc">Com mais de 15 anos no mercado, garante a melhor experiência para nossos clientes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= LOCATION ================= -->
+<section class="section location" id="location">
+    <div class="section-title">
+        <span class="section-eyebrow">Visite-nos</span>
+        <h2 id="locationTitle">Localização</h2>
+    </div>
+    <div class="location-container">
+        <div class="location-info">
+            <h3 id="locationSubtitle">Venha nos Visitar</h3>
+            <div class="location-row"><i class="fas fa-map-marker-alt"></i><div><span class="label">Endereço</span><span class="value" id="locationAddress">Rua das Motos, 123 - Centro, São Paulo - SP</span></div></div>
+            <div class="location-row"><i class="fas fa-phone"></i><div><span class="label">Telefone</span><span class="value" id="locationPhone">(11) 9999-9999</span></div></div>
+            <div class="location-row"><i class="fas fa-envelope"></i><div><span class="label">E-mail</span><span class="value" id="locationEmail">contato@maisoveiculos.com.br</span></div></div>
+            <div class="location-row"><i class="fas fa-clock"></i><div><span class="label">Horário</span><span class="value" id="locationHours">Segunda a Sexta: 9h às 18h | Sábado: 9h às 13h</span></div></div>
+            <div class="location-row"><i class="fab fa-whatsapp"></i><div><span class="label">WhatsApp</span><span class="value" id="locationWhatsapp">WhatsApp: (11) 99999-9999</span></div></div>
+        </div>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2865.600131799303!2d-42.69786453939535!3d-9.007513882590832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x77a04a5ac7585d1%3A0xf100415c102c5dbc!2sMAISO%20VEICULOS!5e0!3m2!1spt-BR!2sbr!4v1759707802712!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa de localização"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3 id="footerTitle1">Maiso Veículos</h3>
+            <p id="footerDescription">Há mais de 10 anos no mercado, oferecendo as melhores motos seminovas com garantia e procedência.</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/maisoveiculos?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" id="socialInstagram" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=5589981210995" id="socialWhatsapp" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div class="footer-column">
+            <h3 id="footerTitle2">Links Rápidos</h3>
+            <ul>
+                <li><a href="#vehicles">Veículos</a></li>
+                <li><a href="#about">Sobre a Loja</a></li>
+                <li><a href="#team">Equipe</a></li>
+                <li><a href="#location">Localização</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3 id="footerTitle3">Contato</h3>
+            <ul>
+                <li><i class="fas fa-map-marker-alt"></i> <span id="footerAddress">Rua das Motos, 123 - Centro, SP</span></li>
+                <li><i class="fas fa-phone"></i> <span id="footerPhone">(11) 9999-9999</span></li>
+                <li><i class="fas fa-envelope"></i> <span id="footerEmail">contato@maisoveiculos.com.br</span></li>
+                <li><i class="fas fa-clock"></i> <span id="footerHours">Seg-Sex: 9h-18h | Sáb: 9h-13h</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p id="footerCopyright">&copy; 2023 Maiso Veículos. Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+<!-- ================= VEHICLE DETAILS MODAL ================= -->
+<div class="modal" id="vehicleModal">
+    <div class="modal-content">
+        <button class="close-modal" id="closeModal" aria-label="Fechar">&times;</button>
+        <div class="modal-body">
+            <div class="carousel-container">
+                <div class="carousel" id="carousel">
+                    <div class="carousel-inner" id="carouselInner"></div>
+                    <button class="carousel-control prev" id="prevBtn" aria-label="Mídia anterior">&#10094;</button>
+                    <button class="carousel-control next" id="nextBtn" aria-label="Próxima mídia">&#10095;</button>
+                    <div class="carousel-indicators" id="carouselIndicators"></div>
+                </div>
+            </div>
+            <div class="modal-details">
+                <span class="modal-eyebrow" id="modalEyebrow">Ficha técnica</span>
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <p class="modal-price" id="modalPrice"></p>
+                <div class="modal-specs" id="modalSpecs"></div>
+                <div class="payment-info">
+                    <h3 id="paymentTitle">Opções de Pagamento</h3>
+                    <div class="payment-options">
+                        <div class="payment-option"><i class="fas fa-money-bill-wave"></i> <span id="paymentCash">À Vista</span></div>
+                        <div class="payment-option"><i class="fas fa-credit-card"></i> <span id="paymentCard">Cartão</span></div>
+                        <div class="payment-option"><i class="fas fa-file-invoice-dollar"></i> <span id="paymentFinancing">Financiamento</span></div>
+                    </div>
+                </div>
+                <div class="modal-contact">
+                    <p id="modalContactText">Interessado neste veículo?</p>
+                    <a href="#" class="whatsapp-button" id="whatsappButton" target="_blank" rel="noopener">
+                        <i class="fab fa-whatsapp"></i> <span id="whatsappButtonText">Falar no WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= LOGIN MODAL ================= -->
+<div class="login-modal" id="loginModal">
+    <div class="login-content">
+        <div class="login-tabs">
+            <button class="login-tab active" data-tab="user">Usuário</button>
+            <button class="login-tab" data-tab="admin">Administrador</button>
+            <button class="login-tab" data-tab="dev">Desenvolvedor</button>
+        </div>
+        <div id="userLogin">
+            <input type="text" class="login-input" id="userNameInput" placeholder="Seu nome">
+            <button class="modal-submit-btn" id="userLoginBtn">Entrar como Usuário</button>
+        </div>
+        <div id="adminLogin" style="display:none;">
+            <input type="password" class="login-input" id="adminPassword" placeholder="Senha de Administrador">
+            <button class="modal-submit-btn" id="adminLoginBtn">Entrar como Admin</button>
+        </div>
+        <div id="devLogin" style="display:none;">
+            <input type="password" class="login-input" id="devPassword" placeholder="Senha de Desenvolvedor">
+            <button class="modal-submit-btn" id="devLoginBtn">Entrar como Dev</button>
+        </div>
+        <div class="login-error" id="loginError">Senha incorreta!</div>
+    </div>
+</div>
+
+<!-- ================= ADMIN PANEL ================= -->
+<div class="admin-panel" id="adminPanel">
+    <div class="admin-content">
+        <div class="admin-header">
+            <h2>Painel Administrativo</h2>
+            <button class="btn-close" id="closeAdminPanel" aria-label="Fechar">&times;</button>
+        </div>
+        <div class="admin-body">
+
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" data-admin-tab="vehicles">Veículos</button>
+                <button class="admin-tab-btn" data-admin-tab="testimonials">Depoimentos</button>
+            </div>
+
+            <!-- ---- ABA: VEÍCULOS ---- -->
+            <div class="admin-tab-panel active" id="adminTabVehicles">
+                <h3 style="margin-bottom:20px; text-transform:uppercase; font-size:1.05rem;" id="formTitle">Adicionar Novo Veículo</h3>
+                <form id="addVehicleForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehicleName">Nome do Veículo</label>
+                            <input type="text" class="form-control" id="vehicleName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleType">Categoria</label>
+                            <select class="form-control" id="vehicleType" required>
+                                <option value="ate-110cc">Até 110cc</option>
+                                <option value="ate-150cc">Até 150cc</option>
+                                <option value="acima-160cc">Acima de 160cc</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehiclePrice">Preço (R$)</label>
+                            <input type="number" class="form-control" id="vehiclePrice" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleYear">Ano</label>
+                            <input type="text" class="form-control" id="vehicleYear" placeholder="Ex: 2024/2025" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehicleKm">Quilometragem</label>
+                            <input type="number" class="form-control" id="vehicleKm" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleColor">Cor</label>
+                            <input type="text" class="form-control" id="vehicleColor">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="vehicleDescription">Descrição</label>
+                        <textarea class="form-control" id="vehicleDescription" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-check-row">
+                        <input type="checkbox" id="vehicleFeatured">
+                        <label for="vehicleFeatured">Destacar na vitrine de ofertas (carrossel do início do site)</label>
+                    </div>
+
+                    <div class="upload-section">
+                        <h4>Fotos do Veículo (salvas no Google Drive)</h4>
+                        <div id="existingMediaWrap" style="display:none; margin-bottom:16px;">
+                            <div class="upload-info" style="margin-bottom:8px;">Fotos já cadastradas (clique no X para remover):</div>
+                            <div class="preview-container" id="existingMediaContainer"></div>
+                        </div>
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arraste imagens aqui ou clique para selecionar</p>
+                            <p class="upload-info">Formatos suportados: JPG, PNG, WEBP (máx. 10MB cada) — as fotos são otimizadas automaticamente para um envio mais rápido.</p>
+                        </div>
+                        <input type="file" class="file-input" id="fileInput" multiple accept="image/*">
+                        <div class="media-counter" id="mediaCounter">0 novas fotos selecionadas</div>
+                        <div class="preview-container" id="previewContainer"></div>
+                    </div>
+
+                    <div class="admin-actions">
+                        <button type="submit" class="btn btn-success" id="submitBtn">Adicionar Veículo</button>
+                        <button type="button" class="btn btn-secondary" id="clearForm">Limpar Formulário</button>
+                    </div>
+                </form>
+
+                <div class="status-message" id="formStatus"></div>
+
+                <div class="moto-list" id="motoList">
+                    <h3>Veículos Cadastrados</h3>
+                </div>
+            </div>
+
+            <!-- ---- ABA: DEPOIMENTOS ---- -->
+            <div class="admin-tab-panel" id="adminTabTestimonials">
+                <h3 style="margin-bottom:20px; text-transform:uppercase; font-size:1.05rem;" id="testimonialFormTitle">Adicionar Depoimento</h3>
+                <form id="addTestimonialForm">
+                    <div class="form-group">
+                        <label for="testimonialName">Nome do Cliente</label>
+                        <input type="text" class="form-control" id="testimonialName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="testimonialText">Depoimento</label>
+                        <textarea class="form-control" id="testimonialText" rows="3" placeholder="Ex: Ótimo atendimento, comprei minha moto com total segurança!" required></textarea>
+                    </div>
+
+                    <div class="upload-section">
+                        <h4>Foto do Cliente (salva no Google Drive)</h4>
+                        <div id="existingTestimonialPhotoWrap" style="display:none; margin-bottom:16px;">
+                            <div class="upload-info" style="margin-bottom:8px;">Foto atual (clique no X para remover):</div>
+                            <div class="preview-container" id="existingTestimonialPhotoContainer"></div>
+                        </div>
+                        <div class="upload-area" id="testimonialUploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arraste uma foto aqui ou clique para selecionar</p>
+                            <p class="upload-info">Formatos suportados: JPG, PNG, WEBP (máx. 10MB). Apenas 1 foto por depoimento.</p>
+                        </div>
+                        <input type="file" class="file-input" id="testimonialFileInput" accept="image/*">
+                        <div class="media-counter" id="testimonialMediaCounter">Nenhuma foto selecionada</div>
+                        <div class="preview-container" id="testimonialPreviewContainer"></div>
+                    </div>
+
+                    <div class="admin-actions">
+                        <button type="submit" class="btn btn-success" id="testimonialSubmitBtn">Adicionar Depoimento</button>
+                        <button type="button" class="btn btn-secondary" id="clearTestimonialForm">Limpar Formulário</button>
+                    </div>
+                </form>
+
+                <div class="status-message" id="testimonialFormStatus"></div>
+
+                <div class="moto-list" id="testimonialList">
+                    <h3>Depoimentos Cadastrados</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ================= TEXT/IMAGE EDIT PANEL ================= -->
+<div class="text-edit-panel" id="textEditPanel">
+    <div class="text-edit-content">
+        <div class="text-edit-header">
+            <h2>Editor Completo do Site (Dev)</h2>
+            <button class="btn-close" id="closeTextEditPanel" aria-label="Fechar">&times;</button>
+        </div>
+        <div class="text-edit-body">
+
+            <div class="text-edit-section">
+                <h3>Imagens do Site</h3>
+                <div id="imageEditorContainer"></div>
+                <p class="upload-info">As imagens são enviadas direto para o Google Drive (a imagem antiga é removida automaticamente) e o link é salvo ao clicar em "Salvar Todas as Alterações".</p>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Header</h3>
+                <div class="text-edit-item"><label for="editUserName">Nome do Usuário (Header)</label><input type="text" class="form-control" id="editUserName"></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Navegação</h3>
+                <div class="text-edit-item"><label for="editNavVehicles">Link Veículos</label><input type="text" class="form-control" id="editNavVehicles"></div>
+                <div class="text-edit-item"><label for="editNavAbout">Link Sobre a Loja</label><input type="text" class="form-control" id="editNavAbout"></div>
+                <div class="text-edit-item"><label for="editNavTeam">Link Equipe</label><input type="text" class="form-control" id="editNavTeam"></div>
+                <div class="text-edit-item"><label for="editNavLocation">Link Localização</label><input type="text" class="form-control" id="editNavLocation"></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Seção Destaques</h3>
+                <div class="text-edit-item"><label for="editFeaturedTitle">Título da Seção</label><input type="text" class="form-control" id="editFeaturedTitle"></div>
+                <div class="text-edit-item"><label for="editFeaturedSubtitle">Subtítulo</label><input type="text" class="form-control" id="editFeaturedSubtitle"></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Seção Veículos</h3>
+                <div class="text-edit-item"><label for="editVehiclesTitle">Título da Seção</label><input type="text" class="form-control" id="editVehiclesTitle"></div>
+                <div class="text-edit-item"><label for="editFilterAll">Filtro - Todos</label><input type="text" class="form-control" id="editFilterAll"></div>
+                <div class="text-edit-item"><label for="editFilter110cc">Filtro - Até 110cc</label><input type="text" class="form-control" id="editFilter110cc"></div>
+                <div class="text-edit-item"><label for="editFilter150cc">Filtro - Até 150cc</label><input type="text" class="form-control" id="editFilter150cc"></div>
+                <div class="text-edit-item"><label for="editFilter160cc">Filtro - Acima de 160cc</label><input type="text" class="form-control" id="editFilter160cc"></div>
+                <div class="text-edit-item"><label for="editVehicleBtn">Texto do Botão Ver Detalhes</label><input type="text" class="form-control" id="editVehicleBtn"></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Seção Depoimentos</h3>
+                <div class="text-edit-item"><label for="editTestimonialsTitle">Título da Seção</label><input type="text" class="form-control" id="editTestimonialsTitle"></div>
+                <div class="text-edit-item"><label for="editTestimonialsSubtitle">Subtítulo</label><input type="text" class="form-control" id="editTestimonialsSubtitle"></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Seção Sobre a Loja</h3>
+                <div class="text-edit-item"><label for="editAboutTitle">Título da Seção</label><input type="text" class="form-control" id="editAboutTitle"></div>
+                <div class="text-edit-item"><label for="editAboutSubtitle">Subtítulo</label><input type="text" class="form-control" id="editAboutSubtitle"></div>
+                <div class="text-edit-item"><label for="editAboutText1">Texto 1</label><textarea class="form-control" id="editAboutText1"></textarea></div>
+                <div class="text-edit-item"><label for="editAboutText2">Texto 2</label><textarea class="form-control" id="editAboutText2"></textarea></div>
+                <div class="text-edit-item"><label for="editAboutText3">Texto 3</label><textarea class="form-control" id="editAboutText3"></textarea></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Seção Equipe</h3>
+                <div class="text-edit-item"><label for="editTeamTitle">Título da Seção</label><input type="text" class="form-control" id="editTeamTitle"></div>
+                <div class="text-edit-item"><label for="editMember1Name">Nome do Membro 1</label><input type="text" class="form-control" id="editMember1Name"></div>
+                <div class="text-edit-item"><label for="editMember1Role">Cargo do Membro 1</label><input type="text" class="form-control" id="editMember1Role"></div>
+                <div class="text-edit-item"><label for="editMember1Desc">Descrição do Membro 1</label><textarea class="form-control" id="editMember1Desc"></textarea></div>
+                <div class="text-edit-item"><label for="editMember2Name">Nome do Membro 2</label><input type="text" class="form-control" id="editMember2Name"></div>
+                <div class="text-edit-item"><label for="editMember2Role">Cargo do Membro 2</label><input type="text" class="form-control" id="editMember2Role"></div>
+                <div class="text-edit-item"><label for="editMember2Desc">Descrição do Membro 2</label><textarea class="form-control" id="editMember2Desc"></textarea></div>
+                <div class="text-edit-item"><label for="editMember3Name">Nome do Membro 3</label><input type="text" class="form-control" id="editMember3Name"></div>
+                <div class="text-edit-item"><label for="editMember3Role">Cargo do Membro 3</label><input type="text" class="form-control" id="editMember3Role"></div>
+                <div class="text-edit-item"><label for="editMember3Desc">Descrição do Membro 3</label><textarea class="form-control" id="editMember3Desc"></textarea></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Seção Localização</h3>
+                <div class="text-edit-item"><label for="editLocationTitle">Título da Seção</label><input type="text" class="form-control" id="editLocationTitle"></div>
+                <div class="text-edit-item"><label for="editLocationSubtitle">Subtítulo</label><input type="text" class="form-control" id="editLocationSubtitle"></div>
+                <div class="text-edit-item"><label for="editLocationAddress">Endereço</label><input type="text" class="form-control" id="editLocationAddress"></div>
+                <div class="text-edit-item"><label for="editLocationPhone">Telefone</label><input type="text" class="form-control" id="editLocationPhone"></div>
+                <div class="text-edit-item"><label for="editLocationEmail">E-mail</label><input type="text" class="form-control" id="editLocationEmail"></div>
+                <div class="text-edit-item"><label for="editLocationHours">Horário de Funcionamento</label><input type="text" class="form-control" id="editLocationHours"></div>
+                <div class="text-edit-item"><label for="editLocationWhatsapp">WhatsApp</label><input type="text" class="form-control" id="editLocationWhatsapp"></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Rodapé</h3>
+                <div class="text-edit-item"><label for="editFooterTitle1">Título Coluna 1</label><input type="text" class="form-control" id="editFooterTitle1"></div>
+                <div class="text-edit-item"><label for="editFooterDescription">Descrição</label><textarea class="form-control" id="editFooterDescription"></textarea></div>
+                <div class="text-edit-item"><label for="editFooterTitle2">Título Coluna 2</label><input type="text" class="form-control" id="editFooterTitle2"></div>
+                <div class="text-edit-item"><label for="editFooterTitle3">Título Coluna 3</label><input type="text" class="form-control" id="editFooterTitle3"></div>
+                <div class="text-edit-item"><label for="editFooterAddress">Endereço (Footer)</label><input type="text" class="form-control" id="editFooterAddress"></div>
+                <div class="text-edit-item"><label for="editFooterPhone">Telefone (Footer)</label><input type="text" class="form-control" id="editFooterPhone"></div>
+                <div class="text-edit-item"><label for="editFooterEmail">E-mail (Footer)</label><input type="text" class="form-control" id="editFooterEmail"></div>
+                <div class="text-edit-item"><label for="editFooterHours">Horário (Footer)</label><input type="text" class="form-control" id="editFooterHours"></div>
+                <div class="text-edit-item"><label for="editFooterCopyright">Texto de Copyright</label><input type="text" class="form-control" id="editFooterCopyright"></div>
+            </div>
+
+            <div class="text-edit-section">
+                <h3>Modal de Detalhes</h3>
+                <div class="text-edit-item"><label for="editPaymentTitle">Título Opções de Pagamento</label><input type="text" class="form-control" id="editPaymentTitle"></div>
+                <div class="text-edit-item"><label for="editPaymentCash">Opção À Vista</label><input type="text" class="form-control" id="editPaymentCash"></div>
+                <div class="text-edit-item"><label for="editPaymentCard">Opção Cartão</label><input type="text" class="form-control" id="editPaymentCard"></div>
+                <div class="text-edit-item"><label for="editPaymentFinancing">Opção Financiamento</label><input type="text" class="form-control" id="editPaymentFinancing"></div>
+                <div class="text-edit-item"><label for="editModalContact">Texto de Contato</label><input type="text" class="form-control" id="editModalContact"></div>
+                <div class="text-edit-item"><label for="editWhatsappButton">Texto do Botão WhatsApp</label><input type="text" class="form-control" id="editWhatsappButton"></div>
+            </div>
+
+            <div class="text-edit-actions">
+                <button type="button" class="btn btn-success" id="saveTextChanges">Salvar Todas as Alterações</button>
+                <button type="button" class="btn btn-secondary" id="cancelTextChanges">Cancelar</button>
+            </div>
+
+            <div class="status-message" id="textEditStatus"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= FLOATING BUTTONS ================= -->
+<button class="float-btn" id="floatBtn" style="display:none;" aria-label="Painel administrativo" title="Painel administrativo">
+    <i class="fas fa-tools"></i>
+</button>
+<button class="text-edit-btn" id="textEditBtn" style="display:none;" aria-label="Editor de conteúdo" title="Editor de conteúdo">
+    <i class="fas fa-edit"></i>
+</button>
+
+<!-- ================= APP LOGIC ================= -->
 <script>
 /* =========================================================
    CONFIGURAÇÃO
