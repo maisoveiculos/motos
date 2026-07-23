@@ -178,7 +178,9 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .hero-image{
     position:absolute; inset:0; z-index:1;
     background-image:url('capa.jpg');
-    background-size:cover; background-position:center; background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
 }
 .hero-overlay{
     position:absolute; inset:0; z-index:2;
@@ -262,6 +264,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     width:100%; 
     height:100%; 
     object-fit:cover;
+    object-position: center center;
     transition:transform .5s var(--ease); 
 }
 .featured-card:hover .featured-media img{ transform:scale(1.08); }
@@ -313,6 +316,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     width:100%; 
     height:100%; 
     object-fit:cover;
+    object-position: center center;
 }
 .testimonial-quote-icon{
     position:absolute; top:12px; left:12px; width:34px; height:34px; border-radius:50%;
@@ -372,6 +376,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     width:100%; 
     height:100%; 
     object-fit:cover;
+    object-position: center center;
     transition:transform .6s var(--ease); 
 }
 .vehicle-card:hover .vehicle-img{ transform:scale(1.08); }
@@ -457,7 +462,9 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     height:250px; 
     background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); 
     background-size:300% 100%; 
-    animation:shimmer 1.4s infinite; 
+    animation:shimmer 1.4s infinite;
+    object-fit:cover;
+    object-position: center center;
 }
 .skeleton-line{ height:12px; margin:16px 18px; border-radius:4px; background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); background-size:300% 100%; animation:shimmer 1.4s infinite; }
 .skeleton-line.short{ width:50%; }
@@ -514,13 +521,14 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 .whatsapp-button:hover{ background:#1ea952; transform:translateY(-2px); box-shadow:0 10px 24px rgba(37,211,102,.35); }
 
+/* CARROSSEL CORRIGIDO - SEM ZOOM, SEM FAIXA PRETA */
 .carousel{ 
     position:relative; 
     width:100%; 
-    height:420px; 
+    aspect-ratio:1/1;
     overflow:hidden; 
     touch-action:pan-y pinch-zoom; 
-    background:var(--black); 
+    background:#fff; 
 }
 .carousel-inner{ 
     display:flex; 
@@ -539,15 +547,15 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     user-select:none; 
     -webkit-user-drag:none; 
     overflow:hidden;
-    background: var(--black);
 }
 .carousel-item img, 
 .carousel-item video{ 
     width:100%; 
     height:100%; 
-    object-fit:cover;
+    object-fit:contain;
     object-position: center center;
     display:block;
+    background:#fff;
 }
 .carousel-control{
     position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.12);
@@ -557,63 +565,28 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .carousel-control:hover{ background:var(--red); }
 .carousel-control.prev{ left:14px; }
 .carousel-control.next{ right:14px; }
-.carousel-indicators{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; }
+.carousel-indicators{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; z-index:5; }
 .carousel-indicator{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.4); border:none; cursor:pointer; transition:all .2s var(--ease); }
 .carousel-indicator.active{ background:var(--red); width:20px; border-radius:4px; }
 
+/* RESPONSIVE - MOBILE */
 @media (max-width:768px){
     .modal{ padding:0; }
     .modal-content{ margin:0; min-height:100vh; border-radius:0; }
     .modal-body{ flex-direction:column; }
-    .carousel{ height:380px; }
+    .carousel{ 
+        width:100%; 
+        aspect-ratio:1/1;
+        height:auto;
+    }
     .carousel-item img, 
     .carousel-item video{ 
         width:100%; 
         height:100%; 
-        object-fit:cover;
+        object-fit:contain;
         object-position: center center;
         display:block;
-    }
-    .modal-details{ padding:20px; }
-    .modal-title, .modal-price{ text-align:center; }
-    .spec-value{ max-width:60%; word-break:break-word; }
-}
-/* =========================================================
-   CORREÇÃO: IMAGEM PREENCHE TODO O ESPAÇO SEM BORDAS PRETAS
-========================================================= */
-.carousel-item img, 
-.carousel-item video{ 
-    width:100%; 
-    height:100%; 
-    object-fit:cover;
-    display:block;
-}
-.carousel-control{
-    position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.12);
-    color:white; border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; font-size:1.1rem; z-index:10;
-    transition:background .2s var(--ease); backdrop-filter:blur(4px);
-}
-.carousel-control:hover{ background:var(--red); }
-.carousel-control.prev{ left:14px; }
-.carousel-control.next{ right:14px; }
-.carousel-indicators{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; }
-.carousel-indicator{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.4); border:none; cursor:pointer; transition:all .2s var(--ease); }
-.carousel-indicator.active{ background:var(--red); width:20px; border-radius:4px; }
-
-/* =========================================================
-   RESPONSIVE - MOBILE (MESMA COISA, IMAGEM PREENCHE TUDO)
-========================================================= */
-@media (max-width:768px){
-    .modal{ padding:0; }
-    .modal-content{ margin:0; min-height:100vh; border-radius:0; }
-    .modal-body{ flex-direction:column; }
-    .carousel{ height:380px; }
-    .carousel-item img, 
-    .carousel-item video{ 
-        width:100%; 
-        height:100%; 
-        object-fit:cover;
-        display:block;
+        background:#fff;
     }
     .modal-details{ padding:20px; }
     .modal-title, .modal-price{ text-align:center; }
@@ -640,6 +613,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     width:100%; 
     height:300px;
     object-fit:cover;
+    object-position: center center;
     border-radius:var(--radius-lg); 
     box-shadow:var(--shadow-md); 
     position:relative; 
@@ -664,6 +638,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     width:100%; 
     height:100%; 
     object-fit:cover;
+    object-position: center center;
     filter:grayscale(65%); 
     transition:filter .4s var(--ease), transform .4s var(--ease); 
 }
@@ -810,7 +785,8 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .moto-thumbnail{ 
     width:56px; 
     height:56px; 
-    object-fit:cover; 
+    object-fit:cover;
+    object-position: center center;
     border-radius:6px; 
     flex-shrink:0; 
 }
@@ -840,7 +816,8 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .preview-item video{ 
     width:100%; 
     height:100%; 
-    object-fit:cover; 
+    object-fit:cover;
+    object-position: center center;
 }
 .preview-item .remove-btn{
     position:absolute; top:5px; right:5px; background:rgba(220,53,69,.85); color:white; border:none;
@@ -860,7 +837,8 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .existing-media-item img{ 
     width:100%; 
     height:100%; 
-    object-fit:cover; 
+    object-fit:cover;
+    object-position: center center;
 }
 .existing-media-item .delete-existing{
     position:absolute; top:5px; right:5px; background:rgba(220,53,69,.85); color:white; border:none;
@@ -893,6 +871,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     width:70px; 
     height:70px; 
     object-fit:cover;
+    object-position: center center;
     border-radius:8px; 
     background:var(--black); 
     flex-shrink:0; 
