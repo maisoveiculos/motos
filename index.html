@@ -464,7 +464,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 @keyframes shimmer{ 0%{background-position:100% 0} 100%{background-position:-100% 0} }
 
 /* =========================================================
-   VEHICLE MODAL
+   VEHICLE MODAL - CORRIGIDO
 ========================================================= */
 .modal{
     display:none; position:fixed; inset:0; background:rgba(8,8,9,.9);
@@ -539,13 +539,14 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     user-select:none; 
     -webkit-user-drag:none; 
 }
+/* =========================================================
+   CORREÇÃO: IMAGEM OCUPA TODO O ESPAÇO
+========================================================= */
 .carousel-item img, 
 .carousel-item video{ 
-    max-width:100%; 
-    max-height:100%; 
-    object-fit:contain;
-    display:block;
-    margin:0 auto;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 .carousel-control{
     position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.12);
@@ -558,6 +559,25 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .carousel-indicators{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; }
 .carousel-indicator{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.4); border:none; cursor:pointer; transition:all .2s var(--ease); }
 .carousel-indicator.active{ background:var(--red); width:20px; border-radius:4px; }
+
+/* =========================================================
+   RESPONSIVE - MOBILE (IMAGEM PREENCHE TUDO)
+========================================================= */
+@media (max-width:768px){
+    .modal{ padding:0; }
+    .modal-content{ margin:0; min-height:100vh; border-radius:0; }
+    .modal-body{ flex-direction:column; }
+    .carousel{ height:380px; }
+    .carousel-item img, 
+    .carousel-item video{ 
+        width:100%;
+        height:100%;
+        object-fit:cover;
+    }
+    .modal-details{ padding:20px; }
+    .modal-title, .modal-price{ text-align:center; }
+    .spec-value{ max-width:60%; word-break:break-word; }
+}
 
 /* =========================================================
    ABOUT
@@ -876,7 +896,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .float-btn:hover, .text-edit-btn:hover{ transform:scale(1.08); }
 
 /* =========================================================
-   RESPONSIVE - ALTERAÇÕES PRINCIPAIS
+   RESPONSIVE - PRINCIPAL
 ========================================================= */
 
 /* Desktop: mostrar o texto "MAISO VEÍCULOS" e esconder a imagem da logo */
@@ -905,15 +925,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     .section{ padding:64px 18px; }
     .hero-content{ padding:0 18px 40px; }
 
-    /* Ajuste do modal para melhor visualização das imagens no mobile */
-    .modal{ padding:0; }
-    .modal-content{ margin:0; min-height:100vh; border-radius:0; }
-    .modal-body{ flex-direction:column; }
-    .carousel{ height:380px; }  /* aumentado para melhor visualização */
-    .modal-details{ padding:20px; }
-    .modal-title, .modal-price{ text-align:center; }
-    .spec-value{ max-width:60%; word-break:break-word; }
-
     .form-row{ flex-direction:column; gap:18px; }
     .admin-actions{ flex-direction:column; }
     .preview-container{ grid-template-columns:repeat(2, 1fr); }
@@ -924,14 +935,14 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     .testimonial-card{ width:260px; }
 }
 
+@media (max-width:900px){
+    .main-nav{ display:none; }
+}
+
 @media (max-width:480px){
     .hero{ height:60vh; min-height:340px; }
     .payment-options{ flex-direction:column; }
     .payment-option{ width:100%; justify-content:center; }
-}
-
-@media (max-width:900px){
-    .main-nav{ display:none; }
 }
 </style>
 </head>
@@ -1584,7 +1595,6 @@ async function uploadImage(file) {
             throw new Error(result.message || 'Falha no upload');
         }
         
-        // 🔥 USA A URL DIRETA DO DRIVE
         return result.url;
     } catch (error) {
         console.error('❌ Erro no upload:', error);
