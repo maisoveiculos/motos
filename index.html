@@ -463,15 +463,13 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); 
     background-size:300% 100%; 
     animation:shimmer 1.4s infinite;
-    object-fit:cover;
-    object-position: center center;
 }
 .skeleton-line{ height:12px; margin:16px 18px; border-radius:4px; background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); background-size:300% 100%; animation:shimmer 1.4s infinite; }
 .skeleton-line.short{ width:50%; }
 @keyframes shimmer{ 0%{background-position:100% 0} 100%{background-position:-100% 0} }
 
 /* =========================================================
-   VEHICLE MODAL - CORRIGIDO (IMAGEM PREENCHE TODO O ESPAÇO)
+   VEHICLE MODAL - CARROSSEL CORRIGIDO
 ========================================================= */
 .modal{
     display:none; position:fixed; inset:0; background:rgba(8,8,9,.9);
@@ -490,7 +488,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .close-modal:hover{ transform:rotate(90deg); background:var(--white); }
 
 .modal-body{ display:flex; flex-wrap:wrap; }
-.carousel-container{ flex:1 1 460px; min-width:320px; background:var(--black); }
+.carousel-container{ flex:1 1 460px; min-width:320px; background:#f5f5f5; }
 .modal-details{ flex:1 1 420px; min-width:320px; padding:34px; display:flex; flex-direction:column; }
 
 .modal-eyebrow{ font-family:var(--font-mono); font-size:.72rem; color:var(--red); letter-spacing:2px; text-transform:uppercase; font-weight:700; margin-bottom:6px; }
@@ -521,14 +519,14 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 .whatsapp-button:hover{ background:#1ea952; transform:translateY(-2px); box-shadow:0 10px 24px rgba(37,211,102,.35); }
 
-/* CARROSSEL CORRIGIDO - SEM ZOOM, SEM FAIXA PRETA */
+/* CARROSSEL - IMAGEM INTEIRA, SEM ZOOM, SEM BARRAS PRETAS */
 .carousel{ 
     position:relative; 
     width:100%; 
     aspect-ratio:1/1;
     overflow:hidden; 
     touch-action:pan-y pinch-zoom; 
-    background:#fff; 
+    background:#f5f5f5; 
 }
 .carousel-inner{ 
     display:flex; 
@@ -547,6 +545,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     user-select:none; 
     -webkit-user-drag:none; 
     overflow:hidden;
+    background:#f5f5f5;
 }
 .carousel-item img, 
 .carousel-item video{ 
@@ -555,18 +554,17 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     object-fit:contain;
     object-position: center center;
     display:block;
-    background:#fff;
 }
 .carousel-control{
-    position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.12);
+    position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.4);
     color:white; border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; font-size:1.1rem; z-index:10;
-    transition:background .2s var(--ease); backdrop-filter:blur(4px);
+    transition:background .2s var(--ease);
 }
 .carousel-control:hover{ background:var(--red); }
 .carousel-control.prev{ left:14px; }
 .carousel-control.next{ right:14px; }
 .carousel-indicators{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; z-index:5; }
-.carousel-indicator{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.4); border:none; cursor:pointer; transition:all .2s var(--ease); }
+.carousel-indicator{ width:8px; height:8px; border-radius:50%; background:rgba(0,0,0,.3); border:none; cursor:pointer; transition:all .2s var(--ease); }
 .carousel-indicator.active{ background:var(--red); width:20px; border-radius:4px; }
 
 /* RESPONSIVE - MOBILE */
@@ -578,6 +576,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         width:100%; 
         aspect-ratio:1/1;
         height:auto;
+        background:#f5f5f5;
     }
     .carousel-item img, 
     .carousel-item video{ 
@@ -586,7 +585,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
         object-fit:contain;
         object-position: center center;
         display:block;
-        background:#fff;
     }
     .modal-details{ padding:20px; }
     .modal-title, .modal-price{ text-align:center; }
