@@ -1441,6 +1441,7 @@ async function uploadImage(file) {
             throw new Error(result.message || 'Falha no upload');
         }
         
+        // 🔥 USA A URL DIRETA DO DRIVE
         return result.url;
     } catch (error) {
         console.error('❌ Erro no upload:', error);
