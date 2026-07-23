@@ -1365,18 +1365,13 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 <!-- ================= APP LOGIC ================= -->
 <script>
 /* =========================================================
-   CONFIGURAÇÃO — cole aqui a URL do seu Web App do Apps Script
-   (Implantar > Nova implantação > Aplicativo da Web > copiar URL)
+   CONFIGURAÇÃO
 ========================================================= */
-// !!! SUBSTITUA PELA URL DO SEU WEB APP !!!
-const API_URL = 'https://script.google.com/macros/s/AKfycbzwqHa_kyb5LzABqYNkhAVwvcQrAX2PYjeNsqizEX4NWljRGkZ4fMqosfalYj_SXjsXKg/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxGOkizek7fBAusdVWPfZF-nj6Xva368O1ObQNg5Pzwzntg63refb0IVdbOQ67eMm3dVQ/exec';
 
-// intervalo de atualização automática dos dados (ms). 0 = desliga.
-const AUTO_REFRESH_MS = 25000;
-
-// compressão de imagens antes do envio
-const IMG_MAX_WIDTH = 1600;
-const IMG_QUALITY = 0.8;
+// COMPRESSÃO DE IMAGENS
+const IMG_MAX_WIDTH = 1200;
+const IMG_QUALITY = 0.85;
 
 // ========== CLIENTE DA API ==========
 async function apiGet(params) {
@@ -1384,6 +1379,7 @@ async function apiGet(params) {
     const res = await fetch(`${API_URL}?${qs}`);
     return res.json();
 }
+
 async function apiPost(payload) {
     const res = await fetch(API_URL, {
         method: 'POST',
@@ -1393,81 +1389,79 @@ async function apiPost(payload) {
     return res.json();
 }
 
-function compressImageToDataURL(file, maxWidth = IMG_MAX_WIDTH, quality = IMG_QUALITY) {
+// ========== COMPRESSÃO DE IMAGEM ==========
+function compressImage(file) {
     return new Promise((resolve, reject) => {
-        const img = new Image();
         const reader = new FileReader();
-        reader.onload = () => { img.src = reader.result; };
-        reader.onerror = reject;
-        img.onload = () => {
-            try {
-                let { width, height } = img;
-                if (width > maxWidth) {
-                    height = Math.round(height * (maxWidth / width));
-                    width = maxWidth;
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                try {
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    if (width > IMG_MAX_WIDTH) {
+                        const ratio = IMG_MAX_WIDTH / width;
+                        width = IMG_MAX_WIDTH;
+                        height = Math.round(height * ratio);
+                    }
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    const dataUrl = canvas.toDataURL('image/jpeg', IMG_QUALITY);
+                    resolve(dataUrl);
+                } catch (err) {
+                    reject(err);
                 }
-                const canvas = document.createElement('canvas');
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-                const outType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
-                const dataUrl = canvas.toDataURL(outType, quality);
-                resolve(dataUrl);
-            } catch (err) { reject(err); }
+            };
+            img.onerror = reject;
+            img.src = e.target.result;
         };
-        img.onerror = reject;
+        reader.onerror = reject;
         reader.readAsDataURL(file);
     });
 }
 
-// ========== FUNÇÃO DE UPLOAD CORRIGIDA ==========
-async function uploadFileToDrive(file) {
+// ========== UPLOAD DE IMAGEM ==========
+async function uploadImage(file) {
     try {
-        const dataUrl = await compressImageToDataURL(file);
-        const result = await apiPost({ 
-            action: 'uploadImage', 
-            base64: dataUrl, 
-            filename: file.name, 
-            mimeType: file.type 
+        const dataUrl = await compressImage(file);
+        const result = await apiPost({
+            action: 'uploadImage',
+            base64: dataUrl,
+            filename: file.name || 'imagem.jpg'
         });
-        
-        console.log('📊 Resposta do servidor:', result);
         
         if (!result.success) {
             throw new Error(result.message || 'Falha no upload');
         }
         
-        if (!result.url || !result.url.startsWith('https://script.google.com')) {
-            console.warn('⚠️ URL suspeita:', result.url);
-        }
-        
-        return result;
-        
+        return result.url;
     } catch (error) {
         console.error('❌ Erro no upload:', error);
         throw error;
     }
 }
 
-async function uploadFilesInParallel(files) {
-    const results = await Promise.all(files.map(f => uploadFileToDrive(f)));
-    return results.map(r => r.url);
+async function uploadMultipleImages(files) {
+    const urls = [];
+    for (const file of files) {
+        const url = await uploadImage(file);
+        urls.push(url);
+    }
+    return urls;
 }
 
+// ========== EXTRAIR ID DO DRIVE ==========
 function extractDriveId(url) {
-    const m = String(url || '').match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (m) return m[1];
-    const m2 = String(url || '').match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (m2) return m2[1];
-    return null;
-}
-
-function isTruthy(val) {
-    if (val === true) return true;
-    if (val === false || val === undefined || val === null || val === '') return false;
-    const s = String(val).trim().toLowerCase();
-    return s === 'true' || s === 'verdadeiro' || s === '1' || s === 'sim' || s === 'yes';
+    if (!url) return null;
+    const match = String(url).match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    return match ? match[1] : null;
 }
 
 // ========== STATE ==========
@@ -1525,12 +1519,9 @@ document.addEventListener('DOMContentLoaded', function () {
     loadSiteContent();
     setupEventListeners();
     checkSavedUser();
-    if (AUTO_REFRESH_MS > 0) {
-        setInterval(() => { loadVehicles(); loadTestimonials(); loadSiteContent(); }, AUTO_REFRESH_MS);
-    }
 });
 
-// ========== EVENTS ==========
+// ========== EVENT LISTENERS ==========
 function setupEventListeners() {
     els.loginBtn.addEventListener('click', openLoginModal);
     els.drawerLoginBtn.addEventListener('click', openLoginModal);
@@ -1604,13 +1595,11 @@ function setupEventListeners() {
     els.featuredNext.addEventListener('click', () => scrollFeatured(1));
     els.featuredTrack.addEventListener('mouseenter', stopFeaturedAutoplay);
     els.featuredTrack.addEventListener('mouseleave', startFeaturedAutoplay);
-    els.featuredTrack.addEventListener('touchstart', stopFeaturedAutoplay, { passive: true });
 
     els.testimonialsPrev.addEventListener('click', () => scrollTestimonials(-1));
     els.testimonialsNext.addEventListener('click', () => scrollTestimonials(1));
     els.testimonialsTrack.addEventListener('mouseenter', stopTestimonialsAutoplay);
     els.testimonialsTrack.addEventListener('mouseleave', startTestimonialsAutoplay);
-    els.testimonialsTrack.addEventListener('touchstart', stopTestimonialsAutoplay, { passive: true });
 
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
@@ -1633,6 +1622,7 @@ function setupSwipeEvents() {
     carousel.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
     carousel.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }, { passive: true });
 }
+
 function handleSwipe() {
     const threshold = 50;
     if (touchEndX < touchStartX - threshold) showNextMedia();
@@ -1796,7 +1786,7 @@ function renderImageEditor() {
             <img class="image-edit-thumb" src="${currentUrl || 'https://via.placeholder.com/100x100/1B1C20/9CA3AF?text=%3F'}" alt="${field.label}">
             <div class="image-edit-meta">
                 <b>${field.label}</b>
-                <span class="img-status">${currentUrl ? 'Imagem definida' : 'Usando imagem padrão do arquivo'}</span>
+                <span class="img-status">${currentUrl ? 'Imagem definida' : 'Usando imagem padrão'}</span>
             </div>
             <div class="image-edit-actions">
                 <button type="button" class="btn btn-primary btn-choose-img">Alterar imagem</button>
@@ -1814,16 +1804,16 @@ function renderImageEditor() {
             if (!file) return;
             const previousUrl = siteContent[field.key];
             chooseBtn.disabled = true;
-            status.textContent = 'Enviando para o Drive...';
+            status.textContent = 'Enviando...';
             try {
-                const { url } = await uploadFileToDrive(file);
+                const url = await uploadImage(file);
                 siteContent[field.key] = url;
                 thumb.src = url;
-                status.textContent = 'Imagem atualizada (clique em "Salvar Todas as Alterações" para publicar)';
+                status.textContent = 'Imagem atualizada (clique em "Salvar" para publicar)';
                 const oldId = extractDriveId(previousUrl);
                 if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
             } catch (err) {
-                status.textContent = 'Erro no upload: ' + err.message;
+                status.textContent = 'Erro: ' + err.message;
             } finally {
                 chooseBtn.disabled = false;
             }
@@ -1864,13 +1854,13 @@ async function saveTextChanges() {
         if (res.success) {
             siteContent = updatedContent;
             updateSiteContent();
-            showStatusIn(els.textEditStatus, 'Todo o conteúdo (textos e imagens) foi publicado no site!', 'success');
+            showStatusIn(els.textEditStatus, 'Conteúdo publicado com sucesso!', 'success');
             setTimeout(closeTextEditPanelFunc, 1800);
         } else {
-            showStatusIn(els.textEditStatus, 'Erro ao salvar: ' + res.message, 'error');
+            showStatusIn(els.textEditStatus, 'Erro: ' + res.message, 'error');
         }
     } catch (err) {
-        showStatusIn(els.textEditStatus, 'Erro ao salvar: ' + err.message, 'error');
+        showStatusIn(els.textEditStatus, 'Erro: ' + err.message, 'error');
     } finally {
         els.saveTextChanges.disabled = false;
     }
@@ -2006,8 +1996,8 @@ function renderVehicles() {
 
         const adminButtons = isAdmin ? `
             <div class="card-admin-actions">
-                <button class="btn-editar" title="Editar" aria-label="Editar veículo" onclick="editVehicle('${vehicle.id}', event)"><i class="fas fa-pen"></i></button>
-                <button class="btn-excluir" title="Excluir" aria-label="Excluir veículo" onclick="deleteVehicle('${vehicle.id}', event)"><i class="fas fa-trash"></i></button>
+                <button class="btn-editar" title="Editar" onclick="editVehicle('${vehicle.id}', event)"><i class="fas fa-pen"></i></button>
+                <button class="btn-excluir" title="Excluir" onclick="deleteVehicle('${vehicle.id}', event)"><i class="fas fa-trash"></i></button>
             </div>` : '';
 
         const featuredTag = isTruthy(vehicle.featured) ? '<span class="vehicle-featured-tag">⭐ Destaque</span>' : '';
@@ -2132,14 +2122,18 @@ function renderTestimonials() {
         const photo = t.photo || 'https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Cliente';
         const card = document.createElement('div');
         card.className = 'testimonial-card';
+        
+        const name = String(t.name || '').trim() || 'Cliente';
+        const text = String(t.text || '').trim() || 'Depoimento não informado';
+        
         card.innerHTML = `
             <div class="testimonial-media">
                 <span class="testimonial-quote-icon"><i class="fas fa-quote-right"></i></span>
-                <img src="${photo}" alt="${escapeHtml(t.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Cliente';">
+                <img src="${photo}" alt="${escapeHtml(name)}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Cliente';">
             </div>
             <div class="testimonial-body">
-                <p class="testimonial-text">"${escapeHtml(t.text)}"</p>
-                <div class="testimonial-name">${escapeHtml(t.name)}</div>
+                <p class="testimonial-text">"${escapeHtml(text)}"</p>
+                <div class="testimonial-name">${escapeHtml(name)}</div>
             </div>
         `;
         els.testimonialsTrack.appendChild(card);
@@ -2148,43 +2142,79 @@ function renderTestimonials() {
     startTestimonialsAutoplay();
 }
 
-function scrollTestimonials(direction) {
-    const cardWidth = els.testimonialsTrack.querySelector('.testimonial-card')?.offsetWidth || 320;
-    els.testimonialsTrack.scrollBy({ left: direction * (cardWidth + 20), behavior: 'smooth' });
+function renderTestimonialList() {
+    els.testimonialList.innerHTML = '<h3>Depoimentos Cadastrados</h3>';
+    if (testimonials.length === 0) {
+        els.testimonialList.insertAdjacentHTML('beforeend', '<p style="color:rgba(255,255,255,.5)">Nenhum depoimento cadastrado.</p>');
+        return;
+    }
+    testimonials.forEach(t => {
+        const name = String(t.name || '').trim() || 'Cliente';
+        const text = String(t.text || '').trim() || 'Sem depoimento';
+        const thumb = t.photo || 'https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';
+        
+        const item = document.createElement('div');
+        item.className = 'moto-item';
+        item.innerHTML = `
+            <div class="moto-info">
+                <img src="${thumb}" alt="${escapeHtml(name)}" class="moto-thumbnail" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';">
+                <div class="moto-details">
+                    <div class="moto-name">${escapeHtml(name)}</div>
+                    <div class="moto-specs">${escapeHtml(text.slice(0, 60))}${text.length > 60 ? '…' : ''}</div>
+                </div>
+            </div>
+            <div class="moto-actions">
+                <button class="btn btn-primary" onclick="editTestimonial('${t.id}', event)">Editar</button>
+                <button class="btn btn-danger" onclick="deleteTestimonial('${t.id}', event)">Excluir</button>
+            </div>`;
+        els.testimonialList.appendChild(item);
+    });
 }
 
-function startTestimonialsAutoplay() {
-    stopTestimonialsAutoplay();
-    if (!els.testimonialsTrack.querySelector('.testimonial-card')) return;
-    testimonialsAutoplayInterval = setInterval(() => {
-        const track = els.testimonialsTrack;
-        const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
-        if (atEnd) { track.scrollTo({ left: 0, behavior: 'smooth' }); }
-        else { scrollTestimonials(1); }
-    }, 4000);
-}
-
-function stopTestimonialsAutoplay() {
-    if (testimonialsAutoplayInterval) { clearInterval(testimonialsAutoplayInterval); testimonialsAutoplayInterval = null; }
+function readTestimonialFormFields() {
+    return {
+        name: String(els.testimonialName.value || '').trim(),
+        text: String(els.testimonialText.value || '').trim()
+    };
 }
 
 async function handleTestimonialFormSubmit(e) {
     e.preventDefault();
+    
+    const name = els.testimonialName.value.trim();
+    const text = els.testimonialText.value.trim();
+    
+    if (!name) {
+        showStatusIn(els.testimonialFormStatus, 'Informe o nome do cliente.', 'error');
+        return;
+    }
+    if (!text) {
+        showStatusIn(els.testimonialFormStatus, 'Informe o depoimento.', 'error');
+        return;
+    }
+    if (!selectedTestimonialFile && !existingTestimonialPhoto && !editingTestimonialId) {
+        showStatusIn(els.testimonialFormStatus, 'Selecione uma foto do cliente.', 'error');
+        return;
+    }
+    
     if (editingTestimonialId) await updateTestimonial(editingTestimonialId);
     else await addTestimonial();
 }
 
 async function addTestimonial() {
-    if (!selectedTestimonialFile) { showStatusIn(els.testimonialFormStatus, 'Selecione uma foto do cliente.', 'error'); return; }
+    if (!selectedTestimonialFile) { 
+        showStatusIn(els.testimonialFormStatus, 'Selecione uma foto do cliente.', 'error'); 
+        return; 
+    }
 
     const data = readTestimonialFormFields();
-    els.loadingText.textContent = 'Enviando foto do depoimento...';
+    els.loadingText.textContent = 'Enviando foto...';
     els.loadingOverlay.style.display = 'flex';
 
     try {
-        const { url } = await uploadFileToDrive(selectedTestimonialFile);
+        const url = await uploadImage(selectedTestimonialFile);
         data.photo = url;
-        els.loadingText.textContent = 'Salvando depoimento na planilha...';
+        els.loadingText.textContent = 'Salvando depoimento...';
         const res = await apiPost({ action: 'addTestimonial', data });
         els.loadingOverlay.style.display = 'none';
         if (res.success) {
@@ -2192,11 +2222,11 @@ async function addTestimonial() {
             clearTestimonialForm();
             loadTestimonials();
         } else {
-            showStatusIn(els.testimonialFormStatus, 'Erro ao adicionar depoimento: ' + res.message, 'error');
+            showStatusIn(els.testimonialFormStatus, 'Erro: ' + res.message, 'error');
         }
     } catch (error) {
         els.loadingOverlay.style.display = 'none';
-        showStatusIn(els.testimonialFormStatus, 'Erro ao adicionar depoimento: ' + error.message, 'error');
+        showStatusIn(els.testimonialFormStatus, 'Erro: ' + error.message, 'error');
     }
 }
 
@@ -2209,7 +2239,7 @@ async function updateTestimonial(testimonialId) {
         let photo = existingTestimonialPhoto;
         if (selectedTestimonialFile) {
             els.loadingText.textContent = 'Enviando nova foto...';
-            const { url } = await uploadFileToDrive(selectedTestimonialFile);
+            const url = await uploadImage(selectedTestimonialFile);
             photo = url;
             const oldId = extractDriveId(existingTestimonialPhoto);
             if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
@@ -2225,30 +2255,27 @@ async function updateTestimonial(testimonialId) {
             clearTestimonialForm();
             loadTestimonials();
         } else {
-            showStatusIn(els.testimonialFormStatus, 'Erro ao atualizar depoimento: ' + res.message, 'error');
+            showStatusIn(els.testimonialFormStatus, 'Erro: ' + res.message, 'error');
         }
     } catch (error) {
         els.loadingOverlay.style.display = 'none';
-        showStatusIn(els.testimonialFormStatus, 'Erro ao atualizar depoimento: ' + error.message, 'error');
+        showStatusIn(els.testimonialFormStatus, 'Erro: ' + error.message, 'error');
     }
-}
-
-function readTestimonialFormFields() {
-    return {
-        name: els.testimonialName.value,
-        text: els.testimonialText.value
-    };
 }
 
 async function deleteTestimonial(testimonialId, event) {
     if (event) event.stopPropagation();
-    if (!confirm('Tem certeza que deseja excluir este depoimento? A foto também será removida do Drive.')) return;
+    if (!confirm('Tem certeza que deseja excluir este depoimento?')) return;
     try {
         const res = await apiPost({ action: 'deleteTestimonial', id: testimonialId });
-        if (res.success) { showStatusIn(els.testimonialFormStatus, 'Depoimento excluído com sucesso!', 'success'); loadTestimonials(); }
-        else showStatusIn(els.testimonialFormStatus, 'Erro ao excluir depoimento: ' + res.message, 'error');
+        if (res.success) { 
+            showStatusIn(els.testimonialFormStatus, 'Depoimento excluído com sucesso!', 'success'); 
+            loadTestimonials(); 
+        } else {
+            showStatusIn(els.testimonialFormStatus, 'Erro: ' + res.message, 'error');
+        }
     } catch (error) {
-        showStatusIn(els.testimonialFormStatus, 'Erro ao excluir depoimento: ' + error.message, 'error');
+        showStatusIn(els.testimonialFormStatus, 'Erro: ' + error.message, 'error');
     }
 }
 
@@ -2273,7 +2300,7 @@ function editTestimonial(testimonialId, event) {
     openAdminPanel();
     switchAdminTab('testimonials');
     els.addTestimonialForm.scrollIntoView({ behavior: 'smooth' });
-    showStatusIn(els.testimonialFormStatus, 'Altere os campos necessários e clique em "Atualizar Depoimento".', 'warning');
+    showStatusIn(els.testimonialFormStatus, 'Altere os campos e clique em "Atualizar Depoimento".', 'warning');
 }
 
 function renderExistingTestimonialPhoto() {
@@ -2306,32 +2333,6 @@ function resetTestimonialFormToCreateMode() {
     els.existingTestimonialPhotoWrap.style.display = 'none';
 }
 
-function renderTestimonialList() {
-    els.testimonialList.innerHTML = '<h3>Depoimentos Cadastrados</h3>';
-    if (testimonials.length === 0) {
-        els.testimonialList.insertAdjacentHTML('beforeend', '<p style="color:rgba(255,255,255,.5)">Nenhum depoimento cadastrado.</p>');
-        return;
-    }
-    testimonials.forEach(t => {
-        const thumb = t.photo || 'https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';
-        const item = document.createElement('div');
-        item.className = 'moto-item';
-        item.innerHTML = `
-            <div class="moto-info">
-                <img src="${thumb}" alt="${escapeHtml(t.name)}" class="moto-thumbnail" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';">
-                <div class="moto-details">
-                    <div class="moto-name">${escapeHtml(t.name)}</div>
-                    <div class="moto-specs">${escapeHtml((t.text || '').slice(0, 60))}${(t.text || '').length > 60 ? '…' : ''}</div>
-                </div>
-            </div>
-            <div class="moto-actions">
-                <button class="btn btn-primary" onclick="editTestimonial('${t.id}', event)">Editar</button>
-                <button class="btn btn-danger" onclick="deleteTestimonial('${t.id}', event)">Excluir</button>
-            </div>`;
-        els.testimonialList.appendChild(item);
-    });
-}
-
 function clearTestimonialForm() {
     els.addTestimonialForm.reset();
     clearTestimonialFileSelection();
@@ -2340,8 +2341,8 @@ function clearTestimonialForm() {
 }
 
 function handleTestimonialFile(file) {
-    if (!file.type.match('image.*')) { alert('Por favor, selecione apenas imagens.'); return; }
-    if (file.size > 10 * 1024 * 1024) { alert('O arquivo é muito grande. Máximo: 10MB.'); return; }
+    if (!file.type.match('image.*')) { alert('Selecione apenas imagens.'); return; }
+    if (file.size > 10 * 1024 * 1024) { alert('Arquivo muito grande. Máximo: 10MB.'); return; }
     selectedTestimonialFile = file;
     els.testimonialPreviewContainer.innerHTML = '';
     const reader = new FileReader();
@@ -2360,6 +2361,26 @@ function clearTestimonialFileSelection() {
     els.testimonialPreviewContainer.innerHTML = '';
     els.testimonialMediaCounter.textContent = 'Nenhuma foto selecionada';
     els.testimonialFileInput.value = '';
+}
+
+function scrollTestimonials(direction) {
+    const cardWidth = els.testimonialsTrack.querySelector('.testimonial-card')?.offsetWidth || 320;
+    els.testimonialsTrack.scrollBy({ left: direction * (cardWidth + 20), behavior: 'smooth' });
+}
+
+function startTestimonialsAutoplay() {
+    stopTestimonialsAutoplay();
+    if (!els.testimonialsTrack.querySelector('.testimonial-card')) return;
+    testimonialsAutoplayInterval = setInterval(() => {
+        const track = els.testimonialsTrack;
+        const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
+        if (atEnd) { track.scrollTo({ left: 0, behavior: 'smooth' }); }
+        else { scrollTestimonials(1); }
+    }, 4000);
+}
+
+function stopTestimonialsAutoplay() {
+    if (testimonialsAutoplayInterval) { clearInterval(testimonialsAutoplayInterval); testimonialsAutoplayInterval = null; }
 }
 
 function applyCurrentFilter() {
@@ -2460,17 +2481,17 @@ async function handleFormSubmit(e) {
 }
 
 async function addVehicle() {
-    if (selectedFiles.length === 0) { showStatusIn(els.formStatus, 'Adicione pelo menos uma foto do veículo.', 'error'); return; }
+    if (selectedFiles.length === 0) { showStatusIn(els.formStatus, 'Adicione pelo menos uma foto.', 'error'); return; }
 
     const vehicle = readFormFields();
-    els.loadingText.textContent = 'Otimizando e enviando fotos...';
+    els.loadingText.textContent = 'Enviando fotos...';
     els.loadingOverlay.style.display = 'flex';
 
     try {
-        vehicle.medias = await uploadFilesInParallel(selectedFiles);
-        console.log('📸 URLs das imagens enviadas:', vehicle.medias);
+        vehicle.medias = await uploadMultipleImages(selectedFiles);
+        console.log('📸 URLs:', vehicle.medias);
         
-        els.loadingText.textContent = 'Salvando veículo na planilha...';
+        els.loadingText.textContent = 'Salvando veículo...';
         const res = await apiPost({ action: 'addVehicle', data: vehicle });
         els.loadingOverlay.style.display = 'none';
         if (res.success) {
@@ -2478,11 +2499,11 @@ async function addVehicle() {
             clearForm();
             loadVehicles();
         } else {
-            showStatusIn(els.formStatus, 'Erro ao adicionar veículo: ' + res.message, 'error');
+            showStatusIn(els.formStatus, 'Erro: ' + res.message, 'error');
         }
     } catch (error) {
         els.loadingOverlay.style.display = 'none';
-        showStatusIn(els.formStatus, 'Erro ao adicionar veículo: ' + error.message, 'error');
+        showStatusIn(els.formStatus, 'Erro: ' + error.message, 'error');
     }
 }
 
@@ -2495,13 +2516,13 @@ async function updateVehicle(vehicleId) {
     try {
         let medias = [...existingMediaForEdit];
         if (selectedFiles.length > 0) {
-            els.loadingText.textContent = 'Otimizando e enviando novas fotos...';
-            const newUrls = await uploadFilesInParallel(selectedFiles);
+            els.loadingText.textContent = 'Enviando novas fotos...';
+            const newUrls = await uploadMultipleImages(selectedFiles);
             medias = medias.concat(newUrls);
         }
         updated.medias = medias;
 
-        els.loadingText.textContent = 'Salvando alterações na planilha...';
+        els.loadingText.textContent = 'Salvando alterações...';
         const res = await apiPost({ action: 'updateVehicle', id: vehicleId, data: updated });
         els.loadingOverlay.style.display = 'none';
         if (res.success) {
@@ -2510,11 +2531,11 @@ async function updateVehicle(vehicleId) {
             clearForm();
             loadVehicles();
         } else {
-            showStatusIn(els.formStatus, 'Erro ao atualizar veículo: ' + res.message, 'error');
+            showStatusIn(els.formStatus, 'Erro: ' + res.message, 'error');
         }
     } catch (error) {
         els.loadingOverlay.style.display = 'none';
-        showStatusIn(els.formStatus, 'Erro ao atualizar veículo: ' + error.message, 'error');
+        showStatusIn(els.formStatus, 'Erro: ' + error.message, 'error');
     }
 }
 
@@ -2533,17 +2554,17 @@ function readFormFields() {
 
 async function deleteVehicle(vehicleId, event) {
     event.stopPropagation();
-    if (!confirm('Tem certeza que deseja excluir este veículo? Todas as fotos serão removidas do Drive permanentemente.')) return;
+    if (!confirm('Tem certeza que deseja excluir este veículo? As fotos serão removidas do Drive.')) return;
     try {
         const res = await apiPost({ action: 'deleteVehicle', id: vehicleId });
         if (res.success) { 
             showStatusIn(els.formStatus, 'Veículo excluído com sucesso!', 'success');
             loadVehicles(); 
         } else {
-            showStatusIn(els.formStatus, 'Erro ao excluir veículo: ' + res.message, 'error');
+            showStatusIn(els.formStatus, 'Erro: ' + res.message, 'error');
         }
     } catch (error) {
-        showStatusIn(els.formStatus, 'Erro ao excluir veículo: ' + error.message, 'error');
+        showStatusIn(els.formStatus, 'Erro: ' + error.message, 'error');
     }
 }
 
@@ -2574,7 +2595,7 @@ function editVehicle(vehicleId, event) {
     openAdminPanel();
     switchAdminTab('vehicles');
     document.getElementById('addVehicleForm').scrollIntoView({ behavior: 'smooth' });
-    showStatusIn(els.formStatus, 'Altere os campos necessários e clique em "Atualizar Veículo".', 'warning');
+    showStatusIn(els.formStatus, 'Altere os campos e clique em "Atualizar Veículo".', 'warning');
 }
 
 function renderExistingMedia() {
@@ -2645,7 +2666,7 @@ function clearForm() {
     els.formStatus.style.display = 'none';
 }
 
-// ========== UPLOAD ==========
+// ========== UPLOAD HANDLERS ==========
 function handleDragOver(e) { e.preventDefault(); els.uploadArea.classList.add('highlight'); }
 function handleDragLeave(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); }
 function handleDrop(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); handleFiles(e.dataTransfer.files); }
@@ -2653,8 +2674,8 @@ function handleFileSelect(e) { handleFiles(e.target.files); }
 
 function handleFiles(files) {
     for (const file of files) {
-        if (!file.type.match('image.*')) { alert('Por favor, selecione apenas imagens.'); continue; }
-        if (file.size > 10 * 1024 * 1024) { alert('O arquivo ' + file.name + ' é muito grande. Máximo: 10MB.'); continue; }
+        if (!file.type.match('image.*')) { alert('Selecione apenas imagens.'); continue; }
+        if (file.size > 10 * 1024 * 1024) { alert('Arquivo ' + file.name + ' é muito grande. Máximo: 10MB.'); continue; }
         selectedFiles.push(file);
         createPreview(file);
     }
@@ -2694,11 +2715,19 @@ function toggleDrawer() { els.drawer.classList.toggle('open'); els.overlay.class
 function closeDrawer() { els.drawer.classList.remove('open'); els.overlay.classList.remove('active'); }
 
 // ========== HELPERS ==========
+function isTruthy(val) {
+    if (val === true) return true;
+    if (val === false || val === undefined || val === null || val === '') return false;
+    return String(val).toLowerCase() === 'true' || String(val).toLowerCase() === 'verdadeiro' || String(val) === '1';
+}
+
 function formatPrice(price) { return new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price || 0); }
 function formatKm(km) { return new Intl.NumberFormat('pt-BR').format(km); }
+
 function getVehicleTypeName(type) {
     return { 'ate-110cc': 'Até 110cc', 'ate-150cc': 'Até 150cc', 'acima-160cc': 'Acima de 160cc' }[type] || type;
 }
+
 function escapeHtml(str) {
     if (str === undefined || str === null) return '';
     return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
