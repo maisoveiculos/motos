@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
 <title>Maiso Veículos - Sua Moto dos Sonhos Está Aqui</title>
 <meta name="description" content="Maiso Veículos - motos seminovas com procedência garantida, financiamento e garantia.">
 <meta name="theme-color" content="#0B0B0D">
@@ -548,6 +548,8 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     align-items:center;
     background:#f0f0f0;
     padding:10px;
+    cursor:pointer;
+    position:relative;
 }
 
 .carousel-item img,
@@ -558,6 +560,35 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     height:auto;
     object-fit:contain;
     border-radius:4px;
+    user-select:none;
+    -webkit-user-drag:none;
+}
+
+/* ===== INDICADOR DE CLIQUE PARA AMPLIAR ===== */
+.zoom-hint{
+    position:absolute;
+    bottom:20px;
+    right:20px;
+    background:rgba(0,0,0,0.6);
+    color:white;
+    padding:8px 14px;
+    border-radius:20px;
+    font-size:.75rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    pointer-events:none;
+    z-index:5;
+    backdrop-filter:blur(4px);
+    font-weight:500;
+    opacity:0.8;
+    transition:opacity 0.3s;
+}
+.zoom-hint i{
+    font-size:.9rem;
+}
+.carousel-item:hover .zoom-hint{
+    opacity:1;
 }
 
 .carousel-control{
@@ -607,6 +638,137 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     background:var(--red);
     width:28px;
     border-radius:5px;
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+    touch-action:none;
+    overflow:hidden;
+}
+
+.lightbox-overlay.active{
+    display:flex;
+}
+
+.lightbox-close{
+    position:absolute;
+    top:20px;
+    right:20px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    border:2px solid rgba(255,255,255,0.3);
+    color:white;
+    font-size:1.6rem;
+    cursor:pointer;
+    z-index:20;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all .3s var(--ease);
+    backdrop-filter:blur(8px);
+}
+.lightbox-close:hover{
+    background:var(--red);
+    border-color:var(--red);
+    transform:rotate(90deg);
+}
+
+.lightbox-image-container{
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    touch-action:none;
+    position:relative;
+}
+
+.lightbox-image{
+    max-width:95%;
+    max-height:95%;
+    object-fit:contain;
+    transition:transform 0.1s ease;
+    touch-action:none;
+    cursor:grab;
+    will-change:transform;
+}
+
+.lightbox-image.grabbing{
+    cursor:grabbing;
+}
+
+.lightbox-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(255,255,255,0.1);
+    color:white;
+    border:2px solid rgba(255,255,255,0.2);
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:1.5rem;
+    z-index:15;
+    transition:all .3s var(--ease);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    backdrop-filter:blur(4px);
+}
+.lightbox-nav:hover{
+    background:var(--red);
+    border-color:var(--red);
+}
+.lightbox-nav.prev{ left:20px; }
+.lightbox-nav.next{ right:20px; }
+
+.lightbox-counter{
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    color:rgba(255,255,255,0.7);
+    font-size:.85rem;
+    font-weight:500;
+    background:rgba(0,0,0,0.4);
+    padding:6px 16px;
+    border-radius:20px;
+    backdrop-filter:blur(4px);
+    pointer-events:none;
+    z-index:10;
+}
+
+@media (max-width:768px){
+    .lightbox-nav{
+        width:40px;
+        height:40px;
+        font-size:1.2rem;
+    }
+    .lightbox-nav.prev{ left:10px; }
+    .lightbox-nav.next{ right:10px; }
+    .lightbox-close{
+        top:14px;
+        right:14px;
+        width:40px;
+        height:40px;
+        font-size:1.3rem;
+    }
+    .lightbox-counter{
+        bottom:20px;
+        font-size:.75rem;
+        padding:4px 14px;
+    }
 }
 
 /* ===== CONTEÚDO DO MODAL ===== */
@@ -798,6 +960,15 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     }
     .carousel-control.prev{ left:8px; }
     .carousel-control.next{ right:8px; }
+    .zoom-hint{
+        bottom:12px;
+        right:12px;
+        font-size:.65rem;
+        padding:5px 10px;
+    }
+    .zoom-hint i{
+        font-size:.75rem;
+    }
 
     .modal-body{
         padding:20px 18px 28px;
@@ -1483,6 +1654,17 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </footer>
 
+<!-- ================= LIGHTBOX ================= -->
+<div class="lightbox-overlay" id="lightboxOverlay">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">&times;</button>
+    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Anterior">&#10094;</button>
+    <button class="lightbox-nav next" id="lightboxNext" aria-label="Próximo">&#10095;</button>
+    <div class="lightbox-image-container" id="lightboxContainer">
+        <img class="lightbox-image" id="lightboxImage" src="" alt="Foto ampliada">
+    </div>
+    <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+</div>
+
 <!-- ================= VEHICLE DETAILS MODAL - NOVO LAYOUT ================= -->
 <div class="modal" id="vehicleModal">
     <div class="modal-content">
@@ -1942,6 +2124,22 @@ let touchStartX = 0, touchEndX = 0;
 let featuredAutoplayInterval = null;
 let testimonialsAutoplayInterval = null;
 
+// Lightbox state
+let lightboxImages = [];
+let lightboxIndex = 0;
+let lightboxScale = 1;
+let lightboxTranslateX = 0;
+let lightboxTranslateY = 0;
+let lightboxIsDragging = false;
+let lightboxStartX = 0;
+let lightboxStartY = 0;
+let lightboxLastX = 0;
+let lightboxLastY = 0;
+let lightboxInitialPinchDist = 0;
+let lightboxInitialScale = 1;
+let lightboxTouchStartX = 0;
+let lightboxTouchStartY = 0;
+
 const IMAGE_FIELDS = [
     { key: 'logoUrl',        selector: '#logoImg',    label: 'Logo (header)' },
     { key: 'heroImageUrl',   selector: '#heroImage',  label: 'Foto de capa (topo do site)', isBg: true },
@@ -1969,7 +2167,8 @@ const els = {};
     'testimonialFileInput','testimonialPreviewContainer','testimonialMediaCounter',
     'existingTestimonialPhotoWrap','existingTestimonialPhotoContainer','testimonialSubmitBtn',
     'testimonialFormTitle','clearTestimonialForm','testimonialFormStatus','testimonialList',
-    'modalDescription','modalDescriptionText'
+    'modalDescription','modalDescriptionText',
+    'lightboxOverlay','lightboxImage','lightboxClose','lightboxPrev','lightboxNext','lightboxCounter','lightboxContainer'
 ].forEach(id => els[id] = document.getElementById(id));
 const filterBtns = document.querySelectorAll('.filter-btn');
 
@@ -1980,7 +2179,175 @@ document.addEventListener('DOMContentLoaded', function () {
     loadSiteContent();
     setupEventListeners();
     checkSavedUser();
+    setupLightboxListeners();
 });
+
+// ========== LIGHTBOX LISTENERS ==========
+function setupLightboxListeners() {
+    // Fechar com X
+    els.lightboxClose.addEventListener('click', closeLightbox);
+    
+    // Navegação
+    els.lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
+    els.lightboxNext.addEventListener('click', () => navigateLightbox(1));
+    
+    // Fechar com ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && els.lightboxOverlay.classList.contains('active')) {
+            closeLightbox();
+        }
+        if (e.key === 'ArrowLeft' && els.lightboxOverlay.classList.contains('active')) {
+            navigateLightbox(-1);
+        }
+        if (e.key === 'ArrowRight' && els.lightboxOverlay.classList.contains('active')) {
+            navigateLightbox(1);
+        }
+    });
+    
+    // Fechar ao clicar no fundo
+    els.lightboxOverlay.addEventListener('click', (e) => {
+        if (e.target === els.lightboxOverlay || e.target === els.lightboxContainer) {
+            closeLightbox();
+        }
+    });
+    
+    // Touch events para zoom e arraste
+    const img = els.lightboxImage;
+    const container = els.lightboxContainer;
+    
+    // Mouse wheel zoom
+    container.addEventListener('wheel', (e) => {
+        if (!els.lightboxOverlay.classList.contains('active')) return;
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+        const newScale = Math.min(Math.max(lightboxScale + delta, 0.5), 5);
+        applyLightboxTransform(newScale, lightboxTranslateX, lightboxTranslateY);
+    }, { passive: false });
+    
+    // Touch para zoom com pinça
+    let lastTouchDist = 0;
+    let touchScale = 1;
+    
+    container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            lightboxInitialPinchDist = Math.sqrt(dx*dx + dy*dy);
+            lightboxInitialScale = lightboxScale;
+        } else if (e.touches.length === 1) {
+            lightboxIsDragging = true;
+            lightboxStartX = e.touches[0].clientX - lightboxTranslateX;
+            lightboxStartY = e.touches[0].clientY - lightboxTranslateY;
+            img.classList.add('grabbing');
+        }
+    }, { passive: true });
+    
+    container.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2) {
+            e.preventDefault();
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            const scale = lightboxInitialScale * (dist / lightboxInitialPinchDist);
+            const newScale = Math.min(Math.max(scale, 0.5), 5);
+            applyLightboxTransform(newScale, lightboxTranslateX, lightboxTranslateY);
+        } else if (e.touches.length === 1 && lightboxIsDragging && lightboxScale > 1) {
+            e.preventDefault();
+            const newX = e.touches[0].clientX - lightboxStartX;
+            const newY = e.touches[0].clientY - lightboxStartY;
+            applyLightboxTransform(lightboxScale, newX, newY);
+        }
+    }, { passive: false });
+    
+    container.addEventListener('touchend', (e) => {
+        lightboxIsDragging = false;
+        img.classList.remove('grabbing');
+        // Se não houve zoom e scale é 1, fechar lightbox
+        if (lightboxScale <= 1.05) {
+            // Pequeno delay para não fechar durante swipe de navegação
+            setTimeout(() => {
+                if (lightboxScale <= 1.05 && els.lightboxOverlay.classList.contains('active')) {
+                    // Não fechar se foi um swipe de navegação
+                }
+            }, 300);
+        }
+    }, { passive: true });
+    
+    // Mouse drag para mover a imagem
+    let mouseDown = false;
+    let mouseStartX = 0, mouseStartY = 0;
+    let mouseTranslateX = 0, mouseTranslateY = 0;
+    
+    img.addEventListener('mousedown', (e) => {
+        if (lightboxScale > 1) {
+            mouseDown = true;
+            mouseStartX = e.clientX - lightboxTranslateX;
+            mouseStartY = e.clientY - lightboxTranslateY;
+            img.classList.add('grabbing');
+        }
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (mouseDown && lightboxScale > 1) {
+            const newX = e.clientX - mouseStartX;
+            const newY = e.clientY - mouseStartY;
+            applyLightboxTransform(lightboxScale, newX, newY);
+        }
+    });
+    
+    document.addEventListener('mouseup', () => {
+        mouseDown = false;
+        img.classList.remove('grabbing');
+    });
+}
+
+function applyLightboxTransform(scale, tx, ty) {
+    lightboxScale = scale;
+    lightboxTranslateX = tx || 0;
+    lightboxTranslateY = ty || 0;
+    els.lightboxImage.style.transform = `translate(${lightboxTranslateX}px, ${lightboxTranslateY}px) scale(${lightboxScale})`;
+}
+
+function openLightbox(images, startIndex) {
+    lightboxImages = images;
+    lightboxIndex = startIndex || 0;
+    lightboxScale = 1;
+    lightboxTranslateX = 0;
+    lightboxTranslateY = 0;
+    
+    updateLightboxImage();
+    els.lightboxOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function updateLightboxImage() {
+    if (lightboxImages.length === 0) return;
+    const img = lightboxImages[lightboxIndex];
+    els.lightboxImage.src = img;
+    els.lightboxImage.alt = `Foto ${lightboxIndex + 1}`;
+    els.lightboxCounter.textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+    
+    // Reset transform
+    lightboxScale = 1;
+    lightboxTranslateX = 0;
+    lightboxTranslateY = 0;
+    els.lightboxImage.style.transform = 'translate(0px, 0px) scale(1)';
+}
+
+function navigateLightbox(direction) {
+    if (lightboxImages.length <= 1) return;
+    lightboxIndex = (lightboxIndex + direction + lightboxImages.length) % lightboxImages.length;
+    updateLightboxImage();
+}
+
+function closeLightbox() {
+    els.lightboxOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    lightboxScale = 1;
+    lightboxTranslateX = 0;
+    lightboxTranslateY = 0;
+    els.lightboxImage.style.transform = 'translate(0px, 0px) scale(1)';
+}
 
 // ========== EVENT LISTENERS ==========
 function setupEventListeners() {
@@ -2905,10 +3272,15 @@ function updateCarousel(medias) {
     els.carouselIndicators.innerHTML = '';
     currentMediaIndex = 0;
 
+    // Salvar as imagens para o lightbox
+    lightboxImages = medias || [];
+
     if (medias.length === 0) {
         const item = document.createElement('div');
         item.className = 'carousel-item';
-        item.innerHTML = `<img src="https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem" alt="Sem imagem">`;
+        item.innerHTML = `
+            <img src="https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem" alt="Sem imagem">
+        `;
         els.carouselInner.appendChild(item);
 
         const indicator = document.createElement('button');
@@ -2918,7 +3290,20 @@ function updateCarousel(medias) {
         medias.forEach((media, index) => {
             const item = document.createElement('div');
             item.className = 'carousel-item';
-            item.innerHTML = `<img src="${media}" alt="Imagem do veículo" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem';">`;
+            item.innerHTML = `
+                <img src="${media}" alt="Imagem do veículo" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem';">
+                <div class="zoom-hint">
+                    <i class="fas fa-search-plus"></i> Tocar para ampliar
+                </div>
+            `;
+            
+            // Abrir lightbox ao clicar na imagem
+            item.addEventListener('click', (e) => {
+                if (e.target.tagName === 'IMG' || e.target.closest('.carousel-item')) {
+                    openLightbox(lightboxImages, index);
+                }
+            });
+            
             els.carouselInner.appendChild(item);
 
             const indicator = document.createElement('button');
