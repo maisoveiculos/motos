@@ -83,16 +83,13 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     max-width:1280px; height:100%; margin:0 auto; padding:0 24px;
     display:flex; align-items:center; justify-content:space-between; gap:20px;
 }
-.logo{ display:flex; align-items:center; gap:10px; flex-shrink:0; text-decoration:none; }
-.logo-text{
-    font-family:var(--font-display); 
-    font-weight:700; 
-    font-size:1.4rem;
-    color:var(--white); 
-    letter-spacing:.5px; 
-    white-space:nowrap;
+.logo{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+.logo-image{ height:42px; width:auto; max-width:180px; object-fit:contain; }
+.logo-fallback{
+    font-family:var(--font-display); font-weight:700; font-size:1.4rem;
+    color:var(--white); letter-spacing:.5px; white-space:nowrap;
 }
-.logo-text span{ color:var(--red); }
+.logo-fallback span{ color:var(--red); }
 
 .main-nav{ flex:1; display:flex; justify-content:center; }
 .nav-menu{ display:flex; list-style:none; gap:34px; }
@@ -255,8 +252,18 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     border:1px solid rgba(255,255,255,.06);
 }
 .featured-card:hover{ transform:translateY(-6px); }
-.featured-media{ position:relative; height:190px; overflow:hidden; background:var(--black); }
-.featured-media img{ width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease); }
+.featured-media{ 
+    position:relative; 
+    height:190px; 
+    overflow:hidden; 
+    background:var(--black);
+}
+.featured-media img{ 
+    width:100%; 
+    height:100%; 
+    object-fit:cover;
+    transition:transform .5s var(--ease); 
+}
 .featured-card:hover .featured-media img{ transform:scale(1.08); }
 .featured-tag{
     position:absolute; top:10px; left:10px; background:var(--red); color:var(--white);
@@ -296,8 +303,17 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     box-shadow:var(--shadow-sm); border:1px solid var(--gray-200);
     display:flex; flex-direction:column;
 }
-.testimonial-media{ position:relative; height:220px; overflow:hidden; background:var(--charcoal); }
-.testimonial-media img{ width:100%; height:100%; object-fit:cover; }
+.testimonial-media{ 
+    position:relative; 
+    height:220px; 
+    overflow:hidden; 
+    background:var(--charcoal);
+}
+.testimonial-media img{ 
+    width:100%; 
+    height:100%; 
+    object-fit:cover;
+}
 .testimonial-quote-icon{
     position:absolute; top:12px; left:12px; width:34px; height:34px; border-radius:50%;
     background:var(--red); color:var(--white); display:flex; align-items:center; justify-content:center;
@@ -346,15 +362,34 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 .vehicle-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-lg); }
 
-.vehicle-media{ position:relative; height:250px; overflow:hidden; background:var(--charcoal); }
-.vehicle-img{ width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
+.vehicle-media{ 
+    position:relative; 
+    height:250px; 
+    overflow:hidden; 
+    background:var(--charcoal);
+}
+.vehicle-img{ 
+    width:100%; 
+    height:100%; 
+    object-fit:cover;
+    transition:transform .6s var(--ease); 
+}
 .vehicle-card:hover .vehicle-img{ transform:scale(1.08); }
 
 .vehicle-media-fade{
     position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(11,11,13,0) 35%, rgba(11,11,13,.55) 75%, rgba(11,11,13,.92) 100%);
 }
-.vehicle-top-row{ position:absolute; top:12px; left:12px; right:12px; display:flex; justify-content:space-between; align-items:flex-start; z-index:3; }
+.vehicle-top-row{ 
+    position:absolute; 
+    top:12px; 
+    left:12px; 
+    right:12px; 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:flex-start; 
+    z-index:3; 
+}
 .vehicle-badge{
     background:var(--red); color:var(--white);
     padding:6px 14px; font-size:.7rem; font-weight:700; letter-spacing:.6px; text-transform:uppercase;
@@ -412,20 +447,24 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .btn-excluir:hover{ background:#dc3545; }
 .btn-editar:hover{ background:var(--azul); }
 .vehicle-card:hover .btn-excluir, .vehicle-card:hover .btn-editar{ opacity:1; transform:translateY(0); }
-.vehicle-top-row .vehicle-badge{ opacity:1; }
 @media (max-width:768px){
     .btn-excluir, .btn-editar{ opacity:1; transform:none; }
 }
 .vehicle-card.has-admin-actions .vehicle-top-row{ padding-right:78px; }
 
 .skeleton-card{ background:var(--white); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); }
-.skeleton-img{ height:250px; background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); background-size:300% 100%; animation:shimmer 1.4s infinite; }
+.skeleton-img{ 
+    height:250px; 
+    background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); 
+    background-size:300% 100%; 
+    animation:shimmer 1.4s infinite; 
+}
 .skeleton-line{ height:12px; margin:16px 18px; border-radius:4px; background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); background-size:300% 100%; animation:shimmer 1.4s infinite; }
 .skeleton-line.short{ width:50%; }
 @keyframes shimmer{ 0%{background-position:100% 0} 100%{background-position:-100% 0} }
 
 /* =========================================================
-   VEHICLE MODAL - CORRIGIDO
+   VEHICLE MODAL
 ========================================================= */
 .modal{
     display:none; position:fixed; inset:0; background:rgba(8,8,9,.9);
@@ -505,8 +544,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     max-width:100%; 
     max-height:100%; 
     object-fit:contain;
-    width:auto;
-    height:auto;
     display:block;
     margin:0 auto;
 }
@@ -521,16 +558,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .carousel-indicators{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; }
 .carousel-indicator{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.4); border:none; cursor:pointer; transition:all .2s var(--ease); }
 .carousel-indicator.active{ background:var(--red); width:20px; border-radius:4px; }
-
-@media (max-width:768px){
-    .modal{ padding:0; }
-    .modal-content{ margin:0; min-height:100vh; border-radius:0; }
-    .modal-body{ flex-direction:column; }
-    .carousel{ height:380px; }
-    .modal-details{ padding:20px; }
-    .modal-title, .modal-price{ text-align:center; }
-    .spec-value{ max-width:60%; word-break:break-word; }
-}
 
 /* =========================================================
    ABOUT
@@ -548,7 +575,15 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     content:''; position:absolute; inset:-14px -14px auto auto; width:70%; height:70%;
     border:2px solid var(--red); border-radius:var(--radius-lg); z-index:0;
 }
-.about-image img{ width:100%; border-radius:var(--radius-lg); box-shadow:var(--shadow-md); position:relative; z-index:1; }
+.about-image img{ 
+    width:100%; 
+    height:300px;
+    object-fit:cover;
+    border-radius:var(--radius-lg); 
+    box-shadow:var(--shadow-md); 
+    position:relative; 
+    z-index:1; 
+}
 
 /* =========================================================
    TEAM
@@ -560,8 +595,17 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     text-align:center; transition:transform .3s var(--ease), box-shadow .3s var(--ease); border:1px solid var(--gray-200);
 }
 .team-member:hover{ transform:translateY(-6px); box-shadow:var(--shadow-md); }
-.member-img-wrap{ overflow:hidden; height:250px; }
-.member-img{ width:100%; height:100%; object-fit:cover; filter:grayscale(65%); transition:filter .4s var(--ease), transform .4s var(--ease); }
+.member-img-wrap{ 
+    overflow:hidden; 
+    height:250px; 
+}
+.member-img{ 
+    width:100%; 
+    height:100%; 
+    object-fit:cover;
+    filter:grayscale(65%); 
+    transition:filter .4s var(--ease), transform .4s var(--ease); 
+}
 .team-member:hover .member-img{ filter:grayscale(0%); transform:scale(1.04); }
 .member-info{ padding:22px; }
 .member-name{ font-size:1.2rem; margin-bottom:4px; color:var(--black); text-transform:uppercase; }
@@ -702,7 +746,13 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     background:rgba(255,255,255,.04); margin-bottom:10px; gap:14px; flex-wrap:wrap;
 }
 .moto-info{ flex:1; display:flex; align-items:center; gap:14px; min-width:200px; }
-.moto-thumbnail{ width:56px; height:56px; object-fit:cover; border-radius:6px; flex-shrink:0; }
+.moto-thumbnail{ 
+    width:56px; 
+    height:56px; 
+    object-fit:cover; 
+    border-radius:6px; 
+    flex-shrink:0; 
+}
 .moto-details{ flex:1; min-width:0; }
 .moto-name{ font-weight:700; margin-bottom:4px; font-size:15px; }
 .moto-specs{ font-size:13px; color:rgba(255,255,255,.55); }
@@ -719,8 +769,18 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .upload-area.highlight{ border-color:var(--verde); background:rgba(29,185,84,.08); }
 .upload-area i{ font-size:34px; margin-bottom:10px; color:rgba(255,255,255,.4); }
 .preview-container{ display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:14px; }
-.preview-item{ position:relative; border-radius:6px; overflow:hidden; height:96px; }
-.preview-item img, .preview-item video{ width:100%; height:100%; object-fit:cover; }
+.preview-item{ 
+    position:relative; 
+    border-radius:6px; 
+    overflow:hidden; 
+    height:96px; 
+}
+.preview-item img, 
+.preview-item video{ 
+    width:100%; 
+    height:100%; 
+    object-fit:cover; 
+}
 .preview-item .remove-btn{
     position:absolute; top:5px; right:5px; background:rgba(220,53,69,.85); color:white; border:none;
     border-radius:50%; width:22px; height:22px; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center;
@@ -729,8 +789,18 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     position:absolute; left:0; right:0; bottom:0; height:4px; background:rgba(255,255,255,.2);
 }
 .preview-item .upload-progress span{ display:block; height:100%; background:var(--verde); width:0%; transition:width .2s linear; }
-.existing-media-item{ position:relative; border-radius:6px; overflow:hidden; height:96px; border:1px solid rgba(255,255,255,.15); }
-.existing-media-item img{ width:100%; height:100%; object-fit:cover; }
+.existing-media-item{ 
+    position:relative; 
+    border-radius:6px; 
+    overflow:hidden; 
+    height:96px; 
+    border:1px solid rgba(255,255,255,.15); 
+}
+.existing-media-item img{ 
+    width:100%; 
+    height:100%; 
+    object-fit:cover; 
+}
 .existing-media-item .delete-existing{
     position:absolute; top:5px; right:5px; background:rgba(220,53,69,.85); color:white; border:none;
     border-radius:50%; width:22px; height:22px; font-size:11px; cursor:pointer;
@@ -758,7 +828,14 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     display:flex; align-items:center; gap:14px; padding:12px; border:1px solid rgba(255,255,255,.08);
     border-radius:8px; background:rgba(255,255,255,.03); margin-bottom:12px; flex-wrap:wrap;
 }
-.image-edit-thumb{ width:70px; height:70px; border-radius:8px; object-fit:cover; background:var(--black); flex-shrink:0; }
+.image-edit-thumb{ 
+    width:70px; 
+    height:70px; 
+    object-fit:cover;
+    border-radius:8px; 
+    background:var(--black); 
+    flex-shrink:0; 
+}
 .image-edit-meta{ flex:1; min-width:140px; }
 .image-edit-meta b{ display:block; font-size:.85rem; margin-bottom:4px; }
 .image-edit-meta span{ font-size:.75rem; color:rgba(255,255,255,.45); }
@@ -799,45 +876,74 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .float-btn:hover, .text-edit-btn:hover{ transform:scale(1.08); }
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE - ALTERAÇÕES PRINCIPAIS
 ========================================================= */
-@media (max-width:900px){
-    .main-nav{ display:none; }
+
+/* Desktop: mostrar o texto "MAISO VEÍCULOS" e esconder a imagem da logo */
+@media (min-width: 769px) {
+    .logo-image {
+        display: none !important;
+    }
+    .logo-fallback {
+        display: block !important;
+    }
 }
-@media (max-width:768px){
+
+/* Mobile: manter a imagem da logo e esconder o texto */
+@media (max-width: 768px) {
+    .logo-image {
+        display: block !important;
+    }
+    .logo-fallback {
+        display: none !important;
+    }
     .menu-toggle{ display:block; }
     .user-menu{ display:none; }
     .header-container{ padding:0 18px; }
-    .logo-text{ font-size:1.15rem; }
+    .logo-image{ height:34px; }
 
     .section{ padding:64px 18px; }
     .hero-content{ padding:0 18px 40px; }
+
+    /* Ajuste do modal para melhor visualização das imagens no mobile */
+    .modal{ padding:0; }
+    .modal-content{ margin:0; min-height:100vh; border-radius:0; }
+    .modal-body{ flex-direction:column; }
+    .carousel{ height:380px; }  /* aumentado para melhor visualização */
+    .modal-details{ padding:20px; }
+    .modal-title, .modal-price{ text-align:center; }
+    .spec-value{ max-width:60%; word-break:break-word; }
 
     .form-row{ flex-direction:column; gap:18px; }
     .admin-actions{ flex-direction:column; }
     .preview-container{ grid-template-columns:repeat(2, 1fr); }
     .about-image::before{ display:none; }
+    .about-image img{ height:200px; }
     .location-container{ flex-direction:column-reverse; }
     .featured-card{ width:230px; }
     .testimonial-card{ width:260px; }
 }
+
 @media (max-width:480px){
     .hero{ height:60vh; min-height:340px; }
     .payment-options{ flex-direction:column; }
     .payment-option{ width:100%; justify-content:center; }
 }
+
+@media (max-width:900px){
+    .main-nav{ display:none; }
+}
 </style>
 </head>
 <body>
 
-<!-- =========================================================
-   HEADER
-========================================================= -->
+<!-- ================= HEADER ================= -->
 <header class="site-header">
     <div class="header-container">
-        <a href="#" class="logo">
-            <span class="logo-text">MAISO<span>VEÍCULOS</span></span>
-        </a>
+        <div class="logo">
+            <img src="logo.png" alt="Maiso Veículos" class="logo-image" id="logoImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span class="logo-fallback" style="display:none;">MAISO<span>VEÍCULOS</span></span>
+        </div>
 
         <nav class="main-nav">
             <ul class="nav-menu">
@@ -866,9 +972,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 <div class="mode-indicator" id="adminIndicator"><i class="fas fa-shield-alt"></i> Modo Administrador Ativo</div>
 <div class="mode-indicator" id="devIndicator"><i class="fas fa-code"></i> Modo Desenvolvedor Ativo — tudo é editável</div>
 
-<!-- =========================================================
-   MOBILE DRAWER
-========================================================= -->
+<!-- ================= MOBILE DRAWER ================= -->
 <div class="overlay" id="overlay"></div>
 <div class="drawer" id="drawer">
     <button class="drawer-close" id="drawerClose" aria-label="Fechar menu">&times;</button>
@@ -889,9 +993,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- =========================================================
-   LOADING OVERLAY
-========================================================= -->
+<!-- ================= LOADING OVERLAY ================= -->
 <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-content">
         <div class="loading-spinner"></div>
@@ -900,9 +1002,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- =========================================================
-   HERO
-========================================================= -->
+<!-- ================= HERO ================= -->
 <section class="hero">
     <div class="hero-image" id="heroImage"></div>
     <div class="hero-overlay"></div>
@@ -917,9 +1017,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </section>
 
-<!-- =========================================================
-   FEATURED
-========================================================= -->
+<!-- ================= FEATURED ================= -->
 <section class="section featured" id="featured" style="display:none;">
     <div class="section-title">
         <span class="section-eyebrow">Selecionados para você</span>
@@ -933,9 +1031,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </section>
 
-<!-- =========================================================
-   VEHICLES
-========================================================= -->
+<!-- ================= VEHICLES ================= -->
 <section class="section vehicles" id="vehicles">
     <div class="section-title">
         <span class="section-eyebrow">Estoque atualizado</span>
@@ -955,9 +1051,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </section>
 
-<!-- =========================================================
-   TESTIMONIALS
-========================================================= -->
+<!-- ================= TESTIMONIALS ================= -->
 <section class="section testimonials" id="testimonials" style="display:none;">
     <div class="section-title">
         <span class="section-eyebrow">Depoimentos</span>
@@ -971,9 +1065,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </section>
 
-<!-- =========================================================
-   ABOUT
-========================================================= -->
+<!-- ================= ABOUT ================= -->
 <section class="section about" id="about">
     <div class="section-title">
         <span class="section-eyebrow">Quem somos</span>
@@ -997,9 +1089,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </section>
 
-<!-- =========================================================
-   TEAM
-========================================================= -->
+<!-- ================= TEAM ================= -->
 <section class="section team" id="team">
     <div class="section-title">
         <span class="section-eyebrow">Time</span>
@@ -1033,9 +1123,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </section>
 
-<!-- =========================================================
-   LOCATION
-========================================================= -->
+<!-- ================= LOCATION ================= -->
 <section class="section location" id="location">
     <div class="section-title">
         <span class="section-eyebrow">Visite-nos</span>
@@ -1056,8 +1144,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </section>
 
-<!-- =========================================================
-   FOOTER========================================================= -->
+<!-- ================= FOOTER ================= -->
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-column">
@@ -1092,9 +1179,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </footer>
 
-<!-- =========================================================
-   VEHICLE DETAILS MODAL
-========================================================= -->
+<!-- ================= VEHICLE DETAILS MODAL ================= -->
 <div class="modal" id="vehicleModal">
     <div class="modal-content">
         <button class="close-modal" id="closeModal" aria-label="Fechar">&times;</button>
@@ -1131,9 +1216,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- =========================================================
-   LOGIN MODAL
-========================================================= -->
+<!-- ================= LOGIN MODAL ================= -->
 <div class="login-modal" id="loginModal">
     <div class="login-content">
         <div class="login-tabs">
@@ -1157,9 +1240,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- =========================================================
-   ADMIN PANEL
-========================================================= -->
+<!-- ================= ADMIN PANEL ================= -->
 <div class="admin-panel" id="adminPanel">
     <div class="admin-content">
         <div class="admin-header">
@@ -1173,6 +1254,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 <button class="admin-tab-btn" data-admin-tab="testimonials">Depoimentos</button>
             </div>
 
+            <!-- ---- ABA: VEÍCULOS ---- -->
             <div class="admin-tab-panel active" id="adminTabVehicles">
                 <h3 style="margin-bottom:20px; text-transform:uppercase; font-size:1.05rem;" id="formTitle">Adicionar Novo Veículo</h3>
                 <form id="addVehicleForm">
@@ -1252,6 +1334,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                 </div>
             </div>
 
+            <!-- ---- ABA: DEPOIMENTOS ---- -->
             <div class="admin-tab-panel" id="adminTabTestimonials">
                 <h3 style="margin-bottom:20px; text-transform:uppercase; font-size:1.05rem;" id="testimonialFormTitle">Adicionar Depoimento</h3>
                 <form id="addTestimonialForm">
@@ -1297,9 +1380,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- =========================================================
-   TEXT/IMAGE EDIT PANEL
-========================================================= -->
+<!-- ================= TEXT/IMAGE EDIT PANEL ================= -->
 <div class="text-edit-panel" id="textEditPanel">
     <div class="text-edit-content">
         <div class="text-edit-header">
@@ -1416,9 +1497,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- =========================================================
-   FLOATING BUTTONS
-========================================================= -->
+<!-- ================= FLOATING BUTTONS ================= -->
 <button class="float-btn" id="floatBtn" style="display:none;" aria-label="Painel administrativo" title="Painel administrativo">
     <i class="fas fa-tools"></i>
 </button>
@@ -1426,18 +1505,16 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     <i class="fas fa-edit"></i>
 </button>
 
-<!-- =========================================================
-   JAVASCRIPT COMPLETO
-========================================================= -->
+<!-- ================= APP LOGIC ================= -->
 <script>
 /* =========================================================
    CONFIGURAÇÃO
 ========================================================= */
 const API_URL = 'https://script.google.com/macros/s/AKfycbxGOkizek7fBAusdVWPfZF-nj6Xva368O1ObQNg5Pzwzntg63refb0IVdbOQ67eMm3dVQ/exec';
 
-const AUTO_REFRESH_MS = 25000;
-const IMG_MAX_WIDTH = 1600;
-const IMG_QUALITY = 0.8;
+// COMPRESSÃO DE IMAGENS
+const IMG_MAX_WIDTH = 1200;
+const IMG_QUALITY = 0.85;
 
 // ========== CLIENTE DA API ==========
 async function apiGet(params) {
@@ -1445,6 +1522,7 @@ async function apiGet(params) {
     const res = await fetch(`${API_URL}?${qs}`);
     return res.json();
 }
+
 async function apiPost(payload) {
     const res = await fetch(API_URL, {
         method: 'POST',
@@ -1454,74 +1532,80 @@ async function apiPost(payload) {
     return res.json();
 }
 
-function compressImageToDataURL(file, maxWidth = IMG_MAX_WIDTH, quality = IMG_QUALITY) {
+// ========== COMPRESSÃO DE IMAGEM ==========
+function compressImage(file) {
     return new Promise((resolve, reject) => {
-        const img = new Image();
         const reader = new FileReader();
-        reader.onload = () => { img.src = reader.result; };
-        reader.onerror = reject;
-        img.onload = () => {
-            try {
-                let { width, height } = img;
-                if (width > maxWidth) {
-                    height = Math.round(height * (maxWidth / width));
-                    width = maxWidth;
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                try {
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    if (width > IMG_MAX_WIDTH) {
+                        const ratio = IMG_MAX_WIDTH / width;
+                        width = IMG_MAX_WIDTH;
+                        height = Math.round(height * ratio);
+                    }
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    const dataUrl = canvas.toDataURL('image/jpeg', IMG_QUALITY);
+                    resolve(dataUrl);
+                } catch (err) {
+                    reject(err);
                 }
-                const canvas = document.createElement('canvas');
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-                const outType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
-                const dataUrl = canvas.toDataURL(outType, quality);
-                resolve(dataUrl);
-            } catch (err) { reject(err); }
+            };
+            img.onerror = reject;
+            img.src = e.target.result;
         };
-        img.onerror = reject;
+        reader.onerror = reject;
         reader.readAsDataURL(file);
     });
 }
 
-// ========== UPLOAD ==========
-async function uploadFileToDrive(file) {
+// ========== UPLOAD DE IMAGEM ==========
+async function uploadImage(file) {
     try {
-        const dataUrl = await compressImageToDataURL(file);
-        const result = await apiPost({ 
-            action: 'uploadImage', 
-            base64: dataUrl, 
-            filename: file.name, 
-            mimeType: file.type 
+        const dataUrl = await compressImage(file);
+        const result = await apiPost({
+            action: 'uploadImage',
+            base64: dataUrl,
+            filename: file.name || 'imagem.jpg'
         });
         
         if (!result.success) {
             throw new Error(result.message || 'Falha no upload');
         }
         
+        // 🔥 USA A URL DIRETA DO DRIVE
         return result.url;
     } catch (error) {
-        console.error('Erro no upload:', error);
+        console.error('❌ Erro no upload:', error);
         throw error;
     }
 }
 
-async function uploadFilesInParallel(files) {
-    const urls = await Promise.all(files.map(f => uploadFileToDrive(f)));
+async function uploadMultipleImages(files) {
+    const urls = [];
+    for (const file of files) {
+        const url = await uploadImage(file);
+        urls.push(url);
+    }
     return urls;
 }
 
+// ========== EXTRAIR ID DO DRIVE ==========
 function extractDriveId(url) {
-    const m = String(url || '').match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (m) return m[1];
-    const m2 = String(url || '').match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (m2) return m2[1];
-    return null;
-}
-
-function isTruthy(val) {
-    if (val === true) return true;
-    if (val === false || val === undefined || val === null || val === '') return false;
-    const s = String(val).trim().toLowerCase();
-    return s === 'true' || s === 'verdadeiro' || s === '1' || s === 'sim' || s === 'yes';
+    if (!url) return null;
+    const match = String(url).match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    return match ? match[1] : null;
 }
 
 // ========== STATE ==========
@@ -1579,9 +1663,6 @@ document.addEventListener('DOMContentLoaded', function () {
     loadSiteContent();
     setupEventListeners();
     checkSavedUser();
-    if (AUTO_REFRESH_MS > 0) {
-        setInterval(() => { loadVehicles(); loadTestimonials(); loadSiteContent(); }, AUTO_REFRESH_MS);
-    }
 });
 
 // ========== EVENT LISTENERS ==========
@@ -1658,13 +1739,11 @@ function setupEventListeners() {
     els.featuredNext.addEventListener('click', () => scrollFeatured(1));
     els.featuredTrack.addEventListener('mouseenter', stopFeaturedAutoplay);
     els.featuredTrack.addEventListener('mouseleave', startFeaturedAutoplay);
-    els.featuredTrack.addEventListener('touchstart', stopFeaturedAutoplay, { passive: true });
 
     els.testimonialsPrev.addEventListener('click', () => scrollTestimonials(-1));
     els.testimonialsNext.addEventListener('click', () => scrollTestimonials(1));
     els.testimonialsTrack.addEventListener('mouseenter', stopTestimonialsAutoplay);
     els.testimonialsTrack.addEventListener('mouseleave', startTestimonialsAutoplay);
-    els.testimonialsTrack.addEventListener('touchstart', stopTestimonialsAutoplay, { passive: true });
 
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
@@ -1687,6 +1766,7 @@ function setupSwipeEvents() {
     carousel.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
     carousel.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }, { passive: true });
 }
+
 function handleSwipe() {
     const threshold = 50;
     if (touchEndX < touchStartX - threshold) showNextMedia();
@@ -1780,7 +1860,6 @@ function updateSiteContent() {
     renderVehicles();
 }
 
-// ========== TEXT EDIT ==========
 function openTextEditPanel() {
     const map = {
         editUserName: siteContent.userName || 'Visitante',
@@ -1871,7 +1950,7 @@ function renderImageEditor() {
             chooseBtn.disabled = true;
             status.textContent = 'Enviando...';
             try {
-                const url = await uploadFileToDrive(file);
+                const url = await uploadImage(file);
                 siteContent[field.key] = url;
                 thumb.src = url;
                 status.textContent = 'Imagem atualizada (clique em "Salvar" para publicar)';
@@ -2102,7 +2181,7 @@ function renderVehicles() {
     renderFeaturedCarousel();
 }
 
-// ========== FEATURED ==========
+// ========== FEATURED CAROUSEL ==========
 function renderFeaturedCarousel() {
     const featuredVehicles = vehicles.filter(v => isTruthy(v.featured));
     stopFeaturedAutoplay();
@@ -2277,7 +2356,7 @@ async function addTestimonial() {
     els.loadingOverlay.style.display = 'flex';
 
     try {
-        const url = await uploadFileToDrive(selectedTestimonialFile);
+        const url = await uploadImage(selectedTestimonialFile);
         data.photo = url;
         els.loadingText.textContent = 'Salvando depoimento...';
         const res = await apiPost({ action: 'addTestimonial', data });
@@ -2304,7 +2383,7 @@ async function updateTestimonial(testimonialId) {
         let photo = existingTestimonialPhoto;
         if (selectedTestimonialFile) {
             els.loadingText.textContent = 'Enviando nova foto...';
-            const url = await uploadFileToDrive(selectedTestimonialFile);
+            const url = await uploadImage(selectedTestimonialFile);
             photo = url;
             const oldId = extractDriveId(existingTestimonialPhoto);
             if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
@@ -2553,7 +2632,7 @@ async function addVehicle() {
     els.loadingOverlay.style.display = 'flex';
 
     try {
-        vehicle.medias = await uploadFilesInParallel(selectedFiles);
+        vehicle.medias = await uploadMultipleImages(selectedFiles);
         console.log('📸 URLs:', vehicle.medias);
         
         els.loadingText.textContent = 'Salvando veículo...';
@@ -2582,7 +2661,7 @@ async function updateVehicle(vehicleId) {
         let medias = [...existingMediaForEdit];
         if (selectedFiles.length > 0) {
             els.loadingText.textContent = 'Enviando novas fotos...';
-            const newUrls = await uploadFilesInParallel(selectedFiles);
+            const newUrls = await uploadMultipleImages(selectedFiles);
             medias = medias.concat(newUrls);
         }
         updated.medias = medias;
@@ -2780,11 +2859,19 @@ function toggleDrawer() { els.drawer.classList.toggle('open'); els.overlay.class
 function closeDrawer() { els.drawer.classList.remove('open'); els.overlay.classList.remove('active'); }
 
 // ========== HELPERS ==========
+function isTruthy(val) {
+    if (val === true) return true;
+    if (val === false || val === undefined || val === null || val === '') return false;
+    return String(val).toLowerCase() === 'true' || String(val).toLowerCase() === 'verdadeiro' || String(val) === '1';
+}
+
 function formatPrice(price) { return new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price || 0); }
 function formatKm(km) { return new Intl.NumberFormat('pt-BR').format(km); }
+
 function getVehicleTypeName(type) {
     return { 'ate-110cc': 'Até 110cc', 'ate-150cc': 'Até 150cc', 'acima-160cc': 'Acima de 160cc' }[type] || type;
 }
+
 function escapeHtml(str) {
     if (str === undefined || str === null) return '';
     return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
