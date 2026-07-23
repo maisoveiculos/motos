@@ -166,7 +166,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .drawer-logout-btn{ background:var(--red); color:var(--white); margin-top:8px; display:none; }
 
 /* =========================================================
-   HERO (foto única, sem carrossel)
+   HERO
 ========================================================= */
 .hero{
     position:relative; overflow:hidden; margin-top:var(--header-h);
@@ -231,7 +231,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 
 /* =========================================================
-   FEATURED / DESTAQUES — carrossel horizontal de ofertas
+   FEATURED
 ========================================================= */
 .featured{ background:var(--black); padding-bottom:80px; }
 .featured .section-eyebrow{ color:var(--red); }
@@ -275,7 +275,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 @media (max-width:900px){ .featured-nav{ display:none; } }
 
 /* =========================================================
-   TESTIMONIALS / DEPOIMENTOS — carrossel de clientes satisfeitos
+   TESTIMONIALS
 ========================================================= */
 .testimonials{ background:var(--gray-100); }
 .testimonials .section-eyebrow{ color:var(--red); }
@@ -315,7 +315,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 @media (max-width:900px){ .testimonials-nav{ display:none; } }
 
 /* =========================================================
-   VEHICLES — NOVO DESIGN (menos "lista", mais visual)
+   VEHICLES
 ========================================================= */
 .vehicles{ background:var(--gray-100); }
 
@@ -336,7 +336,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 .vehicles-empty i, .vehicles-loading i{ font-size:2.4rem; color:var(--gray-200); margin-bottom:14px; display:block; }
 
-/* --- signature vehicle card v2: foto em destaque, texto sobreposto --- */
 .vehicle-card{
     background:var(--white); border-radius:var(--radius-lg); overflow:hidden;
     box-shadow:var(--shadow-sm); transition:transform .35s var(--ease), box-shadow .35s var(--ease);
@@ -401,7 +400,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .vehicle-btn i{ transition:transform .25s var(--ease); }
 .vehicle-btn:hover i{ transform:translateX(3px); }
 
-/* admin quick actions on card */
 .card-admin-actions{ position:absolute; top:12px; right:12px; display:flex; gap:8px; z-index:5; }
 .btn-excluir, .btn-editar{
     background:rgba(11,11,13,.75); color:var(--white); border:none; border-radius:50%;
@@ -411,14 +409,11 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 .btn-excluir:hover{ background:#dc3545; }
 .btn-editar:hover{ background:var(--azul); }
 .vehicle-card:hover .btn-excluir, .vehicle-card:hover .btn-editar{ opacity:1; transform:translateY(0); }
-.vehicle-top-row .vehicle-badge{ opacity:1; }
 @media (max-width:768px){
     .btn-excluir, .btn-editar{ opacity:1; transform:none; }
 }
-/* quando é admin, empurra o tag de ano pra baixo dos botões de ação */
 .vehicle-card.has-admin-actions .vehicle-top-row{ padding-right:78px; }
 
-/* skeleton loading */
 .skeleton-card{ background:var(--white); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); }
 .skeleton-img{ height:250px; background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); background-size:300% 100%; animation:shimmer 1.4s infinite; }
 .skeleton-line{ height:12px; margin:16px 18px; border-radius:4px; background:linear-gradient(100deg, var(--gray-200) 30%, #f8f9fb 50%, var(--gray-200) 70%); background-size:300% 100%; animation:shimmer 1.4s infinite; }
@@ -569,7 +564,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 
 /* =========================================================
-   SHARED MODALS: login / admin / text-edit
+   SHARED MODALS
 ========================================================= */
 .login-modal{
     display:none; position:fixed; inset:0; background:rgba(8,8,9,.85); z-index:4000;
@@ -714,7 +709,6 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 }
 .text-edit-actions .btn{ flex:1; }
 
-/* editor de imagens (modo dev) */
 .image-edit-item{
     display:flex; align-items:center; gap:14px; padding:12px; border:1px solid rgba(255,255,255,.08);
     border-radius:8px; background:rgba(255,255,255,.03); margin-bottom:12px; flex-wrap:wrap;
@@ -865,7 +859,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- ================= HERO (foto única) ================= -->
+<!-- ================= HERO ================= -->
 <section class="hero">
     <div class="hero-image" id="heroImage"></div>
     <div class="hero-overlay"></div>
@@ -880,7 +874,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </section>
 
-<!-- ================= FEATURED / DESTAQUES ================= -->
+<!-- ================= FEATURED ================= -->
 <section class="section featured" id="featured" style="display:none;">
     <div class="section-title">
         <span class="section-eyebrow">Selecionados para você</span>
@@ -914,7 +908,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </section>
 
-<!-- ================= TESTIMONIALS / CLIENTES SATISFEITOS ================= -->
+<!-- ================= TESTIMONIALS ================= -->
 <section class="section testimonials" id="testimonials" style="display:none;">
     <div class="section-title">
         <span class="section-eyebrow">Depoimentos</span>
@@ -1243,7 +1237,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     </div>
 </div>
 
-<!-- ================= TEXT/IMAGE EDIT PANEL (MODO DEV) ================= -->
+<!-- ================= TEXT/IMAGE EDIT PANEL ================= -->
 <div class="text-edit-panel" id="textEditPanel">
     <div class="text-edit-content">
         <div class="text-edit-header">
@@ -1370,1339 +1364,1345 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
 
 <!-- ================= APP LOGIC ================= -->
 <script>
-    /* =========================================================
-       CONFIGURAÇÃO — cole aqui a URL do seu Web App do Apps Script
-       (Implantar > Nova implantação > Aplicativo da Web > copiar URL)
-    ========================================================= */
-    // !!! SUBSTITUA PELA URL DO SEU WEB APP !!!
-    const API_URL = 'https://script.google.com/macros/s/SEU_ID_AQUI/exec';
+/* =========================================================
+   CONFIGURAÇÃO — cole aqui a URL do seu Web App do Apps Script
+   (Implantar > Nova implantação > Aplicativo da Web > copiar URL)
+========================================================= */
+// !!! SUBSTITUA PELA URL DO SEU WEB APP !!!
+const API_URL = 'https://script.google.com/macros/s/AKfycbxD2VDK7qsFzLsM90lc2IZOJeQCuwXWwHBQydjs6sZEBXyH59gK7hP4bGV3zkDaEN0A-Q/exec';
 
-    // intervalo de atualização automática dos dados (ms). 0 = desliga.
-    const AUTO_REFRESH_MS = 25000;
+// intervalo de atualização automática dos dados (ms). 0 = desliga.
+const AUTO_REFRESH_MS = 25000;
 
-    // compressão de imagens antes do envio (deixa o upload bem mais rápido)
-    const IMG_MAX_WIDTH = 1600;
-    const IMG_QUALITY = 0.8;
+// compressão de imagens antes do envio
+const IMG_MAX_WIDTH = 1600;
+const IMG_QUALITY = 0.8;
 
-    // ========== CLIENTE DA API ==========
-    async function apiGet(params) {
-        const qs = new URLSearchParams(params).toString();
-        const res = await fetch(`${API_URL}?${qs}`);
-        return res.json();
-    }
-    async function apiPost(payload) {
-        const res = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(payload)
+// ========== CLIENTE DA API ==========
+async function apiGet(params) {
+    const qs = new URLSearchParams(params).toString();
+    const res = await fetch(`${API_URL}?${qs}`);
+    return res.json();
+}
+async function apiPost(payload) {
+    const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+    });
+    return res.json();
+}
+
+function compressImageToDataURL(file, maxWidth = IMG_MAX_WIDTH, quality = IMG_QUALITY) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = () => { img.src = reader.result; };
+        reader.onerror = reject;
+        img.onload = () => {
+            try {
+                let { width, height } = img;
+                if (width > maxWidth) {
+                    height = Math.round(height * (maxWidth / width));
+                    width = maxWidth;
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                const outType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+                const dataUrl = canvas.toDataURL(outType, quality);
+                resolve(dataUrl);
+            } catch (err) { reject(err); }
+        };
+        img.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+// ========== FUNÇÃO DE UPLOAD CORRIGIDA ==========
+async function uploadFileToDrive(file) {
+    try {
+        const dataUrl = await compressImageToDataURL(file);
+        const result = await apiPost({ 
+            action: 'uploadImage', 
+            base64: dataUrl, 
+            filename: file.name, 
+            mimeType: file.type 
         });
-        return res.json();
-    }
-
-    function compressImageToDataURL(file, maxWidth = IMG_MAX_WIDTH, quality = IMG_QUALITY) {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = () => { img.src = reader.result; };
-            reader.onerror = reject;
-            img.onload = () => {
-                try {
-                    let { width, height } = img;
-                    if (width > maxWidth) {
-                        height = Math.round(height * (maxWidth / width));
-                        width = maxWidth;
-                    }
-                    const canvas = document.createElement('canvas');
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    const outType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
-                    const dataUrl = canvas.toDataURL(outType, quality);
-                    resolve(dataUrl);
-                } catch (err) { reject(err); }
-            };
-            img.onerror = reject;
-            reader.readAsDataURL(file);
-        });
-    }
-
-    // ========== FUNÇÃO DE UPLOAD CORRIGIDA ==========
-    async function uploadFileToDrive(file) {
-        try {
-            const dataUrl = await compressImageToDataURL(file);
-            const result = await apiPost({ 
-                action: 'uploadImage', 
-                base64: dataUrl, 
-                filename: file.name, 
-                mimeType: file.type 
-            });
-            
-            // ⚠️ IMPORTANTE: Mostra no console o que o servidor retornou
-            console.log('📊 Resposta do servidor:', result);
-            
-            if (!result.success) {
-                throw new Error(result.message || 'Falha no upload');
-            }
-            
-            // VERIFICA se a URL está no formato correto
-            if (!result.url || !result.url.startsWith('https://script.google.com')) {
-                console.warn('⚠️ URL suspeita:', result.url);
-            }
-            
-            // O retorno DEVE ser { id, url }
-            return result;
-            
-        } catch (error) {
-            console.error('❌ Erro no upload:', error);
-            throw error;
+        
+        console.log('📊 Resposta do servidor:', result);
+        
+        if (!result.success) {
+            throw new Error(result.message || 'Falha no upload');
         }
+        
+        if (!result.url || !result.url.startsWith('https://script.google.com')) {
+            console.warn('⚠️ URL suspeita:', result.url);
+        }
+        
+        return result;
+        
+    } catch (error) {
+        console.error('❌ Erro no upload:', error);
+        throw error;
     }
+}
 
-    async function uploadFilesInParallel(files) {
-        const urls = await Promise.all(files.map(f => uploadFileToDrive(f)));
-        return urls.map(u => u.url);
+async function uploadFilesInParallel(files) {
+    const results = await Promise.all(files.map(f => uploadFileToDrive(f)));
+    return results.map(r => r.url);
+}
+
+function extractDriveId(url) {
+    const m = String(url || '').match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (m) return m[1];
+    const m2 = String(url || '').match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (m2) return m2[1];
+    return null;
+}
+
+function isTruthy(val) {
+    if (val === true) return true;
+    if (val === false || val === undefined || val === null || val === '') return false;
+    const s = String(val).trim().toLowerCase();
+    return s === 'true' || s === 'verdadeiro' || s === '1' || s === 'sim' || s === 'yes';
+}
+
+// ========== STATE ==========
+let currentUser = { name: 'Visitante', type: 'guest' };
+let vehicles = [];
+let testimonials = [];
+let currentVehicleIndex = 0;
+let currentMediaIndex = 0;
+let selectedFiles = [];
+let existingMediaForEdit = [];
+let editingVehicleId = null;
+let selectedTestimonialFile = null;
+let existingTestimonialPhoto = null;
+let editingTestimonialId = null;
+let siteContent = {};
+let currentFilter = 'all';
+let touchStartX = 0, touchEndX = 0;
+let featuredAutoplayInterval = null;
+let testimonialsAutoplayInterval = null;
+
+const IMAGE_FIELDS = [
+    { key: 'logoUrl',        selector: '#logoImg',    label: 'Logo (header)' },
+    { key: 'heroImageUrl',   selector: '#heroImage',  label: 'Foto de capa (topo do site)', isBg: true },
+    { key: 'aboutImageUrl',  selector: '#aboutImg',   label: 'Foto — Sobre a loja' },
+    { key: 'member1PhotoUrl',selector: '#member1Img', label: 'Foto — Equipe 1' },
+    { key: 'member2PhotoUrl',selector: '#member2Img', label: 'Foto — Equipe 2' },
+    { key: 'member3PhotoUrl',selector: '#member3Img', label: 'Foto — Equipe 3' }
+];
+
+// ========== DOM ==========
+const els = {};
+[
+    'userName','userType','devType','loginBtn','adminIndicator','devIndicator',
+    'loginModal','adminPanel','floatBtn','textEditBtn','textEditPanel','vehiclesGrid',
+    'vehicleModal','closeModal','carouselInner','carouselIndicators','prevBtn','nextBtn',
+    'modalTitle','modalPrice','modalSpecs','whatsappButton','addVehicleForm','motoList',
+    'closeAdminPanel','closeTextEditPanel','formStatus','textEditStatus','uploadArea',
+    'fileInput','previewContainer','mediaCounter','clearForm','menuToggle','drawer',
+    'overlay','drawerLoginBtn','drawerLogoutBtn','drawerUserName','drawerUserType','drawerDevType',
+    'saveTextChanges','cancelTextChanges','loadingOverlay','loadingText','drawerClose',
+    'submitBtn','formTitle','existingMediaWrap','existingMediaContainer','imageEditorContainer',
+    'featured','featuredTrack','featuredPrev','featuredNext',
+    'testimonials','testimonialsTrack','testimonialsPrev','testimonialsNext',
+    'addTestimonialForm','testimonialName','testimonialText','testimonialUploadArea',
+    'testimonialFileInput','testimonialPreviewContainer','testimonialMediaCounter',
+    'existingTestimonialPhotoWrap','existingTestimonialPhotoContainer','testimonialSubmitBtn',
+    'testimonialFormTitle','clearTestimonialForm','testimonialFormStatus','testimonialList'
+].forEach(id => els[id] = document.getElementById(id));
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+// ========== INIT ==========
+document.addEventListener('DOMContentLoaded', function () {
+    loadVehicles();
+    loadTestimonials();
+    loadSiteContent();
+    setupEventListeners();
+    checkSavedUser();
+    if (AUTO_REFRESH_MS > 0) {
+        setInterval(() => { loadVehicles(); loadTestimonials(); loadSiteContent(); }, AUTO_REFRESH_MS);
     }
+});
 
-    function extractDriveId(url) {
-        const m = String(url || '').match(/id=([a-zA-Z0-9_-]+)/);
-        return m ? m[1] : null;
-    }
+// ========== EVENTS ==========
+function setupEventListeners() {
+    els.loginBtn.addEventListener('click', openLoginModal);
+    els.drawerLoginBtn.addEventListener('click', openLoginModal);
+    els.drawerLogoutBtn.addEventListener('click', logout);
+    els.drawerClose.addEventListener('click', closeDrawer);
 
-    function isTruthy(val) {
-        if (val === true) return true;
-        if (val === false || val === undefined || val === null || val === '') return false;
-        const s = String(val).trim().toLowerCase();
-        return s === 'true' || s === 'verdadeiro' || s === '1' || s === 'sim' || s === 'yes';
-    }
+    document.querySelectorAll('.login-tab').forEach(tab => {
+        tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+    });
 
-    // ========== STATE ==========
-    let currentUser = { name: 'Visitante', type: 'guest' };
-    let vehicles = [];
-    let testimonials = [];
-    let currentVehicleIndex = 0;
-    let currentMediaIndex = 0;
-    let selectedFiles = [];
-    let existingMediaForEdit = [];
-    let editingVehicleId = null;
-    let selectedTestimonialFile = null;
-    let existingTestimonialPhoto = null;
-    let editingTestimonialId = null;
-    let siteContent = {};
-    let currentFilter = 'all';
-    let touchStartX = 0, touchEndX = 0;
-    let featuredAutoplayInterval = null;
-    let testimonialsAutoplayInterval = null;
+    document.getElementById('userLoginBtn').addEventListener('click', loginAsUser);
+    document.getElementById('adminLoginBtn').addEventListener('click', loginAsAdmin);
+    document.getElementById('devLoginBtn').addEventListener('click', loginAsDev);
 
-    const IMAGE_FIELDS = [
-        { key: 'logoUrl',        selector: '#logoImg',    label: 'Logo (header)' },
-        { key: 'heroImageUrl',   selector: '#heroImage',  label: 'Foto de capa (topo do site)', isBg: true },
-        { key: 'aboutImageUrl',  selector: '#aboutImg',   label: 'Foto — Sobre a loja' },
-        { key: 'member1PhotoUrl',selector: '#member1Img', label: 'Foto — Equipe 1' },
-        { key: 'member2PhotoUrl',selector: '#member2Img', label: 'Foto — Equipe 2' },
-        { key: 'member3PhotoUrl',selector: '#member3Img', label: 'Foto — Equipe 3' }
-    ];
+    els.loginModal.addEventListener('click', e => { if (e.target === els.loginModal) closeLoginModal(); });
+    els.adminPanel.addEventListener('click', e => { if (e.target === els.adminPanel) closeAdminPanelFunc(); });
+    els.textEditPanel.addEventListener('click', e => { if (e.target === els.textEditPanel) closeTextEditPanelFunc(); });
+    els.vehicleModal.addEventListener('click', e => { if (e.target === els.vehicleModal) closeVehicleModal(); });
 
-    // ========== DOM ==========
-    const els = {};
-    [
-        'userName','userType','devType','loginBtn','adminIndicator','devIndicator',
-        'loginModal','adminPanel','floatBtn','textEditBtn','textEditPanel','vehiclesGrid',
-        'vehicleModal','closeModal','carouselInner','carouselIndicators','prevBtn','nextBtn',
-        'modalTitle','modalPrice','modalSpecs','whatsappButton','addVehicleForm','motoList',
-        'closeAdminPanel','closeTextEditPanel','formStatus','textEditStatus','uploadArea',
-        'fileInput','previewContainer','mediaCounter','clearForm','menuToggle','drawer',
-        'overlay','drawerLoginBtn','drawerLogoutBtn','drawerUserName','drawerUserType','drawerDevType',
-        'saveTextChanges','cancelTextChanges','loadingOverlay','loadingText','drawerClose',
-        'submitBtn','formTitle','existingMediaWrap','existingMediaContainer','imageEditorContainer',
-        'featured','featuredTrack','featuredPrev','featuredNext',
-        'testimonials','testimonialsTrack','testimonialsPrev','testimonialsNext',
-        'addTestimonialForm','testimonialName','testimonialText','testimonialUploadArea',
-        'testimonialFileInput','testimonialPreviewContainer','testimonialMediaCounter',
-        'existingTestimonialPhotoWrap','existingTestimonialPhotoContainer','testimonialSubmitBtn',
-        'testimonialFormTitle','clearTestimonialForm','testimonialFormStatus','testimonialList'
-    ].forEach(id => els[id] = document.getElementById(id));
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    els.closeModal.addEventListener('click', closeVehicleModal);
+    els.closeAdminPanel.addEventListener('click', closeAdminPanelFunc);
+    els.closeTextEditPanel.addEventListener('click', closeTextEditPanelFunc);
 
-    // ========== INIT ==========
-    document.addEventListener('DOMContentLoaded', function () {
-        loadVehicles();
-        loadTestimonials();
-        loadSiteContent();
-        setupEventListeners();
-        checkSavedUser();
-        if (AUTO_REFRESH_MS > 0) {
-            setInterval(() => { loadVehicles(); loadTestimonials(); loadSiteContent(); }, AUTO_REFRESH_MS);
+    els.floatBtn.addEventListener('click', () => openAdminPanel());
+    els.textEditBtn.addEventListener('click', openTextEditPanel);
+
+    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchAdminTab(btn.dataset.adminTab));
+    });
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            currentFilter = this.dataset.filter;
+            setActiveFilter(this);
+            applyCurrentFilter();
+        });
+    });
+
+    els.prevBtn.addEventListener('click', showPrevMedia);
+    els.nextBtn.addEventListener('click', showNextMedia);
+
+    els.addVehicleForm.addEventListener('submit', handleFormSubmit);
+    els.clearForm.addEventListener('click', clearForm);
+
+    els.uploadArea.addEventListener('click', () => els.fileInput.click());
+    els.uploadArea.addEventListener('dragover', handleDragOver);
+    els.uploadArea.addEventListener('dragleave', handleDragLeave);
+    els.uploadArea.addEventListener('drop', handleDrop);
+    els.fileInput.addEventListener('change', handleFileSelect);
+
+    els.addTestimonialForm.addEventListener('submit', handleTestimonialFormSubmit);
+    els.clearTestimonialForm.addEventListener('click', clearTestimonialForm);
+    els.testimonialUploadArea.addEventListener('click', () => els.testimonialFileInput.click());
+    els.testimonialUploadArea.addEventListener('dragover', e => { e.preventDefault(); els.testimonialUploadArea.classList.add('highlight'); });
+    els.testimonialUploadArea.addEventListener('dragleave', e => { e.preventDefault(); els.testimonialUploadArea.classList.remove('highlight'); });
+    els.testimonialUploadArea.addEventListener('drop', e => {
+        e.preventDefault(); els.testimonialUploadArea.classList.remove('highlight');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) handleTestimonialFile(e.dataTransfer.files[0]);
+    });
+    els.testimonialFileInput.addEventListener('change', e => {
+        if (e.target.files && e.target.files[0]) handleTestimonialFile(e.target.files[0]);
+    });
+
+    els.menuToggle.addEventListener('click', toggleDrawer);
+    els.overlay.addEventListener('click', closeDrawer);
+
+    els.saveTextChanges.addEventListener('click', saveTextChanges);
+    els.cancelTextChanges.addEventListener('click', closeTextEditPanelFunc);
+
+    els.featuredPrev.addEventListener('click', () => scrollFeatured(-1));
+    els.featuredNext.addEventListener('click', () => scrollFeatured(1));
+    els.featuredTrack.addEventListener('mouseenter', stopFeaturedAutoplay);
+    els.featuredTrack.addEventListener('mouseleave', startFeaturedAutoplay);
+    els.featuredTrack.addEventListener('touchstart', stopFeaturedAutoplay, { passive: true });
+
+    els.testimonialsPrev.addEventListener('click', () => scrollTestimonials(-1));
+    els.testimonialsNext.addEventListener('click', () => scrollTestimonials(1));
+    els.testimonialsTrack.addEventListener('mouseenter', stopTestimonialsAutoplay);
+    els.testimonialsTrack.addEventListener('mouseleave', startTestimonialsAutoplay);
+    els.testimonialsTrack.addEventListener('touchstart', stopTestimonialsAutoplay, { passive: true });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            closeVehicleModal(); closeLoginModal(); closeDrawer();
         }
     });
 
-    // ========== EVENTS ==========
-    function setupEventListeners() {
-        els.loginBtn.addEventListener('click', openLoginModal);
-        els.drawerLoginBtn.addEventListener('click', openLoginModal);
-        els.drawerLogoutBtn.addEventListener('click', logout);
-        els.drawerClose.addEventListener('click', closeDrawer);
+    setupSwipeEvents();
+}
 
-        document.querySelectorAll('.login-tab').forEach(tab => {
-            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
-        });
+function switchAdminTab(tab) {
+    document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.adminTab === tab));
+    document.getElementById('adminTabVehicles').classList.toggle('active', tab === 'vehicles');
+    document.getElementById('adminTabTestimonials').classList.toggle('active', tab === 'testimonials');
+}
 
-        document.getElementById('userLoginBtn').addEventListener('click', loginAsUser);
-        document.getElementById('adminLoginBtn').addEventListener('click', loginAsAdmin);
-        document.getElementById('devLoginBtn').addEventListener('click', loginAsDev);
+// ========== SWIPE ==========
+function setupSwipeEvents() {
+    const carousel = document.getElementById('carousel');
+    carousel.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    carousel.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }, { passive: true });
+}
+function handleSwipe() {
+    const threshold = 50;
+    if (touchEndX < touchStartX - threshold) showNextMedia();
+    if (touchEndX > touchStartX + threshold) showPrevMedia();
+}
 
-        els.loginModal.addEventListener('click', e => { if (e.target === els.loginModal) closeLoginModal(); });
-        els.adminPanel.addEventListener('click', e => { if (e.target === els.adminPanel) closeAdminPanelFunc(); });
-        els.textEditPanel.addEventListener('click', e => { if (e.target === els.textEditPanel) closeTextEditPanelFunc(); });
-        els.vehicleModal.addEventListener('click', e => { if (e.target === els.vehicleModal) closeVehicleModal(); });
+// ========== SITE CONTENT ==========
+async function loadSiteContent() {
+    try {
+        const res = await apiGet({ action: 'getSiteContent' });
+        if (res.success) { siteContent = res.content || {}; updateSiteContent(); }
+    } catch (err) { console.error('Erro ao carregar conteúdo do site:', err); }
+}
 
-        els.closeModal.addEventListener('click', closeVehicleModal);
-        els.closeAdminPanel.addEventListener('click', closeAdminPanelFunc);
-        els.closeTextEditPanel.addEventListener('click', closeTextEditPanelFunc);
+function setText(id, value) { const el = document.getElementById(id); if (el && value) el.textContent = value; }
 
-        els.floatBtn.addEventListener('click', () => openAdminPanel());
-        els.textEditBtn.addEventListener('click', openTextEditPanel);
+function updateSiteContent() {
+    setText('userName', siteContent.userName);
+    setText('drawerUserName', siteContent.userName);
 
-        document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => switchAdminTab(btn.dataset.adminTab));
-        });
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', function () {
-                currentFilter = this.dataset.filter;
-                setActiveFilter(this);
-                applyCurrentFilter();
-            });
-        });
-
-        els.prevBtn.addEventListener('click', showPrevMedia);
-        els.nextBtn.addEventListener('click', showNextMedia);
-
-        els.addVehicleForm.addEventListener('submit', handleFormSubmit);
-        els.clearForm.addEventListener('click', clearForm);
-
-        els.uploadArea.addEventListener('click', () => els.fileInput.click());
-        els.uploadArea.addEventListener('dragover', handleDragOver);
-        els.uploadArea.addEventListener('dragleave', handleDragLeave);
-        els.uploadArea.addEventListener('drop', handleDrop);
-        els.fileInput.addEventListener('change', handleFileSelect);
-
-        els.addTestimonialForm.addEventListener('submit', handleTestimonialFormSubmit);
-        els.clearTestimonialForm.addEventListener('click', clearTestimonialForm);
-        els.testimonialUploadArea.addEventListener('click', () => els.testimonialFileInput.click());
-        els.testimonialUploadArea.addEventListener('dragover', e => { e.preventDefault(); els.testimonialUploadArea.classList.add('highlight'); });
-        els.testimonialUploadArea.addEventListener('dragleave', e => { e.preventDefault(); els.testimonialUploadArea.classList.remove('highlight'); });
-        els.testimonialUploadArea.addEventListener('drop', e => {
-            e.preventDefault(); els.testimonialUploadArea.classList.remove('highlight');
-            if (e.dataTransfer.files && e.dataTransfer.files[0]) handleTestimonialFile(e.dataTransfer.files[0]);
-        });
-        els.testimonialFileInput.addEventListener('change', e => {
-            if (e.target.files && e.target.files[0]) handleTestimonialFile(e.target.files[0]);
-        });
-
-        els.menuToggle.addEventListener('click', toggleDrawer);
-        els.overlay.addEventListener('click', closeDrawer);
-
-        els.saveTextChanges.addEventListener('click', saveTextChanges);
-        els.cancelTextChanges.addEventListener('click', closeTextEditPanelFunc);
-
-        els.featuredPrev.addEventListener('click', () => scrollFeatured(-1));
-        els.featuredNext.addEventListener('click', () => scrollFeatured(1));
-        els.featuredTrack.addEventListener('mouseenter', stopFeaturedAutoplay);
-        els.featuredTrack.addEventListener('mouseleave', startFeaturedAutoplay);
-        els.featuredTrack.addEventListener('touchstart', stopFeaturedAutoplay, { passive: true });
-
-        els.testimonialsPrev.addEventListener('click', () => scrollTestimonials(-1));
-        els.testimonialsNext.addEventListener('click', () => scrollTestimonials(1));
-        els.testimonialsTrack.addEventListener('mouseenter', stopTestimonialsAutoplay);
-        els.testimonialsTrack.addEventListener('mouseleave', startTestimonialsAutoplay);
-        els.testimonialsTrack.addEventListener('touchstart', stopTestimonialsAutoplay, { passive: true });
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                closeVehicleModal(); closeLoginModal(); closeDrawer();
-            }
-        });
-
-        setupSwipeEvents();
-    }
-
-    function switchAdminTab(tab) {
-        document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.adminTab === tab));
-        document.getElementById('adminTabVehicles').classList.toggle('active', tab === 'vehicles');
-        document.getElementById('adminTabTestimonials').classList.toggle('active', tab === 'testimonials');
-    }
-
-    // ========== SWIPE ==========
-    function setupSwipeEvents() {
-        const carousel = document.getElementById('carousel');
-        carousel.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-        carousel.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }, { passive: true });
-    }
-    function handleSwipe() {
-        const threshold = 50;
-        if (touchEndX < touchStartX - threshold) showNextMedia();
-        if (touchEndX > touchStartX + threshold) showPrevMedia();
-    }
-
-    // ========== SITE CONTENT ==========
-    async function loadSiteContent() {
-        try {
-            const res = await apiGet({ action: 'getSiteContent' });
-            if (res.success) { siteContent = res.content || {}; updateSiteContent(); }
-        } catch (err) { console.error('Erro ao carregar conteúdo do site:', err); }
-    }
-
-    function setText(id, value) { const el = document.getElementById(id); if (el && value) el.textContent = value; }
-
-    function updateSiteContent() {
-        setText('userName', siteContent.userName);
-        setText('drawerUserName', siteContent.userName);
-
-        const navMap = { navVehicles: '#vehicles', navAbout: '#about', navTeam: '#team', navLocation: '#location' };
-        Object.entries(navMap).forEach(([key, href]) => {
-            if (siteContent[key]) {
-                document.querySelectorAll(`a[href="${href}"]`).forEach(el => { el.textContent = siteContent[key]; });
-            }
-        });
-
-        setText('featuredTitle', siteContent.featuredTitle);
-        setText('featuredSubtitle', siteContent.featuredSubtitle);
-
-        setText('vehiclesTitle', siteContent.vehiclesTitle);
-        if (siteContent.filterAll) document.querySelector('.filter-btn[data-filter="all"]').textContent = siteContent.filterAll;
-        if (siteContent.filter110cc) document.querySelector('.filter-btn[data-filter="ate-110cc"]').textContent = siteContent.filter110cc;
-        if (siteContent.filter150cc) document.querySelector('.filter-btn[data-filter="ate-150cc"]').textContent = siteContent.filter150cc;
-        if (siteContent.filter160cc) document.querySelector('.filter-btn[data-filter="acima-160cc"]').textContent = siteContent.filter160cc;
-
-        setText('testimonialsTitle', siteContent.testimonialsTitle);
-        setText('testimonialsSubtitle', siteContent.testimonialsSubtitle);
-
-        setText('aboutTitle', siteContent.aboutTitle);
-        setText('aboutSubtitle', siteContent.aboutSubtitle);
-        setText('aboutText1', siteContent.aboutText1);
-        setText('aboutText2', siteContent.aboutText2);
-        setText('aboutText3', siteContent.aboutText3);
-
-        setText('teamTitle', siteContent.teamTitle);
-        setText('member1Name', siteContent.member1Name);
-        setText('member1Role', siteContent.member1Role);
-        setText('member1Desc', siteContent.member1Desc);
-        setText('member2Name', siteContent.member2Name);
-        setText('member2Role', siteContent.member2Role);
-        setText('member2Desc', siteContent.member2Desc);
-        setText('member3Name', siteContent.member3Name);
-        setText('member3Role', siteContent.member3Role);
-        setText('member3Desc', siteContent.member3Desc);
-
-        setText('locationTitle', siteContent.locationTitle);
-        setText('locationSubtitle', siteContent.locationSubtitle);
-        setText('locationAddress', siteContent.locationAddress);
-        setText('locationPhone', siteContent.locationPhone);
-        setText('locationEmail', siteContent.locationEmail);
-        setText('locationHours', siteContent.locationHours);
-        setText('locationWhatsapp', siteContent.locationWhatsapp);
-
-        setText('footerTitle1', siteContent.footerTitle1);
-        setText('footerDescription', siteContent.footerDescription);
-        setText('footerTitle2', siteContent.footerTitle2);
-        setText('footerTitle3', siteContent.footerTitle3);
-        setText('footerAddress', siteContent.footerAddress);
-        setText('footerPhone', siteContent.footerPhone);
-        setText('footerEmail', siteContent.footerEmail);
-        setText('footerHours', siteContent.footerHours);
-        setText('footerCopyright', siteContent.footerCopyright);
-
-        setText('paymentTitle', siteContent.paymentTitle);
-        setText('paymentCash', siteContent.paymentCash);
-        setText('paymentCard', siteContent.paymentCard);
-        setText('paymentFinancing', siteContent.paymentFinancing);
-        setText('modalContactText', siteContent.modalContact);
-        setText('whatsappButtonText', siteContent.whatsappButton);
-
-        IMAGE_FIELDS.forEach(field => {
-            const url = siteContent[field.key];
-            if (!url) return;
-            const el = document.querySelector(field.selector);
-            if (!el) return;
-            if (field.isBg) el.style.backgroundImage = `url('${url}')`;
-            else el.src = url;
-        });
-
-        renderVehicles();
-    }
-
-    function openTextEditPanel() {
-        const map = {
-            editUserName: siteContent.userName || 'Visitante',
-            editNavVehicles: siteContent.navVehicles || 'Veículos',
-            editNavAbout: siteContent.navAbout || 'Sobre a Loja',
-            editNavTeam: siteContent.navTeam || 'Equipe',
-            editNavLocation: siteContent.navLocation || 'Localização',
-            editFeaturedTitle: siteContent.featuredTitle || 'Ofertas em Destaque',
-            editFeaturedSubtitle: siteContent.featuredSubtitle || 'As melhores oportunidades do momento, escolhidas pela nossa equipe.',
-            editVehiclesTitle: siteContent.vehiclesTitle || 'Nossos Veículos',
-            editFilterAll: siteContent.filterAll || 'Todos',
-            editFilter110cc: siteContent.filter110cc || 'Até 110cc',
-            editFilter150cc: siteContent.filter150cc || 'Até 150cc',
-            editFilter160cc: siteContent.filter160cc || 'Acima de 160cc',
-            editVehicleBtn: siteContent.vehicleBtn || 'Ver Detalhes',
-            editTestimonialsTitle: siteContent.testimonialsTitle || 'Clientes Satisfeitos',
-            editTestimonialsSubtitle: siteContent.testimonialsSubtitle || 'Quem já comprou com a gente conta como foi a experiência.',
-            editAboutTitle: siteContent.aboutTitle || 'Sobre a Loja',
-            editAboutSubtitle: siteContent.aboutSubtitle || 'Mais de 10 anos no mercado',
-            editAboutText1: siteContent.aboutText1 || 'A Maiso Veículos é referência no mercado de motos seminovas, oferecendo produtos de qualidade com procedência garantida.',
-            editAboutText2: siteContent.aboutText2 || 'Nossa missão é proporcionar a melhor experiência de compra, com transparência, segurança e atendimento personalizado.',
-            editAboutText3: siteContent.aboutText3 || 'Trabalhamos com as melhores marcas do mercado e oferecemos garantia em todos os nossos veículos.',
-            editTeamTitle: siteContent.teamTitle || 'Nossa Equipe',
-            editMember1Name: siteContent.member1Name || 'João Silva',
-            editMember1Role: siteContent.member1Role || 'Vendedor',
-            editMember1Desc: siteContent.member1Desc || 'Especialista em motos esportivas e custom, com mais de 8 anos de experiência.',
-            editMember2Name: siteContent.member2Name || 'Maria Santos',
-            editMember2Role: siteContent.member2Role || 'Vendedora',
-            editMember2Desc: siteContent.member2Desc || 'Especialista em scooters e motos urbanas, sempre pronta para ajudar.',
-            editMember3Name: siteContent.member3Name || 'Carlos Oliveira',
-            editMember3Role: siteContent.member3Role || 'Gerente',
-            editMember3Desc: siteContent.member3Desc || 'Com mais de 15 anos no mercado, garante a melhor experiência para nossos clientes.',
-            editLocationTitle: siteContent.locationTitle || 'Localização',
-            editLocationSubtitle: siteContent.locationSubtitle || 'Venha nos Visitar',
-            editLocationAddress: siteContent.locationAddress || 'Rua São Pedro, 360 - Centro, Caucaia - CE',
-            editLocationPhone: siteContent.locationPhone || '(85) 9999-9999',
-            editLocationEmail: siteContent.locationEmail || 'contato@maisoveiculos.com.br',
-            editLocationHours: siteContent.locationHours || 'Segunda a Sexta: 9h às 18h | Sábado: 9h às 13h',
-            editLocationWhatsapp: siteContent.locationWhatsapp || 'WhatsApp: (85) 99999-9999',
-            editFooterTitle1: siteContent.footerTitle1 || 'Maiso Veículos',
-            editFooterDescription: siteContent.footerDescription || 'Há mais de 10 anos no mercado, oferecendo as melhores motos seminovas com garantia e procedência.',
-            editFooterTitle2: siteContent.footerTitle2 || 'Links Rápidos',
-            editFooterTitle3: siteContent.footerTitle3 || 'Contato',
-            editFooterAddress: siteContent.footerAddress || 'Rua São Pedro, 360 - Centro, Caucaia - CE',
-            editFooterPhone: siteContent.footerPhone || '(85) 9999-9999',
-            editFooterEmail: siteContent.footerEmail || 'contato@maisoveiculos.com.br',
-            editFooterHours: siteContent.footerHours || 'Seg-Sex: 9h-18h | Sáb: 9h-13h',
-            editFooterCopyright: siteContent.footerCopyright || '© 2023 Maiso Veículos. Todos os direitos reservados.',
-            editPaymentTitle: siteContent.paymentTitle || 'Opções de Pagamento',
-            editPaymentCash: siteContent.paymentCash || 'À Vista',
-            editPaymentCard: siteContent.paymentCard || 'Cartão',
-            editPaymentFinancing: siteContent.paymentFinancing || 'Financiamento',
-            editModalContact: siteContent.modalContact || 'Interessado neste veículo?',
-            editWhatsappButton: siteContent.whatsappButton || 'Falar no WhatsApp'
-        };
-        Object.entries(map).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.value = val; });
-        renderImageEditor();
-        els.textEditPanel.style.display = 'block';
-    }
-
-    function renderImageEditor() {
-        els.imageEditorContainer.innerHTML = '';
-        IMAGE_FIELDS.forEach(field => {
-            const currentUrl = siteContent[field.key] || '';
-            const row = document.createElement('div');
-            row.className = 'image-edit-item';
-            row.innerHTML = `
-                <img class="image-edit-thumb" src="${currentUrl || 'https://via.placeholder.com/100x100/1B1C20/9CA3AF?text=%3F'}" alt="${field.label}">
-                <div class="image-edit-meta">
-                    <b>${field.label}</b>
-                    <span class="img-status">${currentUrl ? 'Imagem definida' : 'Usando imagem padrão do arquivo'}</span>
-                </div>
-                <div class="image-edit-actions">
-                    <button type="button" class="btn btn-primary btn-choose-img">Alterar imagem</button>
-                    <input type="file" class="image-edit-input" accept="image/*">
-                </div>
-            `;
-            const input = row.querySelector('.image-edit-input');
-            const chooseBtn = row.querySelector('.btn-choose-img');
-            const thumb = row.querySelector('.image-edit-thumb');
-            const status = row.querySelector('.img-status');
-
-            chooseBtn.addEventListener('click', () => input.click());
-            input.addEventListener('change', async () => {
-                const file = input.files[0];
-                if (!file) return;
-                const previousUrl = siteContent[field.key];
-                chooseBtn.disabled = true;
-                status.textContent = 'Enviando para o Drive...';
-                try {
-                    const { url } = await uploadFileToDrive(file);
-                    siteContent[field.key] = url;
-                    thumb.src = url;
-                    status.textContent = 'Imagem atualizada (clique em "Salvar Todas as Alterações" para publicar)';
-                    const oldId = extractDriveId(previousUrl);
-                    if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
-                } catch (err) {
-                    status.textContent = 'Erro no upload: ' + err.message;
-                } finally {
-                    chooseBtn.disabled = false;
-                }
-            });
-
-            els.imageEditorContainer.appendChild(row);
-        });
-    }
-
-    function closeTextEditPanelFunc() {
-        els.textEditPanel.style.display = 'none';
-        els.textEditStatus.style.display = 'none';
-    }
-
-    async function saveTextChanges() {
-        const ids = ['editUserName','editNavVehicles','editNavAbout','editNavTeam','editNavLocation',
-            'editFeaturedTitle','editFeaturedSubtitle',
-            'editVehiclesTitle','editFilterAll','editFilter110cc','editFilter150cc','editFilter160cc','editVehicleBtn',
-            'editTestimonialsTitle','editTestimonialsSubtitle',
-            'editAboutTitle','editAboutSubtitle','editAboutText1','editAboutText2','editAboutText3',
-            'editTeamTitle','editMember1Name','editMember1Role','editMember1Desc','editMember2Name','editMember2Role',
-            'editMember2Desc','editMember3Name','editMember3Role','editMember3Desc',
-            'editLocationTitle','editLocationSubtitle','editLocationAddress','editLocationPhone','editLocationEmail',
-            'editLocationHours','editLocationWhatsapp',
-            'editFooterTitle1','editFooterDescription','editFooterTitle2','editFooterTitle3','editFooterAddress',
-            'editFooterPhone','editFooterEmail','editFooterHours','editFooterCopyright',
-            'editPaymentTitle','editPaymentCash','editPaymentCard','editPaymentFinancing','editModalContact','editWhatsappButton'];
-
-        const updatedContent = { ...siteContent };
-        ids.forEach(id => {
-            const key = id.charAt(4).toLowerCase() + id.slice(5);
-            updatedContent[key] = document.getElementById(id).value;
-        });
-
-        els.saveTextChanges.disabled = true;
-        try {
-            const res = await apiPost({ action: 'saveSiteContent', data: updatedContent });
-            if (res.success) {
-                siteContent = updatedContent;
-                updateSiteContent();
-                showStatusIn(els.textEditStatus, 'Todo o conteúdo (textos e imagens) foi publicado no site!', 'success');
-                setTimeout(closeTextEditPanelFunc, 1800);
-            } else {
-                showStatusIn(els.textEditStatus, 'Erro ao salvar: ' + res.message, 'error');
-            }
-        } catch (err) {
-            showStatusIn(els.textEditStatus, 'Erro ao salvar: ' + err.message, 'error');
-        } finally {
-            els.saveTextChanges.disabled = false;
+    const navMap = { navVehicles: '#vehicles', navAbout: '#about', navTeam: '#team', navLocation: '#location' };
+    Object.entries(navMap).forEach(([key, href]) => {
+        if (siteContent[key]) {
+            document.querySelectorAll(`a[href="${href}"]`).forEach(el => { el.textContent = siteContent[key]; });
         }
-    }
+    });
 
-    function showStatusIn(el, message, type) {
-        el.textContent = message;
-        el.className = `status-message status-${type}`;
-        el.style.display = 'block';
-    }
+    setText('featuredTitle', siteContent.featuredTitle);
+    setText('featuredSubtitle', siteContent.featuredSubtitle);
 
-    // ========== USERS ==========
-    function checkSavedUser() {
-        try {
-            const saved = localStorage.getItem('currentUser');
-            if (saved) { currentUser = JSON.parse(saved); updateUserInterface(); }
-        } catch (e) {}
-    }
+    setText('vehiclesTitle', siteContent.vehiclesTitle);
+    if (siteContent.filterAll) document.querySelector('.filter-btn[data-filter="all"]').textContent = siteContent.filterAll;
+    if (siteContent.filter110cc) document.querySelector('.filter-btn[data-filter="ate-110cc"]').textContent = siteContent.filter110cc;
+    if (siteContent.filter150cc) document.querySelector('.filter-btn[data-filter="ate-150cc"]').textContent = siteContent.filter150cc;
+    if (siteContent.filter160cc) document.querySelector('.filter-btn[data-filter="acima-160cc"]').textContent = siteContent.filter160cc;
 
-    function openLoginModal() { els.loginModal.style.display = 'flex'; closeDrawer(); }
-    function closeLoginModal() {
-        els.loginModal.style.display = 'none';
-        document.getElementById('loginError').style.display = 'none';
-        document.getElementById('adminPassword').value = '';
-        document.getElementById('devPassword').value = '';
-    }
+    setText('testimonialsTitle', siteContent.testimonialsTitle);
+    setText('testimonialsSubtitle', siteContent.testimonialsSubtitle);
 
-    function switchTab(tab) {
-        document.querySelectorAll('.login-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
-        document.getElementById('userLogin').style.display = tab === 'user' ? 'block' : 'none';
-        document.getElementById('adminLogin').style.display = tab === 'admin' ? 'block' : 'none';
-        document.getElementById('devLogin').style.display = tab === 'dev' ? 'block' : 'none';
-        document.getElementById('loginError').style.display = 'none';
-    }
+    setText('aboutTitle', siteContent.aboutTitle);
+    setText('aboutSubtitle', siteContent.aboutSubtitle);
+    setText('aboutText1', siteContent.aboutText1);
+    setText('aboutText2', siteContent.aboutText2);
+    setText('aboutText3', siteContent.aboutText3);
 
-    function loginAsUser() {
-        const name = document.getElementById('userNameInput').value.trim();
-        if (name) { currentUser = { name, type: 'user' }; saveUser(); closeLoginModal(); }
-    }
+    setText('teamTitle', siteContent.teamTitle);
+    setText('member1Name', siteContent.member1Name);
+    setText('member1Role', siteContent.member1Role);
+    setText('member1Desc', siteContent.member1Desc);
+    setText('member2Name', siteContent.member2Name);
+    setText('member2Role', siteContent.member2Role);
+    setText('member2Desc', siteContent.member2Desc);
+    setText('member3Name', siteContent.member3Name);
+    setText('member3Role', siteContent.member3Role);
+    setText('member3Desc', siteContent.member3Desc);
 
-    async function loginAsAdmin() {
-        const password = document.getElementById('adminPassword').value;
-        const btn = document.getElementById('adminLoginBtn');
-        btn.disabled = true;
-        try {
-            const res = await apiPost({ action: 'login', type: 'admin', password });
-            if (res.success) { currentUser = { name: 'Administrador', type: 'admin' }; saveUser(); closeLoginModal(); }
-            else document.getElementById('loginError').style.display = 'block';
-        } finally { btn.disabled = false; }
-    }
+    setText('locationTitle', siteContent.locationTitle);
+    setText('locationSubtitle', siteContent.locationSubtitle);
+    setText('locationAddress', siteContent.locationAddress);
+    setText('locationPhone', siteContent.locationPhone);
+    setText('locationEmail', siteContent.locationEmail);
+    setText('locationHours', siteContent.locationHours);
+    setText('locationWhatsapp', siteContent.locationWhatsapp);
 
-    async function loginAsDev() {
-        const password = document.getElementById('devPassword').value;
-        const btn = document.getElementById('devLoginBtn');
-        btn.disabled = true;
-        try {
-            const res = await apiPost({ action: 'login', type: 'dev', password });
-            if (res.success) { currentUser = { name: 'Desenvolvedor', type: 'dev' }; saveUser(); closeLoginModal(); }
-            else document.getElementById('loginError').style.display = 'block';
-        } finally { btn.disabled = false; }
-    }
+    setText('footerTitle1', siteContent.footerTitle1);
+    setText('footerDescription', siteContent.footerDescription);
+    setText('footerTitle2', siteContent.footerTitle2);
+    setText('footerTitle3', siteContent.footerTitle3);
+    setText('footerAddress', siteContent.footerAddress);
+    setText('footerPhone', siteContent.footerPhone);
+    setText('footerEmail', siteContent.footerEmail);
+    setText('footerHours', siteContent.footerHours);
+    setText('footerCopyright', siteContent.footerCopyright);
 
-    function saveUser() { localStorage.setItem('currentUser', JSON.stringify(currentUser)); updateUserInterface(); }
+    setText('paymentTitle', siteContent.paymentTitle);
+    setText('paymentCash', siteContent.paymentCash);
+    setText('paymentCard', siteContent.paymentCard);
+    setText('paymentFinancing', siteContent.paymentFinancing);
+    setText('modalContactText', siteContent.modalContact);
+    setText('whatsappButtonText', siteContent.whatsappButton);
 
-    function updateUserInterface() {
-        els.userName.textContent = currentUser.name;
-        els.drawerUserName.textContent = currentUser.name;
+    IMAGE_FIELDS.forEach(field => {
+        const url = siteContent[field.key];
+        if (!url) return;
+        const el = document.querySelector(field.selector);
+        if (!el) return;
+        if (field.isBg) el.style.backgroundImage = `url('${url}')`;
+        else el.src = url;
+    });
 
-        els.userType.style.display = currentUser.type === 'admin' ? 'inline-block' : 'none';
-        els.devType.style.display = currentUser.type === 'dev' ? 'inline-block' : 'none';
-        els.drawerUserType.style.display = currentUser.type === 'admin' ? 'inline-block' : 'none';
-        els.drawerDevType.style.display = currentUser.type === 'dev' ? 'inline-block' : 'none';
+    renderVehicles();
+}
 
-        els.adminIndicator.style.display = currentUser.type === 'admin' ? 'block' : 'none';
-        els.devIndicator.style.display = currentUser.type === 'dev' ? 'block' : 'none';
+function openTextEditPanel() {
+    const map = {
+        editUserName: siteContent.userName || 'Visitante',
+        editNavVehicles: siteContent.navVehicles || 'Veículos',
+        editNavAbout: siteContent.navAbout || 'Sobre a Loja',
+        editNavTeam: siteContent.navTeam || 'Equipe',
+        editNavLocation: siteContent.navLocation || 'Localização',
+        editFeaturedTitle: siteContent.featuredTitle || 'Ofertas em Destaque',
+        editFeaturedSubtitle: siteContent.featuredSubtitle || 'As melhores oportunidades do momento, escolhidas pela nossa equipe.',
+        editVehiclesTitle: siteContent.vehiclesTitle || 'Nossos Veículos',
+        editFilterAll: siteContent.filterAll || 'Todos',
+        editFilter110cc: siteContent.filter110cc || 'Até 110cc',
+        editFilter150cc: siteContent.filter150cc || 'Até 150cc',
+        editFilter160cc: siteContent.filter160cc || 'Acima de 160cc',
+        editVehicleBtn: siteContent.vehicleBtn || 'Ver Detalhes',
+        editTestimonialsTitle: siteContent.testimonialsTitle || 'Clientes Satisfeitos',
+        editTestimonialsSubtitle: siteContent.testimonialsSubtitle || 'Quem já comprou com a gente conta como foi a experiência.',
+        editAboutTitle: siteContent.aboutTitle || 'Sobre a Loja',
+        editAboutSubtitle: siteContent.aboutSubtitle || 'Mais de 10 anos no mercado',
+        editAboutText1: siteContent.aboutText1 || 'A Maiso Veículos é referência no mercado de motos seminovas, oferecendo produtos de qualidade com procedência garantida.',
+        editAboutText2: siteContent.aboutText2 || 'Nossa missão é proporcionar a melhor experiência de compra, com transparência, segurança e atendimento personalizado.',
+        editAboutText3: siteContent.aboutText3 || 'Trabalhamos com as melhores marcas do mercado e oferecemos garantia em todos os nossos veículos.',
+        editTeamTitle: siteContent.teamTitle || 'Nossa Equipe',
+        editMember1Name: siteContent.member1Name || 'João Silva',
+        editMember1Role: siteContent.member1Role || 'Vendedor',
+        editMember1Desc: siteContent.member1Desc || 'Especialista em motos esportivas e custom, com mais de 8 anos de experiência.',
+        editMember2Name: siteContent.member2Name || 'Maria Santos',
+        editMember2Role: siteContent.member2Role || 'Vendedora',
+        editMember2Desc: siteContent.member2Desc || 'Especialista em scooters e motos urbanas, sempre pronta para ajudar.',
+        editMember3Name: siteContent.member3Name || 'Carlos Oliveira',
+        editMember3Role: siteContent.member3Role || 'Gerente',
+        editMember3Desc: siteContent.member3Desc || 'Com mais de 15 anos no mercado, garante a melhor experiência para nossos clientes.',
+        editLocationTitle: siteContent.locationTitle || 'Localização',
+        editLocationSubtitle: siteContent.locationSubtitle || 'Venha nos Visitar',
+        editLocationAddress: siteContent.locationAddress || 'Rua São Pedro, 360 - Centro, Caucaia - CE',
+        editLocationPhone: siteContent.locationPhone || '(85) 9999-9999',
+        editLocationEmail: siteContent.locationEmail || 'contato@maisoveiculos.com.br',
+        editLocationHours: siteContent.locationHours || 'Segunda a Sexta: 9h às 18h | Sábado: 9h às 13h',
+        editLocationWhatsapp: siteContent.locationWhatsapp || 'WhatsApp: (85) 99999-9999',
+        editFooterTitle1: siteContent.footerTitle1 || 'Maiso Veículos',
+        editFooterDescription: siteContent.footerDescription || 'Há mais de 10 anos no mercado, oferecendo as melhores motos seminovas com garantia e procedência.',
+        editFooterTitle2: siteContent.footerTitle2 || 'Links Rápidos',
+        editFooterTitle3: siteContent.footerTitle3 || 'Contato',
+        editFooterAddress: siteContent.footerAddress || 'Rua São Pedro, 360 - Centro, Caucaia - CE',
+        editFooterPhone: siteContent.footerPhone || '(85) 9999-9999',
+        editFooterEmail: siteContent.footerEmail || 'contato@maisoveiculos.com.br',
+        editFooterHours: siteContent.footerHours || 'Seg-Sex: 9h-18h | Sáb: 9h-13h',
+        editFooterCopyright: siteContent.footerCopyright || '© 2023 Maiso Veículos. Todos os direitos reservados.',
+        editPaymentTitle: siteContent.paymentTitle || 'Opções de Pagamento',
+        editPaymentCash: siteContent.paymentCash || 'À Vista',
+        editPaymentCard: siteContent.paymentCard || 'Cartão',
+        editPaymentFinancing: siteContent.paymentFinancing || 'Financiamento',
+        editModalContact: siteContent.modalContact || 'Interessado neste veículo?',
+        editWhatsappButton: siteContent.whatsappButton || 'Falar no WhatsApp'
+    };
+    Object.entries(map).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.value = val; });
+    renderImageEditor();
+    els.textEditPanel.style.display = 'block';
+}
 
-        els.floatBtn.style.display = (currentUser.type === 'admin' || currentUser.type === 'dev') ? 'flex' : 'none';
-        els.textEditBtn.style.display = currentUser.type === 'dev' ? 'flex' : 'none';
+function renderImageEditor() {
+    els.imageEditorContainer.innerHTML = '';
+    IMAGE_FIELDS.forEach(field => {
+        const currentUrl = siteContent[field.key] || '';
+        const row = document.createElement('div');
+        row.className = 'image-edit-item';
+        row.innerHTML = `
+            <img class="image-edit-thumb" src="${currentUrl || 'https://via.placeholder.com/100x100/1B1C20/9CA3AF?text=%3F'}" alt="${field.label}">
+            <div class="image-edit-meta">
+                <b>${field.label}</b>
+                <span class="img-status">${currentUrl ? 'Imagem definida' : 'Usando imagem padrão do arquivo'}</span>
+            </div>
+            <div class="image-edit-actions">
+                <button type="button" class="btn btn-primary btn-choose-img">Alterar imagem</button>
+                <input type="file" class="image-edit-input" accept="image/*">
+            </div>
+        `;
+        const input = row.querySelector('.image-edit-input');
+        const chooseBtn = row.querySelector('.btn-choose-img');
+        const thumb = row.querySelector('.image-edit-thumb');
+        const status = row.querySelector('.img-status');
 
-        els.loginBtn.textContent = currentUser.type === 'guest' ? 'Entrar' : 'Sair';
-        els.loginBtn.onclick = currentUser.type === 'guest' ? openLoginModal : logout;
-
-        els.drawerLoginBtn.style.display = currentUser.type === 'guest' ? 'block' : 'none';
-        els.drawerLogoutBtn.style.display = currentUser.type === 'guest' ? 'none' : 'block';
-
-        renderVehicles();
-        renderTestimonials();
-    }
-
-    function logout() {
-        currentUser = { name: 'Visitante', type: 'guest' };
-        localStorage.removeItem('currentUser');
-        updateUserInterface();
-        closeDrawer();
-    }
-
-    // ========== VEHICLES ==========
-    async function loadVehicles() {
-        try {
-            const res = await apiGet({ action: 'getVehicles' });
-            if (res.success) {
-                vehicles = res.vehicles || [];
-                renderVehicles();
-                renderMotoList();
-            }
-        } catch (err) { console.error('Erro ao carregar veículos:', err); }
-    }
-
-    function renderVehicles() {
-        els.vehiclesGrid.innerHTML = '';
-
-        if (vehicles.length === 0) {
-            els.vehiclesGrid.innerHTML = `
-                <div class="vehicles-empty">
-                    <i class="fas fa-motorcycle"></i>
-                    <p>Nenhum veículo cadastrado no momento. Volte em breve!</p>
-                </div>`;
-            renderFeaturedCarousel();
-            return;
-        }
-
-        const btnLabel = siteContent.vehicleBtn || 'Ver Detalhes';
-        const isAdmin = (currentUser.type === 'admin' || currentUser.type === 'dev');
-
-        vehicles.forEach((vehicle, index) => {
-            const card = document.createElement('div');
-            card.className = `vehicle-card ${vehicle.type} ${isAdmin ? 'has-admin-actions' : ''}`;
-            card.dataset.index = index;
-
-            const thumb = (vehicle.medias && vehicle.medias.length > 0)
-                ? vehicle.medias[0]
-                : 'https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';
-
-            const adminButtons = isAdmin ? `
-                <div class="card-admin-actions">
-                    <button class="btn-editar" title="Editar" aria-label="Editar veículo" onclick="editVehicle('${vehicle.id}', event)"><i class="fas fa-pen"></i></button>
-                    <button class="btn-excluir" title="Excluir" aria-label="Excluir veículo" onclick="deleteVehicle('${vehicle.id}', event)"><i class="fas fa-trash"></i></button>
-                </div>` : '';
-
-            const featuredTag = isTruthy(vehicle.featured) ? '<span class="vehicle-featured-tag">⭐ Destaque</span>' : '';
-
-            card.innerHTML = `
-                <div class="vehicle-media">
-                    <img src="${thumb}" alt="${vehicle.name}" class="vehicle-img" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';">
-                    <div class="vehicle-media-fade"></div>
-                    <div class="vehicle-top-row">
-                        <span class="vehicle-badge">${getVehicleTypeName(vehicle.type)}</span>
-                        <span class="vehicle-year-tag">${vehicle.year || ''} ${featuredTag}</span>
-                    </div>
-                    ${adminButtons}
-                    <div class="vehicle-overlay-text">
-                        <div class="vehicle-title">${escapeHtml(vehicle.name)}</div>
-                        <div class="vehicle-price"><small>Valor</small>R$ ${formatPrice(vehicle.price)}</div>
-                    </div>
-                </div>
-                <div class="vehicle-info">
-                    <div class="vehicle-specs-row">
-                        <span class="vehicle-spec"><i class="fas fa-tachometer-alt"></i>${vehicle.km ? formatKm(vehicle.km) + ' km' : 'N/D'}</span>
-                        <span class="vehicle-spec"><i class="fas fa-palette"></i>${vehicle.color ? escapeHtml(vehicle.color) : 'N/D'}</span>
-                    </div>
-                    <a href="#" class="vehicle-btn"><span class="btn-label">${btnLabel}</span> <i class="fas fa-arrow-right"></i></a>
-                </div>
-            `;
-
-            card.addEventListener('click', e => {
-                if (e.target.closest('.btn-excluir') || e.target.closest('.btn-editar')) return;
-                showVehicleDetails(index);
-            });
-
-            els.vehiclesGrid.appendChild(card);
-        });
-
-        applyCurrentFilter();
-        renderFeaturedCarousel();
-    }
-
-    // ========== FEATURED CAROUSEL ==========
-    function renderFeaturedCarousel() {
-        const featuredVehicles = vehicles.filter(v => isTruthy(v.featured));
-        stopFeaturedAutoplay();
-
-        if (featuredVehicles.length === 0) {
-            els.featured.style.display = 'none';
-            els.featuredTrack.innerHTML = '';
-            return;
-        }
-
-        els.featured.style.display = 'block';
-        els.featuredTrack.innerHTML = '';
-
-        featuredVehicles.forEach(vehicle => {
-            const realIndex = vehicles.findIndex(v => v.id === vehicle.id);
-            const thumb = (vehicle.medias && vehicle.medias.length > 0)
-                ? vehicle.medias[0]
-                : 'https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';
-
-            const card = document.createElement('div');
-            card.className = 'featured-card';
-            card.innerHTML = `
-                <div class="featured-media">
-                    <span class="featured-tag">Oferta</span>
-                    <img src="${thumb}" alt="${escapeHtml(vehicle.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';">
-                </div>
-                <div class="featured-info">
-                    <div class="featured-name">${escapeHtml(vehicle.name)}</div>
-                    <div class="featured-price">R$ ${formatPrice(vehicle.price)}</div>
-                </div>
-            `;
-            card.addEventListener('click', () => showVehicleDetails(realIndex));
-            els.featuredTrack.appendChild(card);
-        });
-
-        startFeaturedAutoplay();
-    }
-
-    function scrollFeatured(direction) {
-        const cardWidth = els.featuredTrack.querySelector('.featured-card')?.offsetWidth || 280;
-        els.featuredTrack.scrollBy({ left: direction * (cardWidth + 20), behavior: 'smooth' });
-    }
-
-    function startFeaturedAutoplay() {
-        stopFeaturedAutoplay();
-        if (!els.featuredTrack.querySelector('.featured-card')) return;
-        featuredAutoplayInterval = setInterval(() => {
-            const track = els.featuredTrack;
-            const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
-            if (atEnd) { track.scrollTo({ left: 0, behavior: 'smooth' }); }
-            else { scrollFeatured(1); }
-        }, 3500);
-    }
-
-    function stopFeaturedAutoplay() {
-        if (featuredAutoplayInterval) { clearInterval(featuredAutoplayInterval); featuredAutoplayInterval = null; }
-    }
-
-    // ========== TESTIMONIALS ==========
-    async function loadTestimonials() {
-        try {
-            const res = await apiGet({ action: 'getTestimonials' });
-            if (res.success) {
-                testimonials = res.testimonials || [];
-                renderTestimonials();
-                renderTestimonialList();
-            }
-        } catch (err) { console.error('Erro ao carregar depoimentos:', err); }
-    }
-
-    function renderTestimonials() {
-        stopTestimonialsAutoplay();
-        els.testimonialsTrack.innerHTML = '';
-
-        if (testimonials.length === 0) {
-            els.testimonials.style.display = 'none';
-            return;
-        }
-        els.testimonials.style.display = 'block';
-
-        testimonials.forEach(t => {
-            const photo = t.photo || 'https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Cliente';
-            const card = document.createElement('div');
-            card.className = 'testimonial-card';
-            card.innerHTML = `
-                <div class="testimonial-media">
-                    <span class="testimonial-quote-icon"><i class="fas fa-quote-right"></i></span>
-                    <img src="${photo}" alt="${escapeHtml(t.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Cliente';">
-                </div>
-                <div class="testimonial-body">
-                    <p class="testimonial-text">"${escapeHtml(t.text)}"</p>
-                    <div class="testimonial-name">${escapeHtml(t.name)}</div>
-                </div>
-            `;
-            els.testimonialsTrack.appendChild(card);
-        });
-
-        startTestimonialsAutoplay();
-    }
-
-    function scrollTestimonials(direction) {
-        const cardWidth = els.testimonialsTrack.querySelector('.testimonial-card')?.offsetWidth || 320;
-        els.testimonialsTrack.scrollBy({ left: direction * (cardWidth + 20), behavior: 'smooth' });
-    }
-
-    function startTestimonialsAutoplay() {
-        stopTestimonialsAutoplay();
-        if (!els.testimonialsTrack.querySelector('.testimonial-card')) return;
-        testimonialsAutoplayInterval = setInterval(() => {
-            const track = els.testimonialsTrack;
-            const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
-            if (atEnd) { track.scrollTo({ left: 0, behavior: 'smooth' }); }
-            else { scrollTestimonials(1); }
-        }, 4000);
-    }
-
-    function stopTestimonialsAutoplay() {
-        if (testimonialsAutoplayInterval) { clearInterval(testimonialsAutoplayInterval); testimonialsAutoplayInterval = null; }
-    }
-
-    async function handleTestimonialFormSubmit(e) {
-        e.preventDefault();
-        if (editingTestimonialId) await updateTestimonial(editingTestimonialId);
-        else await addTestimonial();
-    }
-
-    async function addTestimonial() {
-        if (!selectedTestimonialFile) { showStatusIn(els.testimonialFormStatus, 'Selecione uma foto do cliente.', 'error'); return; }
-
-        const data = readTestimonialFormFields();
-        els.loadingText.textContent = 'Enviando foto do depoimento...';
-        els.loadingOverlay.style.display = 'flex';
-
-        try {
-            const { url } = await uploadFileToDrive(selectedTestimonialFile);
-            data.photo = url;
-            els.loadingText.textContent = 'Salvando depoimento na planilha...';
-            const res = await apiPost({ action: 'addTestimonial', data });
-            els.loadingOverlay.style.display = 'none';
-            if (res.success) {
-                showStatusIn(els.testimonialFormStatus, 'Depoimento adicionado com sucesso!', 'success');
-                clearTestimonialForm();
-                loadTestimonials();
-            } else {
-                showStatusIn(els.testimonialFormStatus, 'Erro ao adicionar depoimento: ' + res.message, 'error');
-            }
-        } catch (error) {
-            els.loadingOverlay.style.display = 'none';
-            showStatusIn(els.testimonialFormStatus, 'Erro ao adicionar depoimento: ' + error.message, 'error');
-        }
-    }
-
-    async function updateTestimonial(testimonialId) {
-        const data = readTestimonialFormFields();
-        els.loadingText.textContent = 'Atualizando depoimento...';
-        els.loadingOverlay.style.display = 'flex';
-
-        try {
-            let photo = existingTestimonialPhoto;
-            if (selectedTestimonialFile) {
-                els.loadingText.textContent = 'Enviando nova foto...';
-                const { url } = await uploadFileToDrive(selectedTestimonialFile);
-                photo = url;
-                const oldId = extractDriveId(existingTestimonialPhoto);
+        chooseBtn.addEventListener('click', () => input.click());
+        input.addEventListener('change', async () => {
+            const file = input.files[0];
+            if (!file) return;
+            const previousUrl = siteContent[field.key];
+            chooseBtn.disabled = true;
+            status.textContent = 'Enviando para o Drive...';
+            try {
+                const { url } = await uploadFileToDrive(file);
+                siteContent[field.key] = url;
+                thumb.src = url;
+                status.textContent = 'Imagem atualizada (clique em "Salvar Todas as Alterações" para publicar)';
+                const oldId = extractDriveId(previousUrl);
                 if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
+            } catch (err) {
+                status.textContent = 'Erro no upload: ' + err.message;
+            } finally {
+                chooseBtn.disabled = false;
             }
-            data.photo = photo;
+        });
 
-            els.loadingText.textContent = 'Salvando alterações...';
-            const res = await apiPost({ action: 'updateTestimonial', id: testimonialId, data });
-            els.loadingOverlay.style.display = 'none';
-            if (res.success) {
-                showStatusIn(els.testimonialFormStatus, 'Depoimento atualizado com sucesso!', 'success');
-                resetTestimonialFormToCreateMode();
-                clearTestimonialForm();
-                loadTestimonials();
-            } else {
-                showStatusIn(els.testimonialFormStatus, 'Erro ao atualizar depoimento: ' + res.message, 'error');
-            }
-        } catch (error) {
-            els.loadingOverlay.style.display = 'none';
-            showStatusIn(els.testimonialFormStatus, 'Erro ao atualizar depoimento: ' + error.message, 'error');
+        els.imageEditorContainer.appendChild(row);
+    });
+}
+
+function closeTextEditPanelFunc() {
+    els.textEditPanel.style.display = 'none';
+    els.textEditStatus.style.display = 'none';
+}
+
+async function saveTextChanges() {
+    const ids = ['editUserName','editNavVehicles','editNavAbout','editNavTeam','editNavLocation',
+        'editFeaturedTitle','editFeaturedSubtitle',
+        'editVehiclesTitle','editFilterAll','editFilter110cc','editFilter150cc','editFilter160cc','editVehicleBtn',
+        'editTestimonialsTitle','editTestimonialsSubtitle',
+        'editAboutTitle','editAboutSubtitle','editAboutText1','editAboutText2','editAboutText3',
+        'editTeamTitle','editMember1Name','editMember1Role','editMember1Desc','editMember2Name','editMember2Role',
+        'editMember2Desc','editMember3Name','editMember3Role','editMember3Desc',
+        'editLocationTitle','editLocationSubtitle','editLocationAddress','editLocationPhone','editLocationEmail',
+        'editLocationHours','editLocationWhatsapp',
+        'editFooterTitle1','editFooterDescription','editFooterTitle2','editFooterTitle3','editFooterAddress',
+        'editFooterPhone','editFooterEmail','editFooterHours','editFooterCopyright',
+        'editPaymentTitle','editPaymentCash','editPaymentCard','editPaymentFinancing','editModalContact','editWhatsappButton'];
+
+    const updatedContent = { ...siteContent };
+    ids.forEach(id => {
+        const key = id.charAt(4).toLowerCase() + id.slice(5);
+        updatedContent[key] = document.getElementById(id).value;
+    });
+
+    els.saveTextChanges.disabled = true;
+    try {
+        const res = await apiPost({ action: 'saveSiteContent', data: updatedContent });
+        if (res.success) {
+            siteContent = updatedContent;
+            updateSiteContent();
+            showStatusIn(els.textEditStatus, 'Todo o conteúdo (textos e imagens) foi publicado no site!', 'success');
+            setTimeout(closeTextEditPanelFunc, 1800);
+        } else {
+            showStatusIn(els.textEditStatus, 'Erro ao salvar: ' + res.message, 'error');
         }
+    } catch (err) {
+        showStatusIn(els.textEditStatus, 'Erro ao salvar: ' + err.message, 'error');
+    } finally {
+        els.saveTextChanges.disabled = false;
     }
+}
 
-    function readTestimonialFormFields() {
-        return {
-            name: els.testimonialName.value,
-            text: els.testimonialText.value
-        };
-    }
+function showStatusIn(el, message, type) {
+    el.textContent = message;
+    el.className = `status-message status-${type}`;
+    el.style.display = 'block';
+}
 
-    async function deleteTestimonial(testimonialId, event) {
-        if (event) event.stopPropagation();
-        if (!confirm('Tem certeza que deseja excluir este depoimento? A foto também será removida do Drive.')) return;
-        try {
-            const res = await apiPost({ action: 'deleteTestimonial', id: testimonialId });
-            if (res.success) { showStatusIn(els.testimonialFormStatus, 'Depoimento excluído com sucesso!', 'success'); loadTestimonials(); }
-            else showStatusIn(els.testimonialFormStatus, 'Erro ao excluir depoimento: ' + res.message, 'error');
-        } catch (error) {
-            showStatusIn(els.testimonialFormStatus, 'Erro ao excluir depoimento: ' + error.message, 'error');
+// ========== USERS ==========
+function checkSavedUser() {
+    try {
+        const saved = localStorage.getItem('currentUser');
+        if (saved) { currentUser = JSON.parse(saved); updateUserInterface(); }
+    } catch (e) {}
+}
+
+function openLoginModal() { els.loginModal.style.display = 'flex'; closeDrawer(); }
+function closeLoginModal() {
+    els.loginModal.style.display = 'none';
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('adminPassword').value = '';
+    document.getElementById('devPassword').value = '';
+}
+
+function switchTab(tab) {
+    document.querySelectorAll('.login-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    document.getElementById('userLogin').style.display = tab === 'user' ? 'block' : 'none';
+    document.getElementById('adminLogin').style.display = tab === 'admin' ? 'block' : 'none';
+    document.getElementById('devLogin').style.display = tab === 'dev' ? 'block' : 'none';
+    document.getElementById('loginError').style.display = 'none';
+}
+
+function loginAsUser() {
+    const name = document.getElementById('userNameInput').value.trim();
+    if (name) { currentUser = { name, type: 'user' }; saveUser(); closeLoginModal(); }
+}
+
+async function loginAsAdmin() {
+    const password = document.getElementById('adminPassword').value;
+    const btn = document.getElementById('adminLoginBtn');
+    btn.disabled = true;
+    try {
+        const res = await apiPost({ action: 'login', type: 'admin', password });
+        if (res.success) { currentUser = { name: 'Administrador', type: 'admin' }; saveUser(); closeLoginModal(); }
+        else document.getElementById('loginError').style.display = 'block';
+    } finally { btn.disabled = false; }
+}
+
+async function loginAsDev() {
+    const password = document.getElementById('devPassword').value;
+    const btn = document.getElementById('devLoginBtn');
+    btn.disabled = true;
+    try {
+        const res = await apiPost({ action: 'login', type: 'dev', password });
+        if (res.success) { currentUser = { name: 'Desenvolvedor', type: 'dev' }; saveUser(); closeLoginModal(); }
+        else document.getElementById('loginError').style.display = 'block';
+    } finally { btn.disabled = false; }
+}
+
+function saveUser() { localStorage.setItem('currentUser', JSON.stringify(currentUser)); updateUserInterface(); }
+
+function updateUserInterface() {
+    els.userName.textContent = currentUser.name;
+    els.drawerUserName.textContent = currentUser.name;
+
+    els.userType.style.display = currentUser.type === 'admin' ? 'inline-block' : 'none';
+    els.devType.style.display = currentUser.type === 'dev' ? 'inline-block' : 'none';
+    els.drawerUserType.style.display = currentUser.type === 'admin' ? 'inline-block' : 'none';
+    els.drawerDevType.style.display = currentUser.type === 'dev' ? 'inline-block' : 'none';
+
+    els.adminIndicator.style.display = currentUser.type === 'admin' ? 'block' : 'none';
+    els.devIndicator.style.display = currentUser.type === 'dev' ? 'block' : 'none';
+
+    els.floatBtn.style.display = (currentUser.type === 'admin' || currentUser.type === 'dev') ? 'flex' : 'none';
+    els.textEditBtn.style.display = currentUser.type === 'dev' ? 'flex' : 'none';
+
+    els.loginBtn.textContent = currentUser.type === 'guest' ? 'Entrar' : 'Sair';
+    els.loginBtn.onclick = currentUser.type === 'guest' ? openLoginModal : logout;
+
+    els.drawerLoginBtn.style.display = currentUser.type === 'guest' ? 'block' : 'none';
+    els.drawerLogoutBtn.style.display = currentUser.type === 'guest' ? 'none' : 'block';
+
+    renderVehicles();
+    renderTestimonials();
+}
+
+function logout() {
+    currentUser = { name: 'Visitante', type: 'guest' };
+    localStorage.removeItem('currentUser');
+    updateUserInterface();
+    closeDrawer();
+}
+
+// ========== VEHICLES ==========
+async function loadVehicles() {
+    try {
+        const res = await apiGet({ action: 'getVehicles' });
+        if (res.success) {
+            vehicles = res.vehicles || [];
+            renderVehicles();
+            renderMotoList();
         }
-    }
+    } catch (err) { console.error('Erro ao carregar veículos:', err); }
+}
 
-    function editTestimonial(testimonialId, event) {
-        if (event) event.stopPropagation();
-        const t = testimonials.find(x => x.id === testimonialId);
-        if (!t) return;
+function renderVehicles() {
+    els.vehiclesGrid.innerHTML = '';
 
-        editingTestimonialId = testimonialId;
-        existingTestimonialPhoto = t.photo || null;
-
-        els.testimonialName.value = t.name || '';
-        els.testimonialText.value = t.text || '';
-
-        clearTestimonialFileSelection();
-        renderExistingTestimonialPhoto();
-
-        els.testimonialFormTitle.textContent = 'Editar Depoimento';
-        els.testimonialSubmitBtn.textContent = 'Atualizar Depoimento';
-        els.testimonialSubmitBtn.className = 'btn btn-primary';
-
-        openAdminPanel();
-        switchAdminTab('testimonials');
-        els.addTestimonialForm.scrollIntoView({ behavior: 'smooth' });
-        showStatusIn(els.testimonialFormStatus, 'Altere os campos necessários e clique em "Atualizar Depoimento".', 'warning');
-    }
-
-    function renderExistingTestimonialPhoto() {
-        if (!existingTestimonialPhoto) {
-            els.existingTestimonialPhotoWrap.style.display = 'none';
-            els.existingTestimonialPhotoContainer.innerHTML = '';
-            return;
-        }
-        els.existingTestimonialPhotoWrap.style.display = 'block';
-        els.existingTestimonialPhotoContainer.innerHTML = `
-            <div class="existing-media-item">
-                <img src="${existingTestimonialPhoto}" alt="Foto atual" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100/2A2B30/9CA3AF?text=Erro';">
-                <button type="button" class="delete-existing" onclick="removeExistingTestimonialPhoto()">&times;</button>
+    if (vehicles.length === 0) {
+        els.vehiclesGrid.innerHTML = `
+            <div class="vehicles-empty">
+                <i class="fas fa-motorcycle"></i>
+                <p>Nenhum veículo cadastrado no momento. Volte em breve!</p>
             </div>`;
+        renderFeaturedCarousel();
+        return;
     }
 
-    async function removeExistingTestimonialPhoto() {
-        const fileId = extractDriveId(existingTestimonialPhoto);
-        existingTestimonialPhoto = null;
-        renderExistingTestimonialPhoto();
-        if (fileId) { try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) {} }
-    }
+    const btnLabel = siteContent.vehicleBtn || 'Ver Detalhes';
+    const isAdmin = (currentUser.type === 'admin' || currentUser.type === 'dev');
 
-    function resetTestimonialFormToCreateMode() {
-        editingTestimonialId = null;
-        existingTestimonialPhoto = null;
-        els.testimonialFormTitle.textContent = 'Adicionar Depoimento';
-        els.testimonialSubmitBtn.textContent = 'Adicionar Depoimento';
-        els.testimonialSubmitBtn.className = 'btn btn-success';
-        els.existingTestimonialPhotoWrap.style.display = 'none';
-    }
+    vehicles.forEach((vehicle, index) => {
+        const card = document.createElement('div');
+        card.className = `vehicle-card ${vehicle.type} ${isAdmin ? 'has-admin-actions' : ''}`;
+        card.dataset.index = index;
 
-    function renderTestimonialList() {
-        els.testimonialList.innerHTML = '<h3>Depoimentos Cadastrados</h3>';
-        if (testimonials.length === 0) {
-            els.testimonialList.insertAdjacentHTML('beforeend', '<p style="color:rgba(255,255,255,.5)">Nenhum depoimento cadastrado.</p>');
-            return;
-        }
-        testimonials.forEach(t => {
-            const thumb = t.photo || 'https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';
-            const item = document.createElement('div');
-            item.className = 'moto-item';
-            item.innerHTML = `
-                <div class="moto-info">
-                    <img src="${thumb}" alt="${escapeHtml(t.name)}" class="moto-thumbnail" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';">
-                    <div class="moto-details">
-                        <div class="moto-name">${escapeHtml(t.name)}</div>
-                        <div class="moto-specs">${escapeHtml((t.text || '').slice(0, 60))}${(t.text || '').length > 60 ? '…' : ''}</div>
-                    </div>
+        const thumb = (vehicle.medias && vehicle.medias.length > 0)
+            ? vehicle.medias[0]
+            : 'https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';
+
+        const adminButtons = isAdmin ? `
+            <div class="card-admin-actions">
+                <button class="btn-editar" title="Editar" aria-label="Editar veículo" onclick="editVehicle('${vehicle.id}', event)"><i class="fas fa-pen"></i></button>
+                <button class="btn-excluir" title="Excluir" aria-label="Excluir veículo" onclick="deleteVehicle('${vehicle.id}', event)"><i class="fas fa-trash"></i></button>
+            </div>` : '';
+
+        const featuredTag = isTruthy(vehicle.featured) ? '<span class="vehicle-featured-tag">⭐ Destaque</span>' : '';
+
+        card.innerHTML = `
+            <div class="vehicle-media">
+                <img src="${thumb}" alt="${vehicle.name}" class="vehicle-img" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';">
+                <div class="vehicle-media-fade"></div>
+                <div class="vehicle-top-row">
+                    <span class="vehicle-badge">${getVehicleTypeName(vehicle.type)}</span>
+                    <span class="vehicle-year-tag">${vehicle.year || ''} ${featuredTag}</span>
                 </div>
-                <div class="moto-actions">
-                    <button class="btn btn-primary" onclick="editTestimonial('${t.id}', event)">Editar</button>
-                    <button class="btn btn-danger" onclick="deleteTestimonial('${t.id}', event)">Excluir</button>
-                </div>`;
-            els.testimonialList.appendChild(item);
-        });
-    }
-
-    function clearTestimonialForm() {
-        els.addTestimonialForm.reset();
-        clearTestimonialFileSelection();
-        resetTestimonialFormToCreateMode();
-        els.testimonialFormStatus.style.display = 'none';
-    }
-
-    function handleTestimonialFile(file) {
-        if (!file.type.match('image.*')) { alert('Por favor, selecione apenas imagens.'); return; }
-        if (file.size > 10 * 1024 * 1024) { alert('O arquivo é muito grande. Máximo: 10MB.'); return; }
-        selectedTestimonialFile = file;
-        els.testimonialPreviewContainer.innerHTML = '';
-        const reader = new FileReader();
-        reader.onload = e => {
-            const item = document.createElement('div');
-            item.className = 'preview-item';
-            item.innerHTML = `<img src="${e.target.result}" alt="Pré-visualização"><button type="button" class="remove-btn" onclick="clearTestimonialFileSelection()">&times;</button>`;
-            els.testimonialPreviewContainer.appendChild(item);
-        };
-        reader.readAsDataURL(file);
-        els.testimonialMediaCounter.textContent = '1 foto selecionada';
-    }
-
-    function clearTestimonialFileSelection() {
-        selectedTestimonialFile = null;
-        els.testimonialPreviewContainer.innerHTML = '';
-        els.testimonialMediaCounter.textContent = 'Nenhuma foto selecionada';
-        els.testimonialFileInput.value = '';
-    }
-
-    function applyCurrentFilter() {
-        document.querySelectorAll('.vehicle-card').forEach(card => {
-            const show = currentFilter === 'all' || card.classList.contains(currentFilter);
-            card.style.display = show ? '' : 'none';
-        });
-    }
-
-    function setActiveFilter(activeBtn) {
-        filterBtns.forEach(btn => btn.classList.remove('active'));
-        activeBtn.classList.add('active');
-    }
-
-    function showVehicleDetails(index) {
-        currentVehicleIndex = index;
-        const vehicle = vehicles[index];
-
-        document.getElementById('modalEyebrow').textContent = getVehicleTypeName(vehicle.type);
-        els.modalTitle.textContent = vehicle.name;
-        els.modalPrice.textContent = `R$ ${formatPrice(vehicle.price)}`;
-
-        els.modalSpecs.innerHTML = `
-            <div class="spec-item"><span class="spec-name">Categoria</span><span class="spec-value">${getVehicleTypeName(vehicle.type)}</span></div>
-            <div class="spec-item"><span class="spec-name">Ano</span><span class="spec-value">${vehicle.year || 'N/D'}</span></div>
-            <div class="spec-item"><span class="spec-name">Quilometragem</span><span class="spec-value">${vehicle.km ? formatKm(vehicle.km) + ' km' : 'N/D'}</span></div>
-            <div class="spec-item"><span class="spec-name">Cor</span><span class="spec-value">${vehicle.color ? escapeHtml(vehicle.color) : 'N/D'}</span></div>
-            <div class="spec-item"><span class="spec-name">Descrição</span><span class="spec-value">${vehicle.description ? escapeHtml(vehicle.description) : 'Sem descrição'}</span></div>
+                ${adminButtons}
+                <div class="vehicle-overlay-text">
+                    <div class="vehicle-title">${escapeHtml(vehicle.name)}</div>
+                    <div class="vehicle-price"><small>Valor</small>R$ ${formatPrice(vehicle.price)}</div>
+                </div>
+            </div>
+            <div class="vehicle-info">
+                <div class="vehicle-specs-row">
+                    <span class="vehicle-spec"><i class="fas fa-tachometer-alt"></i>${vehicle.km ? formatKm(vehicle.km) + ' km' : 'N/D'}</span>
+                    <span class="vehicle-spec"><i class="fas fa-palette"></i>${vehicle.color ? escapeHtml(vehicle.color) : 'N/D'}</span>
+                </div>
+                <a href="#" class="vehicle-btn"><span class="btn-label">${btnLabel}</span> <i class="fas fa-arrow-right"></i></a>
+            </div>
         `;
 
-        const message = `Olá, tenho interesse na moto ${vehicle.name} - Ano: ${vehicle.year} - Cor: ${vehicle.color || 'N/A'} - Preço: R$ ${formatPrice(vehicle.price)}. Poderia me fornecer mais informações?`;
-        els.whatsappButton.href = `https://api.whatsapp.com/send?phone=5589981067904&text=${encodeURIComponent(message)}`;
+        card.addEventListener('click', e => {
+            if (e.target.closest('.btn-excluir') || e.target.closest('.btn-editar')) return;
+            showVehicleDetails(index);
+        });
 
-        updateCarousel(vehicle.medias || []);
-        els.vehicleModal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        els.vehiclesGrid.appendChild(card);
+    });
+
+    applyCurrentFilter();
+    renderFeaturedCarousel();
+}
+
+// ========== FEATURED CAROUSEL ==========
+function renderFeaturedCarousel() {
+    const featuredVehicles = vehicles.filter(v => isTruthy(v.featured));
+    stopFeaturedAutoplay();
+
+    if (featuredVehicles.length === 0) {
+        els.featured.style.display = 'none';
+        els.featuredTrack.innerHTML = '';
+        return;
     }
 
-    function updateCarousel(medias) {
-        els.carouselInner.innerHTML = '';
-        els.carouselIndicators.innerHTML = '';
-        currentMediaIndex = 0;
+    els.featured.style.display = 'block';
+    els.featuredTrack.innerHTML = '';
 
-        if (medias.length === 0) {
+    featuredVehicles.forEach(vehicle => {
+        const realIndex = vehicles.findIndex(v => v.id === vehicle.id);
+        const thumb = (vehicle.medias && vehicle.medias.length > 0)
+            ? vehicle.medias[0]
+            : 'https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';
+
+        const card = document.createElement('div');
+        card.className = 'featured-card';
+        card.innerHTML = `
+            <div class="featured-media">
+                <span class="featured-tag">Oferta</span>
+                <img src="${thumb}" alt="${escapeHtml(vehicle.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/500x400/1B1C20/9CA3AF?text=Sem+Imagem';">
+            </div>
+            <div class="featured-info">
+                <div class="featured-name">${escapeHtml(vehicle.name)}</div>
+                <div class="featured-price">R$ ${formatPrice(vehicle.price)}</div>
+            </div>
+        `;
+        card.addEventListener('click', () => showVehicleDetails(realIndex));
+        els.featuredTrack.appendChild(card);
+    });
+
+    startFeaturedAutoplay();
+}
+
+function scrollFeatured(direction) {
+    const cardWidth = els.featuredTrack.querySelector('.featured-card')?.offsetWidth || 280;
+    els.featuredTrack.scrollBy({ left: direction * (cardWidth + 20), behavior: 'smooth' });
+}
+
+function startFeaturedAutoplay() {
+    stopFeaturedAutoplay();
+    if (!els.featuredTrack.querySelector('.featured-card')) return;
+    featuredAutoplayInterval = setInterval(() => {
+        const track = els.featuredTrack;
+        const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
+        if (atEnd) { track.scrollTo({ left: 0, behavior: 'smooth' }); }
+        else { scrollFeatured(1); }
+    }, 3500);
+}
+
+function stopFeaturedAutoplay() {
+    if (featuredAutoplayInterval) { clearInterval(featuredAutoplayInterval); featuredAutoplayInterval = null; }
+}
+
+// ========== TESTIMONIALS ==========
+async function loadTestimonials() {
+    try {
+        const res = await apiGet({ action: 'getTestimonials' });
+        if (res.success) {
+            testimonials = res.testimonials || [];
+            renderTestimonials();
+            renderTestimonialList();
+        }
+    } catch (err) { console.error('Erro ao carregar depoimentos:', err); }
+}
+
+function renderTestimonials() {
+    stopTestimonialsAutoplay();
+    els.testimonialsTrack.innerHTML = '';
+
+    if (testimonials.length === 0) {
+        els.testimonials.style.display = 'none';
+        return;
+    }
+    els.testimonials.style.display = 'block';
+
+    testimonials.forEach(t => {
+        const photo = t.photo || 'https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Cliente';
+        const card = document.createElement('div');
+        card.className = 'testimonial-card';
+        card.innerHTML = `
+            <div class="testimonial-media">
+                <span class="testimonial-quote-icon"><i class="fas fa-quote-right"></i></span>
+                <img src="${photo}" alt="${escapeHtml(t.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x400/1B1C20/9CA3AF?text=Cliente';">
+            </div>
+            <div class="testimonial-body">
+                <p class="testimonial-text">"${escapeHtml(t.text)}"</p>
+                <div class="testimonial-name">${escapeHtml(t.name)}</div>
+            </div>
+        `;
+        els.testimonialsTrack.appendChild(card);
+    });
+
+    startTestimonialsAutoplay();
+}
+
+function scrollTestimonials(direction) {
+    const cardWidth = els.testimonialsTrack.querySelector('.testimonial-card')?.offsetWidth || 320;
+    els.testimonialsTrack.scrollBy({ left: direction * (cardWidth + 20), behavior: 'smooth' });
+}
+
+function startTestimonialsAutoplay() {
+    stopTestimonialsAutoplay();
+    if (!els.testimonialsTrack.querySelector('.testimonial-card')) return;
+    testimonialsAutoplayInterval = setInterval(() => {
+        const track = els.testimonialsTrack;
+        const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
+        if (atEnd) { track.scrollTo({ left: 0, behavior: 'smooth' }); }
+        else { scrollTestimonials(1); }
+    }, 4000);
+}
+
+function stopTestimonialsAutoplay() {
+    if (testimonialsAutoplayInterval) { clearInterval(testimonialsAutoplayInterval); testimonialsAutoplayInterval = null; }
+}
+
+async function handleTestimonialFormSubmit(e) {
+    e.preventDefault();
+    if (editingTestimonialId) await updateTestimonial(editingTestimonialId);
+    else await addTestimonial();
+}
+
+async function addTestimonial() {
+    if (!selectedTestimonialFile) { showStatusIn(els.testimonialFormStatus, 'Selecione uma foto do cliente.', 'error'); return; }
+
+    const data = readTestimonialFormFields();
+    els.loadingText.textContent = 'Enviando foto do depoimento...';
+    els.loadingOverlay.style.display = 'flex';
+
+    try {
+        const { url } = await uploadFileToDrive(selectedTestimonialFile);
+        data.photo = url;
+        els.loadingText.textContent = 'Salvando depoimento na planilha...';
+        const res = await apiPost({ action: 'addTestimonial', data });
+        els.loadingOverlay.style.display = 'none';
+        if (res.success) {
+            showStatusIn(els.testimonialFormStatus, 'Depoimento adicionado com sucesso!', 'success');
+            clearTestimonialForm();
+            loadTestimonials();
+        } else {
+            showStatusIn(els.testimonialFormStatus, 'Erro ao adicionar depoimento: ' + res.message, 'error');
+        }
+    } catch (error) {
+        els.loadingOverlay.style.display = 'none';
+        showStatusIn(els.testimonialFormStatus, 'Erro ao adicionar depoimento: ' + error.message, 'error');
+    }
+}
+
+async function updateTestimonial(testimonialId) {
+    const data = readTestimonialFormFields();
+    els.loadingText.textContent = 'Atualizando depoimento...';
+    els.loadingOverlay.style.display = 'flex';
+
+    try {
+        let photo = existingTestimonialPhoto;
+        if (selectedTestimonialFile) {
+            els.loadingText.textContent = 'Enviando nova foto...';
+            const { url } = await uploadFileToDrive(selectedTestimonialFile);
+            photo = url;
+            const oldId = extractDriveId(existingTestimonialPhoto);
+            if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
+        }
+        data.photo = photo;
+
+        els.loadingText.textContent = 'Salvando alterações...';
+        const res = await apiPost({ action: 'updateTestimonial', id: testimonialId, data });
+        els.loadingOverlay.style.display = 'none';
+        if (res.success) {
+            showStatusIn(els.testimonialFormStatus, 'Depoimento atualizado com sucesso!', 'success');
+            resetTestimonialFormToCreateMode();
+            clearTestimonialForm();
+            loadTestimonials();
+        } else {
+            showStatusIn(els.testimonialFormStatus, 'Erro ao atualizar depoimento: ' + res.message, 'error');
+        }
+    } catch (error) {
+        els.loadingOverlay.style.display = 'none';
+        showStatusIn(els.testimonialFormStatus, 'Erro ao atualizar depoimento: ' + error.message, 'error');
+    }
+}
+
+function readTestimonialFormFields() {
+    return {
+        name: els.testimonialName.value,
+        text: els.testimonialText.value
+    };
+}
+
+async function deleteTestimonial(testimonialId, event) {
+    if (event) event.stopPropagation();
+    if (!confirm('Tem certeza que deseja excluir este depoimento? A foto também será removida do Drive.')) return;
+    try {
+        const res = await apiPost({ action: 'deleteTestimonial', id: testimonialId });
+        if (res.success) { showStatusIn(els.testimonialFormStatus, 'Depoimento excluído com sucesso!', 'success'); loadTestimonials(); }
+        else showStatusIn(els.testimonialFormStatus, 'Erro ao excluir depoimento: ' + res.message, 'error');
+    } catch (error) {
+        showStatusIn(els.testimonialFormStatus, 'Erro ao excluir depoimento: ' + error.message, 'error');
+    }
+}
+
+function editTestimonial(testimonialId, event) {
+    if (event) event.stopPropagation();
+    const t = testimonials.find(x => x.id === testimonialId);
+    if (!t) return;
+
+    editingTestimonialId = testimonialId;
+    existingTestimonialPhoto = t.photo || null;
+
+    els.testimonialName.value = t.name || '';
+    els.testimonialText.value = t.text || '';
+
+    clearTestimonialFileSelection();
+    renderExistingTestimonialPhoto();
+
+    els.testimonialFormTitle.textContent = 'Editar Depoimento';
+    els.testimonialSubmitBtn.textContent = 'Atualizar Depoimento';
+    els.testimonialSubmitBtn.className = 'btn btn-primary';
+
+    openAdminPanel();
+    switchAdminTab('testimonials');
+    els.addTestimonialForm.scrollIntoView({ behavior: 'smooth' });
+    showStatusIn(els.testimonialFormStatus, 'Altere os campos necessários e clique em "Atualizar Depoimento".', 'warning');
+}
+
+function renderExistingTestimonialPhoto() {
+    if (!existingTestimonialPhoto) {
+        els.existingTestimonialPhotoWrap.style.display = 'none';
+        els.existingTestimonialPhotoContainer.innerHTML = '';
+        return;
+    }
+    els.existingTestimonialPhotoWrap.style.display = 'block';
+    els.existingTestimonialPhotoContainer.innerHTML = `
+        <div class="existing-media-item">
+            <img src="${existingTestimonialPhoto}" alt="Foto atual" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100/2A2B30/9CA3AF?text=Erro';">
+            <button type="button" class="delete-existing" onclick="removeExistingTestimonialPhoto()">&times;</button>
+        </div>`;
+}
+
+async function removeExistingTestimonialPhoto() {
+    const fileId = extractDriveId(existingTestimonialPhoto);
+    existingTestimonialPhoto = null;
+    renderExistingTestimonialPhoto();
+    if (fileId) { try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) {} }
+}
+
+function resetTestimonialFormToCreateMode() {
+    editingTestimonialId = null;
+    existingTestimonialPhoto = null;
+    els.testimonialFormTitle.textContent = 'Adicionar Depoimento';
+    els.testimonialSubmitBtn.textContent = 'Adicionar Depoimento';
+    els.testimonialSubmitBtn.className = 'btn btn-success';
+    els.existingTestimonialPhotoWrap.style.display = 'none';
+}
+
+function renderTestimonialList() {
+    els.testimonialList.innerHTML = '<h3>Depoimentos Cadastrados</h3>';
+    if (testimonials.length === 0) {
+        els.testimonialList.insertAdjacentHTML('beforeend', '<p style="color:rgba(255,255,255,.5)">Nenhum depoimento cadastrado.</p>');
+        return;
+    }
+    testimonials.forEach(t => {
+        const thumb = t.photo || 'https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';
+        const item = document.createElement('div');
+        item.className = 'moto-item';
+        item.innerHTML = `
+            <div class="moto-info">
+                <img src="${thumb}" alt="${escapeHtml(t.name)}" class="moto-thumbnail" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';">
+                <div class="moto-details">
+                    <div class="moto-name">${escapeHtml(t.name)}</div>
+                    <div class="moto-specs">${escapeHtml((t.text || '').slice(0, 60))}${(t.text || '').length > 60 ? '…' : ''}</div>
+                </div>
+            </div>
+            <div class="moto-actions">
+                <button class="btn btn-primary" onclick="editTestimonial('${t.id}', event)">Editar</button>
+                <button class="btn btn-danger" onclick="deleteTestimonial('${t.id}', event)">Excluir</button>
+            </div>`;
+        els.testimonialList.appendChild(item);
+    });
+}
+
+function clearTestimonialForm() {
+    els.addTestimonialForm.reset();
+    clearTestimonialFileSelection();
+    resetTestimonialFormToCreateMode();
+    els.testimonialFormStatus.style.display = 'none';
+}
+
+function handleTestimonialFile(file) {
+    if (!file.type.match('image.*')) { alert('Por favor, selecione apenas imagens.'); return; }
+    if (file.size > 10 * 1024 * 1024) { alert('O arquivo é muito grande. Máximo: 10MB.'); return; }
+    selectedTestimonialFile = file;
+    els.testimonialPreviewContainer.innerHTML = '';
+    const reader = new FileReader();
+    reader.onload = e => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.innerHTML = `<img src="${e.target.result}" alt="Pré-visualização"><button type="button" class="remove-btn" onclick="clearTestimonialFileSelection()">&times;</button>`;
+        els.testimonialPreviewContainer.appendChild(item);
+    };
+    reader.readAsDataURL(file);
+    els.testimonialMediaCounter.textContent = '1 foto selecionada';
+}
+
+function clearTestimonialFileSelection() {
+    selectedTestimonialFile = null;
+    els.testimonialPreviewContainer.innerHTML = '';
+    els.testimonialMediaCounter.textContent = 'Nenhuma foto selecionada';
+    els.testimonialFileInput.value = '';
+}
+
+function applyCurrentFilter() {
+    document.querySelectorAll('.vehicle-card').forEach(card => {
+        const show = currentFilter === 'all' || card.classList.contains(currentFilter);
+        card.style.display = show ? '' : 'none';
+    });
+}
+
+function setActiveFilter(activeBtn) {
+    filterBtns.forEach(btn => btn.classList.remove('active'));
+    activeBtn.classList.add('active');
+}
+
+function showVehicleDetails(index) {
+    currentVehicleIndex = index;
+    const vehicle = vehicles[index];
+
+    document.getElementById('modalEyebrow').textContent = getVehicleTypeName(vehicle.type);
+    els.modalTitle.textContent = vehicle.name;
+    els.modalPrice.textContent = `R$ ${formatPrice(vehicle.price)}`;
+
+    els.modalSpecs.innerHTML = `
+        <div class="spec-item"><span class="spec-name">Categoria</span><span class="spec-value">${getVehicleTypeName(vehicle.type)}</span></div>
+        <div class="spec-item"><span class="spec-name">Ano</span><span class="spec-value">${vehicle.year || 'N/D'}</span></div>
+        <div class="spec-item"><span class="spec-name">Quilometragem</span><span class="spec-value">${vehicle.km ? formatKm(vehicle.km) + ' km' : 'N/D'}</span></div>
+        <div class="spec-item"><span class="spec-name">Cor</span><span class="spec-value">${vehicle.color ? escapeHtml(vehicle.color) : 'N/D'}</span></div>
+        <div class="spec-item"><span class="spec-name">Descrição</span><span class="spec-value">${vehicle.description ? escapeHtml(vehicle.description) : 'Sem descrição'}</span></div>
+    `;
+
+    const message = `Olá, tenho interesse na moto ${vehicle.name} - Ano: ${vehicle.year} - Cor: ${vehicle.color || 'N/A'} - Preço: R$ ${formatPrice(vehicle.price)}. Poderia me fornecer mais informações?`;
+    els.whatsappButton.href = `https://api.whatsapp.com/send?phone=5589981067904&text=${encodeURIComponent(message)}`;
+
+    updateCarousel(vehicle.medias || []);
+    els.vehicleModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function updateCarousel(medias) {
+    els.carouselInner.innerHTML = '';
+    els.carouselIndicators.innerHTML = '';
+    currentMediaIndex = 0;
+
+    if (medias.length === 0) {
+        const item = document.createElement('div');
+        item.className = 'carousel-item';
+        item.innerHTML = `<img src="https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem" alt="Sem imagem">`;
+        els.carouselInner.appendChild(item);
+
+        const indicator = document.createElement('button');
+        indicator.className = 'carousel-indicator active';
+        els.carouselIndicators.appendChild(indicator);
+    } else {
+        medias.forEach((media, index) => {
             const item = document.createElement('div');
             item.className = 'carousel-item';
-            item.innerHTML = `<img src="https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem" alt="Sem imagem">`;
+            item.innerHTML = `<img src="${media}" alt="Imagem do veículo" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem';">`;
             els.carouselInner.appendChild(item);
 
             const indicator = document.createElement('button');
-            indicator.className = 'carousel-indicator active';
+            indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
+            indicator.setAttribute('aria-label', `Ir para imagem ${index + 1}`);
+            indicator.addEventListener('click', () => showMedia(index));
             els.carouselIndicators.appendChild(indicator);
+        });
+    }
+    updateCarouselPosition();
+}
+
+function showMedia(index) { currentMediaIndex = index; updateCarouselPosition(); updateCarouselIndicators(); }
+function showPrevMedia() {
+    const medias = (vehicles[currentVehicleIndex] && vehicles[currentVehicleIndex].medias) || [];
+    if (!medias.length) return;
+    currentMediaIndex = (currentMediaIndex - 1 + medias.length) % medias.length;
+    updateCarouselPosition(); updateCarouselIndicators();
+}
+function showNextMedia() {
+    const medias = (vehicles[currentVehicleIndex] && vehicles[currentVehicleIndex].medias) || [];
+    if (!medias.length) return;
+    currentMediaIndex = (currentMediaIndex + 1) % medias.length;
+    updateCarouselPosition(); updateCarouselIndicators();
+}
+function updateCarouselPosition() { els.carouselInner.style.transform = `translateX(-${currentMediaIndex * 100}%)`; }
+function updateCarouselIndicators() {
+    els.carouselIndicators.querySelectorAll('.carousel-indicator').forEach((ind, i) => ind.classList.toggle('active', i === currentMediaIndex));
+}
+
+function closeVehicleModal() { els.vehicleModal.style.display = 'none'; document.body.style.overflow = ''; }
+
+// ========== ADMIN PANEL ==========
+function openAdminPanel() { els.adminPanel.style.display = 'block'; }
+function closeAdminPanelFunc() { els.adminPanel.style.display = 'none'; }
+
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    if (editingVehicleId) await updateVehicle(editingVehicleId);
+    else await addVehicle();
+}
+
+async function addVehicle() {
+    if (selectedFiles.length === 0) { showStatusIn(els.formStatus, 'Adicione pelo menos uma foto do veículo.', 'error'); return; }
+
+    const vehicle = readFormFields();
+    els.loadingText.textContent = 'Otimizando e enviando fotos...';
+    els.loadingOverlay.style.display = 'flex';
+
+    try {
+        vehicle.medias = await uploadFilesInParallel(selectedFiles);
+        console.log('📸 URLs das imagens enviadas:', vehicle.medias);
+        
+        els.loadingText.textContent = 'Salvando veículo na planilha...';
+        const res = await apiPost({ action: 'addVehicle', data: vehicle });
+        els.loadingOverlay.style.display = 'none';
+        if (res.success) {
+            showStatusIn(els.formStatus, 'Veículo adicionado com sucesso!', 'success');
+            clearForm();
+            loadVehicles();
         } else {
-            medias.forEach((media, index) => {
-                const item = document.createElement('div');
-                item.className = 'carousel-item';
-                item.innerHTML = `<img src="${media}" alt="Imagem do veículo" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem';">`;
-                els.carouselInner.appendChild(item);
-
-                const indicator = document.createElement('button');
-                indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
-                indicator.setAttribute('aria-label', `Ir para imagem ${index + 1}`);
-                indicator.addEventListener('click', () => showMedia(index));
-                els.carouselIndicators.appendChild(indicator);
-            });
+            showStatusIn(els.formStatus, 'Erro ao adicionar veículo: ' + res.message, 'error');
         }
-        updateCarouselPosition();
+    } catch (error) {
+        els.loadingOverlay.style.display = 'none';
+        showStatusIn(els.formStatus, 'Erro ao adicionar veículo: ' + error.message, 'error');
     }
+}
 
-    function showMedia(index) { currentMediaIndex = index; updateCarouselPosition(); updateCarouselIndicators(); }
-    function showPrevMedia() {
-        const medias = (vehicles[currentVehicleIndex] && vehicles[currentVehicleIndex].medias) || [];
-        if (!medias.length) return;
-        currentMediaIndex = (currentMediaIndex - 1 + medias.length) % medias.length;
-        updateCarouselPosition(); updateCarouselIndicators();
-    }
-    function showNextMedia() {
-        const medias = (vehicles[currentVehicleIndex] && vehicles[currentVehicleIndex].medias) || [];
-        if (!medias.length) return;
-        currentMediaIndex = (currentMediaIndex + 1) % medias.length;
-        updateCarouselPosition(); updateCarouselIndicators();
-    }
-    function updateCarouselPosition() { els.carouselInner.style.transform = `translateX(-${currentMediaIndex * 100}%)`; }
-    function updateCarouselIndicators() {
-        els.carouselIndicators.querySelectorAll('.carousel-indicator').forEach((ind, i) => ind.classList.toggle('active', i === currentMediaIndex));
-    }
+async function updateVehicle(vehicleId) {
+    const updated = readFormFields();
 
-    function closeVehicleModal() { els.vehicleModal.style.display = 'none'; document.body.style.overflow = ''; }
+    els.loadingText.textContent = 'Atualizando veículo...';
+    els.loadingOverlay.style.display = 'flex';
 
-    // ========== ADMIN PANEL ==========
-    function openAdminPanel() { els.adminPanel.style.display = 'block'; }
-    function closeAdminPanelFunc() { els.adminPanel.style.display = 'none'; }
-
-    async function handleFormSubmit(e) {
-        e.preventDefault();
-        if (editingVehicleId) await updateVehicle(editingVehicleId);
-        else await addVehicle();
-    }
-
-    async function addVehicle() {
-        if (selectedFiles.length === 0) { showStatusIn(els.formStatus, 'Adicione pelo menos uma foto do veículo.', 'error'); return; }
-
-        const vehicle = readFormFields();
-        els.loadingText.textContent = 'Otimizando e enviando fotos...';
-        els.loadingOverlay.style.display = 'flex';
-
-        try {
-            vehicle.medias = await uploadFilesInParallel(selectedFiles);
-            els.loadingText.textContent = 'Salvando veículo na planilha...';
-            const res = await apiPost({ action: 'addVehicle', data: vehicle });
-            els.loadingOverlay.style.display = 'none';
-            if (res.success) {
-                showStatusIn(els.formStatus, 'Veículo adicionado com sucesso!', 'success');
-                clearForm();
-                loadVehicles();
-            } else {
-                showStatusIn(els.formStatus, 'Erro ao adicionar veículo: ' + res.message, 'error');
-            }
-        } catch (error) {
-            els.loadingOverlay.style.display = 'none';
-            showStatusIn(els.formStatus, 'Erro ao adicionar veículo: ' + error.message, 'error');
+    try {
+        let medias = [...existingMediaForEdit];
+        if (selectedFiles.length > 0) {
+            els.loadingText.textContent = 'Otimizando e enviando novas fotos...';
+            const newUrls = await uploadFilesInParallel(selectedFiles);
+            medias = medias.concat(newUrls);
         }
-    }
+        updated.medias = medias;
 
-    async function updateVehicle(vehicleId) {
-        const updated = readFormFields();
-
-        els.loadingText.textContent = 'Atualizando veículo...';
-        els.loadingOverlay.style.display = 'flex';
-
-        try {
-            let medias = [...existingMediaForEdit];
-            if (selectedFiles.length > 0) {
-                els.loadingText.textContent = 'Otimizando e enviando novas fotos...';
-                const newUrls = await uploadFilesInParallel(selectedFiles);
-                medias = medias.concat(newUrls);
-            }
-            updated.medias = medias;
-
-            els.loadingText.textContent = 'Salvando alterações na planilha...';
-            const res = await apiPost({ action: 'updateVehicle', id: vehicleId, data: updated });
-            els.loadingOverlay.style.display = 'none';
-            if (res.success) {
-                showStatusIn(els.formStatus, 'Veículo atualizado com sucesso!', 'success');
-                resetFormToCreateMode();
-                clearForm();
-                loadVehicles();
-            } else {
-                showStatusIn(els.formStatus, 'Erro ao atualizar veículo: ' + res.message, 'error');
-            }
-        } catch (error) {
-            els.loadingOverlay.style.display = 'none';
-            showStatusIn(els.formStatus, 'Erro ao atualizar veículo: ' + error.message, 'error');
+        els.loadingText.textContent = 'Salvando alterações na planilha...';
+        const res = await apiPost({ action: 'updateVehicle', id: vehicleId, data: updated });
+        els.loadingOverlay.style.display = 'none';
+        if (res.success) {
+            showStatusIn(els.formStatus, 'Veículo atualizado com sucesso!', 'success');
+            resetFormToCreateMode();
+            clearForm();
+            loadVehicles();
+        } else {
+            showStatusIn(els.formStatus, 'Erro ao atualizar veículo: ' + res.message, 'error');
         }
+    } catch (error) {
+        els.loadingOverlay.style.display = 'none';
+        showStatusIn(els.formStatus, 'Erro ao atualizar veículo: ' + error.message, 'error');
     }
+}
 
-    function readFormFields() {
-        return {
-            name: document.getElementById('vehicleName').value,
-            type: document.getElementById('vehicleType').value,
-            price: parseFloat(document.getElementById('vehiclePrice').value),
-            year: document.getElementById('vehicleYear').value,
-            km: document.getElementById('vehicleKm').value ? parseInt(document.getElementById('vehicleKm').value) : null,
-            color: document.getElementById('vehicleColor').value,
-            description: document.getElementById('vehicleDescription').value,
-            featured: document.getElementById('vehicleFeatured').checked
-        };
-    }
+function readFormFields() {
+    return {
+        name: document.getElementById('vehicleName').value,
+        type: document.getElementById('vehicleType').value,
+        price: parseFloat(document.getElementById('vehiclePrice').value),
+        year: document.getElementById('vehicleYear').value,
+        km: document.getElementById('vehicleKm').value ? parseInt(document.getElementById('vehicleKm').value) : null,
+        color: document.getElementById('vehicleColor').value,
+        description: document.getElementById('vehicleDescription').value,
+        featured: document.getElementById('vehicleFeatured').checked
+    };
+}
 
-    async function deleteVehicle(vehicleId, event) {
-        event.stopPropagation();
-        if (!confirm('Tem certeza que deseja excluir este veículo? As fotos também serão removidas do Drive.')) return;
-        try {
-            const res = await apiPost({ action: 'deleteVehicle', id: vehicleId });
-            if (res.success) { showStatusIn(els.formStatus, 'Veículo excluído com sucesso!', 'success'); loadVehicles(); }
-            else showStatusIn(els.formStatus, 'Erro ao excluir veículo: ' + res.message, 'error');
-        } catch (error) {
-            showStatusIn(els.formStatus, 'Erro ao excluir veículo: ' + error.message, 'error');
+async function deleteVehicle(vehicleId, event) {
+    event.stopPropagation();
+    if (!confirm('Tem certeza que deseja excluir este veículo? Todas as fotos serão removidas do Drive permanentemente.')) return;
+    try {
+        const res = await apiPost({ action: 'deleteVehicle', id: vehicleId });
+        if (res.success) { 
+            showStatusIn(els.formStatus, 'Veículo excluído com sucesso!', 'success');
+            loadVehicles(); 
+        } else {
+            showStatusIn(els.formStatus, 'Erro ao excluir veículo: ' + res.message, 'error');
         }
+    } catch (error) {
+        showStatusIn(els.formStatus, 'Erro ao excluir veículo: ' + error.message, 'error');
     }
+}
 
-    function editVehicle(vehicleId, event) {
-        if (event) event.stopPropagation();
-        const vehicle = vehicles.find(v => v.id === vehicleId);
-        if (!vehicle) return;
+function editVehicle(vehicleId, event) {
+    if (event) event.stopPropagation();
+    const vehicle = vehicles.find(v => v.id === vehicleId);
+    if (!vehicle) return;
 
-        editingVehicleId = vehicleId;
-        existingMediaForEdit = vehicle.medias ? [...vehicle.medias] : [];
+    editingVehicleId = vehicleId;
+    existingMediaForEdit = vehicle.medias ? [...vehicle.medias] : [];
 
-        document.getElementById('vehicleName').value = vehicle.name || '';
-        document.getElementById('vehicleType').value = vehicle.type || 'ate-110cc';
-        document.getElementById('vehiclePrice').value = vehicle.price || '';
-        document.getElementById('vehicleYear').value = vehicle.year || '';
-        document.getElementById('vehicleKm').value = vehicle.km || '';
-        document.getElementById('vehicleColor').value = vehicle.color || '';
-        document.getElementById('vehicleDescription').value = vehicle.description || '';
-        document.getElementById('vehicleFeatured').checked = isTruthy(vehicle.featured);
+    document.getElementById('vehicleName').value = vehicle.name || '';
+    document.getElementById('vehicleType').value = vehicle.type || 'ate-110cc';
+    document.getElementById('vehiclePrice').value = vehicle.price || '';
+    document.getElementById('vehicleYear').value = vehicle.year || '';
+    document.getElementById('vehicleKm').value = vehicle.km || '';
+    document.getElementById('vehicleColor').value = vehicle.color || '';
+    document.getElementById('vehicleDescription').value = vehicle.description || '';
+    document.getElementById('vehicleFeatured').checked = isTruthy(vehicle.featured);
 
-        clearFileSelection();
-        renderExistingMedia();
+    clearFileSelection();
+    renderExistingMedia();
 
-        els.formTitle.textContent = 'Editar Veículo';
-        els.submitBtn.textContent = 'Atualizar Veículo';
-        els.submitBtn.className = 'btn btn-primary';
+    els.formTitle.textContent = 'Editar Veículo';
+    els.submitBtn.textContent = 'Atualizar Veículo';
+    els.submitBtn.className = 'btn btn-primary';
 
-        openAdminPanel();
-        switchAdminTab('vehicles');
-        document.getElementById('addVehicleForm').scrollIntoView({ behavior: 'smooth' });
-        showStatusIn(els.formStatus, 'Altere os campos necessários e clique em "Atualizar Veículo".', 'warning');
-    }
+    openAdminPanel();
+    switchAdminTab('vehicles');
+    document.getElementById('addVehicleForm').scrollIntoView({ behavior: 'smooth' });
+    showStatusIn(els.formStatus, 'Altere os campos necessários e clique em "Atualizar Veículo".', 'warning');
+}
 
-    function renderExistingMedia() {
-        if (existingMediaForEdit.length === 0) {
-            els.existingMediaWrap.style.display = 'none';
-            els.existingMediaContainer.innerHTML = '';
-            return;
-        }
-        els.existingMediaWrap.style.display = 'block';
-        els.existingMediaContainer.innerHTML = '';
-        existingMediaForEdit.forEach((url, idx) => {
-            const div = document.createElement('div');
-            div.className = 'existing-media-item';
-            div.innerHTML = `<img src="${url}" alt="Foto atual ${idx + 1}" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100/2A2B30/9CA3AF?text=Erro';"><button type="button" class="delete-existing" onclick="removeExistingMedia(${idx})">&times;</button>`;
-            els.existingMediaContainer.appendChild(div);
-        });
-    }
-
-    async function removeExistingMedia(idx) {
-        const url = existingMediaForEdit[idx];
-        const fileId = extractDriveId(url);
-        existingMediaForEdit.splice(idx, 1);
-        renderExistingMedia();
-        if (fileId) {
-            try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) {}
-        }
-    }
-
-    function resetFormToCreateMode() {
-        editingVehicleId = null;
-        existingMediaForEdit = [];
-        els.formTitle.textContent = 'Adicionar Novo Veículo';
-        els.submitBtn.textContent = 'Adicionar Veículo';
-        els.submitBtn.className = 'btn btn-success';
+function renderExistingMedia() {
+    if (existingMediaForEdit.length === 0) {
         els.existingMediaWrap.style.display = 'none';
+        els.existingMediaContainer.innerHTML = '';
+        return;
     }
+    els.existingMediaWrap.style.display = 'block';
+    els.existingMediaContainer.innerHTML = '';
+    existingMediaForEdit.forEach((url, idx) => {
+        const div = document.createElement('div');
+        div.className = 'existing-media-item';
+        div.innerHTML = `<img src="${url}" alt="Foto atual ${idx + 1}" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100/2A2B30/9CA3AF?text=Erro';"><button type="button" class="delete-existing" onclick="removeExistingMedia(${idx})">&times;</button>`;
+        els.existingMediaContainer.appendChild(div);
+    });
+}
 
-    function renderMotoList() {
-        els.motoList.innerHTML = '<h3>Veículos Cadastrados</h3>';
-        if (vehicles.length === 0) {
-            els.motoList.insertAdjacentHTML('beforeend', '<p style="color:rgba(255,255,255,.5)">Nenhum veículo cadastrado.</p>');
-            return;
-        }
-        vehicles.forEach(vehicle => {
-            const thumb = (vehicle.medias && vehicle.medias.length > 0) ? vehicle.medias[0] : 'https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';
-            const item = document.createElement('div');
-            item.className = 'moto-item';
-            item.innerHTML = `
-                <div class="moto-info">
-                    <img src="${thumb}" alt="${vehicle.name}" class="moto-thumbnail" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';">
-                    <div class="moto-details">
-                        <div class="moto-name">${escapeHtml(vehicle.name)} ${isTruthy(vehicle.featured) ? '⭐' : ''}</div>
-                        <div class="moto-specs">${getVehicleTypeName(vehicle.type)} • ${vehicle.year} • R$ ${formatPrice(vehicle.price)}</div>
-                    </div>
+async function removeExistingMedia(idx) {
+    const url = existingMediaForEdit[idx];
+    const fileId = extractDriveId(url);
+    existingMediaForEdit.splice(idx, 1);
+    renderExistingMedia();
+    if (fileId) {
+        try { await apiPost({ action: 'deleteImage', fileId }); } catch (e) {}
+    }
+}
+
+function resetFormToCreateMode() {
+    editingVehicleId = null;
+    existingMediaForEdit = [];
+    els.formTitle.textContent = 'Adicionar Novo Veículo';
+    els.submitBtn.textContent = 'Adicionar Veículo';
+    els.submitBtn.className = 'btn btn-success';
+    els.existingMediaWrap.style.display = 'none';
+}
+
+function renderMotoList() {
+    els.motoList.innerHTML = '<h3>Veículos Cadastrados</h3>';
+    if (vehicles.length === 0) {
+        els.motoList.insertAdjacentHTML('beforeend', '<p style="color:rgba(255,255,255,.5)">Nenhum veículo cadastrado.</p>');
+        return;
+    }
+    vehicles.forEach(vehicle => {
+        const thumb = (vehicle.medias && vehicle.medias.length > 0) ? vehicle.medias[0] : 'https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';
+        const item = document.createElement('div');
+        item.className = 'moto-item';
+        item.innerHTML = `
+            <div class="moto-info">
+                <img src="${thumb}" alt="${vehicle.name}" class="moto-thumbnail" onerror="this.onerror=null;this.src='https://via.placeholder.com/60x60/2A2B30/9CA3AF?text=?';">
+                <div class="moto-details">
+                    <div class="moto-name">${escapeHtml(vehicle.name)} ${isTruthy(vehicle.featured) ? '⭐' : ''}</div>
+                    <div class="moto-specs">${getVehicleTypeName(vehicle.type)} • ${vehicle.year} • R$ ${formatPrice(vehicle.price)}</div>
                 </div>
-                <div class="moto-actions">
-                    <button class="btn btn-primary" onclick="editVehicle('${vehicle.id}', event)">Editar</button>
-                    <button class="btn btn-danger" onclick="deleteVehicle('${vehicle.id}', event)">Excluir</button>
-                </div>`;
-            els.motoList.appendChild(item);
-        });
+            </div>
+            <div class="moto-actions">
+                <button class="btn btn-primary" onclick="editVehicle('${vehicle.id}', event)">Editar</button>
+                <button class="btn btn-danger" onclick="deleteVehicle('${vehicle.id}', event)">Excluir</button>
+            </div>`;
+        els.motoList.appendChild(item);
+    });
+}
+
+function clearForm() {
+    els.addVehicleForm.reset();
+    clearFileSelection();
+    resetFormToCreateMode();
+    els.formStatus.style.display = 'none';
+}
+
+// ========== UPLOAD ==========
+function handleDragOver(e) { e.preventDefault(); els.uploadArea.classList.add('highlight'); }
+function handleDragLeave(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); }
+function handleDrop(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); handleFiles(e.dataTransfer.files); }
+function handleFileSelect(e) { handleFiles(e.target.files); }
+
+function handleFiles(files) {
+    for (const file of files) {
+        if (!file.type.match('image.*')) { alert('Por favor, selecione apenas imagens.'); continue; }
+        if (file.size > 10 * 1024 * 1024) { alert('O arquivo ' + file.name + ' é muito grande. Máximo: 10MB.'); continue; }
+        selectedFiles.push(file);
+        createPreview(file);
     }
+    updateMediaCounter();
+}
 
-    function clearForm() {
-        els.addVehicleForm.reset();
-        clearFileSelection();
-        resetFormToCreateMode();
-        els.formStatus.style.display = 'none';
-    }
+function createPreview(file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.innerHTML = `<img src="${e.target.result}" alt="Pré-visualização"><button type="button" class="remove-btn" onclick="removePreview(this)">&times;</button>`;
+        els.previewContainer.appendChild(item);
+    };
+    reader.readAsDataURL(file);
+}
 
-    // ========== UPLOAD ==========
-    function handleDragOver(e) { e.preventDefault(); els.uploadArea.classList.add('highlight'); }
-    function handleDragLeave(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); }
-    function handleDrop(e) { e.preventDefault(); els.uploadArea.classList.remove('highlight'); handleFiles(e.dataTransfer.files); }
-    function handleFileSelect(e) { handleFiles(e.target.files); }
+function removePreview(button) {
+    const item = button.parentElement;
+    const index = Array.from(els.previewContainer.children).indexOf(item);
+    selectedFiles.splice(index, 1);
+    item.remove();
+    updateMediaCounter();
+}
 
-    function handleFiles(files) {
-        for (const file of files) {
-            if (!file.type.match('image.*')) { alert('Por favor, selecione apenas imagens.'); continue; }
-            if (file.size > 10 * 1024 * 1024) { alert('O arquivo ' + file.name + ' é muito grande. Máximo: 10MB.'); continue; }
-            selectedFiles.push(file);
-            createPreview(file);
-        }
-        updateMediaCounter();
-    }
+function clearFileSelection() {
+    selectedFiles = [];
+    els.previewContainer.innerHTML = '';
+    updateMediaCounter();
+    els.fileInput.value = '';
+}
 
-    function createPreview(file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-            const item = document.createElement('div');
-            item.className = 'preview-item';
-            item.innerHTML = `<img src="${e.target.result}" alt="Pré-visualização"><button type="button" class="remove-btn" onclick="removePreview(this)">&times;</button>`;
-            els.previewContainer.appendChild(item);
-        };
-        reader.readAsDataURL(file);
-    }
+function updateMediaCounter() { els.mediaCounter.textContent = `${selectedFiles.length} nova(s) foto(s) selecionada(s)`; }
 
-    function removePreview(button) {
-        const item = button.parentElement;
-        const index = Array.from(els.previewContainer.children).indexOf(item);
-        selectedFiles.splice(index, 1);
-        item.remove();
-        updateMediaCounter();
-    }
+// ========== DRAWER ==========
+function toggleDrawer() { els.drawer.classList.toggle('open'); els.overlay.classList.toggle('active'); }
+function closeDrawer() { els.drawer.classList.remove('open'); els.overlay.classList.remove('active'); }
 
-    function clearFileSelection() {
-        selectedFiles = [];
-        els.previewContainer.innerHTML = '';
-        updateMediaCounter();
-        els.fileInput.value = '';
-    }
-
-    function updateMediaCounter() { els.mediaCounter.textContent = `${selectedFiles.length} nova(s) foto(s) selecionada(s)`; }
-
-    // ========== DRAWER ==========
-    function toggleDrawer() { els.drawer.classList.toggle('open'); els.overlay.classList.toggle('active'); }
-    function closeDrawer() { els.drawer.classList.remove('open'); els.overlay.classList.remove('active'); }
-
-    // ========== HELPERS ==========
-    function formatPrice(price) { return new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price || 0); }
-    function formatKm(km) { return new Intl.NumberFormat('pt-BR').format(km); }
-    function getVehicleTypeName(type) {
-        return { 'ate-110cc': 'Até 110cc', 'ate-150cc': 'Até 150cc', 'acima-160cc': 'Acima de 160cc' }[type] || type;
-    }
-    function escapeHtml(str) {
-        if (str === undefined || str === null) return '';
-        return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
-    }
+// ========== HELPERS ==========
+function formatPrice(price) { return new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price || 0); }
+function formatKm(km) { return new Intl.NumberFormat('pt-BR').format(km); }
+function getVehicleTypeName(type) {
+    return { 'ate-110cc': 'Até 110cc', 'ate-150cc': 'Até 150cc', 'acima-160cc': 'Acima de 160cc' }[type] || type;
+}
+function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
 </script>
 </body>
 </html>
