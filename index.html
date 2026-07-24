@@ -701,19 +701,10 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     touch-action:none;
     cursor:grab;
     will-change:transform;
-    display:block;
 }
 
 .lightbox-image.grabbing{
     cursor:grabbing;
-}
-
-.lightbox-video{
-    max-width:95%;
-    max-height:95%;
-    border-radius:4px;
-    background:#000;
-    outline:none;
 }
 
 .lightbox-nav{
@@ -1669,7 +1660,7 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
     <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Anterior">&#10094;</button>
     <button class="lightbox-nav next" id="lightboxNext" aria-label="Próximo">&#10095;</button>
     <div class="lightbox-image-container" id="lightboxContainer">
-        <img class="lightbox-image" id="lightboxImage" src="" alt="Mídia ampliada">
+        <img class="lightbox-image" id="lightboxImage" src="" alt="Foto ampliada">
     </div>
     <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
 </div>
@@ -1814,18 +1805,18 @@ h1,h2,h3{ font-family:var(--font-display); font-weight:700; letter-spacing:.3px;
                     </div>
 
                     <div class="upload-section">
-                        <h4>Fotos e Vídeos do Veículo (salvos no Google Drive)</h4>
+                        <h4>Fotos do Veículo (salvas no Google Drive)</h4>
                         <div id="existingMediaWrap" style="display:none; margin-bottom:16px;">
-                            <div class="upload-info" style="margin-bottom:8px;">Mídias já cadastradas (clique no X para remover):</div>
+                            <div class="upload-info" style="margin-bottom:8px;">Fotos já cadastradas (clique no X para remover):</div>
                             <div class="preview-container" id="existingMediaContainer"></div>
                         </div>
                         <div class="upload-area" id="uploadArea">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Arraste imagens ou vídeos aqui ou clique para selecionar</p>
-                            <p class="upload-info">Formatos suportados: JPG, PNG, WEBP, MP4, MOV, AVI, MKV (máx. 100MB cada) — as imagens são otimizadas automaticamente.</p>
+                            <p>Arraste imagens aqui ou clique para selecionar</p>
+                            <p class="upload-info">Formatos suportados: JPG, PNG, WEBP (máx. 10MB cada) — as fotos são otimizadas automaticamente para um envio mais rápido.</p>
                         </div>
-                        <input type="file" class="file-input" id="fileInput" multiple accept="image/*,video/*">
-                        <div class="media-counter" id="mediaCounter">0 mídias selecionadas</div>
+                        <input type="file" class="file-input" id="fileInput" multiple accept="image/*">
+                        <div class="media-counter" id="mediaCounter">0 novas fotos selecionadas</div>
                         <div class="preview-container" id="previewContainer"></div>
                     </div>
 
@@ -2023,7 +2014,6 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbxGOkizek7fBAusdVWPfZF-
 // COMPRESSÃO DE IMAGENS
 const IMG_MAX_WIDTH = 1200;
 const IMG_QUALITY = 0.85;
-const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB para vídeos
 
 // ========== CLIENTE DA API ==========
 async function apiGet(params) {
@@ -2079,32 +2069,14 @@ function compressImage(file) {
     });
 }
 
-// ========== UPLOAD DE ARQUIVO (imagem ou vídeo) ==========
-async function uploadMedia(file) {
+// ========== UPLOAD DE IMAGEM ==========
+async function uploadImage(file) {
     try {
-        let base64Data;
-        let filename = file.name || 'media';
-        
-        // Verifica se é vídeo ou imagem
-        const isVideo = file.type.match('video.*');
-        
-        if (isVideo) {
-            // Vídeo: ler como base64 diretamente
-            base64Data = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = (e) => resolve(e.target.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        } else {
-            // Imagem: comprimir
-            base64Data = await compressImage(file);
-        }
-        
+        const dataUrl = await compressImage(file);
         const result = await apiPost({
             action: 'uploadImage',
-            base64: base64Data,
-            filename: filename
+            base64: dataUrl,
+            filename: file.name || 'imagem.jpg'
         });
         
         if (!result.success) {
@@ -2118,10 +2090,10 @@ async function uploadMedia(file) {
     }
 }
 
-async function uploadMultipleMedia(files) {
+async function uploadMultipleImages(files) {
     const urls = [];
     for (const file of files) {
-        const url = await uploadMedia(file);
+        const url = await uploadImage(file);
         urls.push(url);
     }
     return urls;
@@ -2163,11 +2135,12 @@ let lightboxStartX = 0;
 let lightboxStartY = 0;
 let lightboxInitialPinchDist = 0;
 let lightboxInitialScale = 1;
+let lightboxTouchStartX = 0;
+let lightboxTouchStartY = 0;
 let lightboxSwipeStartX = 0;
 let lightboxSwipeStartY = 0;
 let lightboxIsSwiping = false;
 let lightboxSwipeThreshold = 50;
-let lightboxCurrentMediaIsVideo = false;
 
 const IMAGE_FIELDS = [
     { key: 'logoUrl',        selector: '#logoImg',    label: 'Logo (header)' },
@@ -2213,10 +2186,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // ========== LIGHTBOX LISTENERS ==========
 function setupLightboxListeners() {
+    // Fechar com X
     els.lightboxClose.addEventListener('click', closeLightbox);
+    
+    // Navegação
     els.lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
     els.lightboxNext.addEventListener('click', () => navigateLightbox(1));
     
+    // Fechar com ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && els.lightboxOverlay.classList.contains('active')) {
             closeLightbox();
@@ -2229,27 +2206,34 @@ function setupLightboxListeners() {
         }
     });
     
+    // Fechar ao clicar no fundo
     els.lightboxOverlay.addEventListener('click', (e) => {
         if (e.target === els.lightboxOverlay || e.target === els.lightboxContainer) {
             closeLightbox();
         }
     });
     
+    // Touch events para zoom, arraste e swipe
     const img = els.lightboxImage;
     const container = els.lightboxContainer;
     
+    // Mouse wheel zoom
     container.addEventListener('wheel', (e) => {
-        if (!els.lightboxOverlay.classList.contains('active') || lightboxCurrentMediaIsVideo) return;
+        if (!els.lightboxOverlay.classList.contains('active')) return;
         e.preventDefault();
         const delta = e.deltaY > 0 ? -0.1 : 0.1;
         const newScale = Math.min(Math.max(lightboxScale + delta, 0.5), 5);
         applyLightboxTransform(newScale, lightboxTranslateX, lightboxTranslateY);
     }, { passive: false });
     
+    // Touch para zoom com pinça e swipe para navegar
+    let lastTouchDist = 0;
+    let touchScale = 1;
+    let touchStartX = 0;
+    let touchStartY = 0;
     let isPinching = false;
     
     container.addEventListener('touchstart', (e) => {
-        if (lightboxCurrentMediaIsVideo) return;
         if (e.touches.length === 2) {
             isPinching = true;
             lightboxIsSwiping = false;
@@ -2258,6 +2242,8 @@ function setupLightboxListeners() {
             lightboxInitialPinchDist = Math.sqrt(dx*dx + dy*dy);
             lightboxInitialScale = lightboxScale;
         } else if (e.touches.length === 1) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
             lightboxSwipeStartX = e.touches[0].clientX;
             lightboxSwipeStartY = e.touches[0].clientY;
             lightboxIsSwiping = false;
@@ -2272,7 +2258,6 @@ function setupLightboxListeners() {
     }, { passive: true });
     
     container.addEventListener('touchmove', (e) => {
-        if (lightboxCurrentMediaIsVideo) return;
         if (e.touches.length === 2 && isPinching) {
             e.preventDefault();
             const dx = e.touches[0].clientX - e.touches[1].clientX;
@@ -2284,16 +2269,20 @@ function setupLightboxListeners() {
         } else if (e.touches.length === 1) {
             const touchX = e.touches[0].clientX;
             const touchY = e.touches[0].clientY;
-            const deltaX = touchX - lightboxSwipeStartX;
+            const deltaX = touchX - touchStartX;
+            const deltaY = touchY - touchStartY;
             
+            // Se o zoom for maior que 1, arrasta a imagem
             if (lightboxScale > 1) {
                 e.preventDefault();
                 const newX = touchX - lightboxStartX;
                 const newY = touchY - lightboxStartY;
                 applyLightboxTransform(lightboxScale, newX, newY);
                 lightboxIsSwiping = false;
-            } else if (lightboxScale <= 1) {
-                if (Math.abs(deltaX) > 20) {
+            } 
+            // Se o zoom for 1, detecta swipe para navegar
+            else if (lightboxScale <= 1) {
+                if (Math.abs(deltaX) > 20 || Math.abs(deltaY) > 20) {
                     lightboxIsSwiping = true;
                 }
             }
@@ -2301,31 +2290,32 @@ function setupLightboxListeners() {
     }, { passive: false });
     
     container.addEventListener('touchend', (e) => {
-        if (lightboxCurrentMediaIsVideo) return;
         isPinching = false;
         lightboxIsDragging = false;
         img.classList.remove('grabbing');
         
+        // Se estava swipando e escala é 1, navega
         if (lightboxIsSwiping && lightboxScale <= 1 && lightboxImages.length > 1) {
             const endX = e.changedTouches[0].clientX;
             const deltaX = endX - lightboxSwipeStartX;
             
             if (Math.abs(deltaX) > lightboxSwipeThreshold) {
                 if (deltaX < 0) {
-                    navigateLightbox(1);
+                    navigateLightbox(1); // swipe esquerda = próxima
                 } else {
-                    navigateLightbox(-1);
+                    navigateLightbox(-1); // swipe direita = anterior
                 }
             }
         }
+        
         lightboxIsSwiping = false;
     }, { passive: true });
     
+    // Mouse drag para mover a imagem
     let mouseDown = false;
     let mouseStartX = 0, mouseStartY = 0;
     
     img.addEventListener('mousedown', (e) => {
-        if (lightboxCurrentMediaIsVideo) return;
         if (lightboxScale > 1) {
             mouseDown = true;
             mouseStartX = e.clientX - lightboxTranslateX;
@@ -2335,7 +2325,6 @@ function setupLightboxListeners() {
     });
     
     document.addEventListener('mousemove', (e) => {
-        if (lightboxCurrentMediaIsVideo) return;
         if (mouseDown && lightboxScale > 1) {
             const newX = e.clientX - mouseStartX;
             const newY = e.clientY - mouseStartY;
@@ -2350,7 +2339,6 @@ function setupLightboxListeners() {
 }
 
 function applyLightboxTransform(scale, tx, ty) {
-    if (lightboxCurrentMediaIsVideo) return;
     lightboxScale = scale;
     lightboxTranslateX = tx || 0;
     lightboxTranslateY = ty || 0;
@@ -2364,7 +2352,6 @@ function openLightbox(images, startIndex) {
     lightboxTranslateX = 0;
     lightboxTranslateY = 0;
     lightboxIsSwiping = false;
-    lightboxCurrentMediaIsVideo = false;
     
     updateLightboxImage();
     els.lightboxOverlay.classList.add('active');
@@ -2373,41 +2360,17 @@ function openLightbox(images, startIndex) {
 
 function updateLightboxImage() {
     if (lightboxImages.length === 0) return;
-    const media = lightboxImages[lightboxIndex];
-    const isVideo = /\.(mp4|mov|webm|avi|mkv|m4v|3gp)$/i.test(media) || media.includes('video');
-    
-    // Limpar elementos anteriores
-    const oldVideo = document.querySelector('.lightbox-video');
-    if (oldVideo) oldVideo.remove();
-    els.lightboxImage.style.display = 'none';
-    
-    lightboxCurrentMediaIsVideo = isVideo;
-    
-    if (isVideo) {
-        const video = document.createElement('video');
-        video.className = 'lightbox-video';
-        video.src = media;
-        video.controls = true;
-        video.autoplay = false;
-        video.preload = 'metadata';
-        video.style.maxWidth = '95%';
-        video.style.maxHeight = '95%';
-        video.style.borderRadius = '4px';
-        video.style.background = '#000';
-        video.style.display = 'block';
-        video.setAttribute('playsinline', '');
-        els.lightboxContainer.appendChild(video);
-    } else {
-        els.lightboxImage.style.display = 'block';
-        els.lightboxImage.src = media;
-        els.lightboxImage.alt = `Mídia ${lightboxIndex + 1}`;
-        lightboxScale = 1;
-        lightboxTranslateX = 0;
-        lightboxTranslateY = 0;
-        els.lightboxImage.style.transform = 'translate(0px, 0px) scale(1)';
-    }
-    
+    const img = lightboxImages[lightboxIndex];
+    els.lightboxImage.src = img;
+    els.lightboxImage.alt = `Foto ${lightboxIndex + 1}`;
     els.lightboxCounter.textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+    
+    // Reset transform
+    lightboxScale = 1;
+    lightboxTranslateX = 0;
+    lightboxTranslateY = 0;
+    els.lightboxImage.style.transform = 'translate(0px, 0px) scale(1)';
+    lightboxIsSwiping = false;
 }
 
 function navigateLightbox(direction) {
@@ -2423,10 +2386,7 @@ function closeLightbox() {
     lightboxTranslateX = 0;
     lightboxTranslateY = 0;
     els.lightboxImage.style.transform = 'translate(0px, 0px) scale(1)';
-    els.lightboxImage.style.display = 'block';
-    lightboxCurrentMediaIsVideo = false;
-    const oldVideo = document.querySelector('.lightbox-video');
-    if (oldVideo) oldVideo.remove();
+    lightboxIsSwiping = false;
 }
 
 // ========== EVENT LISTENERS ==========
@@ -2714,7 +2674,7 @@ function renderImageEditor() {
             chooseBtn.disabled = true;
             status.textContent = 'Enviando...';
             try {
-                const url = await uploadMedia(file);
+                const url = await uploadImage(file);
                 siteContent[field.key] = url;
                 thumb.src = url;
                 status.textContent = 'Imagem atualizada (clique em "Salvar" para publicar)';
@@ -3120,7 +3080,7 @@ async function addTestimonial() {
     els.loadingOverlay.style.display = 'flex';
 
     try {
-        const url = await uploadMedia(selectedTestimonialFile);
+        const url = await uploadImage(selectedTestimonialFile);
         data.photo = url;
         els.loadingText.textContent = 'Salvando depoimento...';
         const res = await apiPost({ action: 'addTestimonial', data });
@@ -3147,7 +3107,7 @@ async function updateTestimonial(testimonialId) {
         let photo = existingTestimonialPhoto;
         if (selectedTestimonialFile) {
             els.loadingText.textContent = 'Enviando nova foto...';
-            const url = await uploadMedia(selectedTestimonialFile);
+            const url = await uploadImage(selectedTestimonialFile);
             photo = url;
             const oldId = extractDriveId(existingTestimonialPhoto);
             if (oldId) { apiPost({ action: 'deleteImage', fileId: oldId }).catch(() => {}); }
@@ -3311,6 +3271,7 @@ function showVehicleDetails(index) {
     els.modalTitle.textContent = vehicle.name;
     els.modalPrice.textContent = `R$ ${formatPrice(vehicle.price)}`;
 
+    // Especificações em grid
     els.modalSpecs.innerHTML = `
         <div class="spec-item">
             <span class="spec-name">Categoria</span>
@@ -3330,6 +3291,7 @@ function showVehicleDetails(index) {
         </div>
     `;
 
+    // Descrição
     if (vehicle.description) {
         els.modalDescription.style.display = 'block';
         els.modalDescriptionText.textContent = vehicle.description;
@@ -3350,6 +3312,7 @@ function updateCarousel(medias) {
     els.carouselIndicators.innerHTML = '';
     currentMediaIndex = 0;
 
+    // Salvar as imagens para o lightbox
     lightboxImages = medias || [];
 
     if (medias.length === 0) {
@@ -3365,52 +3328,27 @@ function updateCarousel(medias) {
         els.carouselIndicators.appendChild(indicator);
     } else {
         medias.forEach((media, index) => {
-            const isVideo = /\.(mp4|mov|webm|avi|mkv|m4v|3gp)$/i.test(media) || media.includes('video');
             const item = document.createElement('div');
             item.className = 'carousel-item';
+            item.innerHTML = `
+                <img src="${media}" alt="Imagem do veículo" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem';">
+                <div class="zoom-hint">
+                    <i class="fas fa-search-plus"></i> Tocar para ampliar
+                </div>
+            `;
             
-            if (isVideo) {
-                item.innerHTML = `
-                    <video controls preload="metadata" playsinline>
-                        <source src="${media}" type="video/mp4">
-                        Seu navegador não suporta vídeos.
-                    </video>
-                    <div class="zoom-hint">
-                        <i class="fas fa-play"></i> Tocar vídeo
-                    </div>
-                `;
-            } else {
-                item.innerHTML = `
-                    <img src="${media}" alt="Imagem do veículo" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600/1B1C20/9CA3AF?text=Sem+Imagem';">
-                    <div class="zoom-hint">
-                        <i class="fas fa-search-plus"></i> Tocar para ampliar
-                    </div>
-                `;
-            }
-            
-            // Abrir lightbox ao clicar na imagem (não no vídeo)
-            const imgElement = item.querySelector('img');
-            if (imgElement) {
-                imgElement.addEventListener('click', (e) => {
-                    e.stopPropagation();
+            // Abrir lightbox ao clicar na imagem
+            item.addEventListener('click', (e) => {
+                if (e.target.tagName === 'IMG' || e.target.closest('.carousel-item')) {
                     openLightbox(lightboxImages, index);
-                });
-            }
-            
-            // Para vídeos, clicar no container abre o lightbox
-            if (isVideo) {
-                item.addEventListener('click', (e) => {
-                    if (!e.target.closest('video')) {
-                        openLightbox(lightboxImages, index);
-                    }
-                });
-            }
+                }
+            });
             
             els.carouselInner.appendChild(item);
 
             const indicator = document.createElement('button');
             indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
-            indicator.setAttribute('aria-label', `Ir para mídia ${index + 1}`);
+            indicator.setAttribute('aria-label', `Ir para imagem ${index + 1}`);
             indicator.addEventListener('click', () => showMedia(index));
             els.carouselIndicators.appendChild(indicator);
         });
@@ -3449,14 +3387,14 @@ async function handleFormSubmit(e) {
 }
 
 async function addVehicle() {
-    if (selectedFiles.length === 0) { showStatusIn(els.formStatus, 'Adicione pelo menos uma mídia (foto ou vídeo).', 'error'); return; }
+    if (selectedFiles.length === 0) { showStatusIn(els.formStatus, 'Adicione pelo menos uma foto.', 'error'); return; }
 
     const vehicle = readFormFields();
-    els.loadingText.textContent = 'Enviando mídias...';
+    els.loadingText.textContent = 'Enviando fotos...';
     els.loadingOverlay.style.display = 'flex';
 
     try {
-        vehicle.medias = await uploadMultipleMedia(selectedFiles);
+        vehicle.medias = await uploadMultipleImages(selectedFiles);
         console.log('📸 URLs:', vehicle.medias);
         
         els.loadingText.textContent = 'Salvando veículo...';
@@ -3484,8 +3422,8 @@ async function updateVehicle(vehicleId) {
     try {
         let medias = [...existingMediaForEdit];
         if (selectedFiles.length > 0) {
-            els.loadingText.textContent = 'Enviando novas mídias...';
-            const newUrls = await uploadMultipleMedia(selectedFiles);
+            els.loadingText.textContent = 'Enviando novas fotos...';
+            const newUrls = await uploadMultipleImages(selectedFiles);
             medias = medias.concat(newUrls);
         }
         updated.medias = medias;
@@ -3522,7 +3460,7 @@ function readFormFields() {
 
 async function deleteVehicle(vehicleId, event) {
     event.stopPropagation();
-    if (!confirm('Tem certeza que deseja excluir este veículo? As mídias serão removidas do Drive.')) return;
+    if (!confirm('Tem certeza que deseja excluir este veículo? As fotos serão removidas do Drive.')) return;
     try {
         const res = await apiPost({ action: 'deleteVehicle', id: vehicleId });
         if (res.success) { 
@@ -3575,20 +3513,9 @@ function renderExistingMedia() {
     els.existingMediaWrap.style.display = 'block';
     els.existingMediaContainer.innerHTML = '';
     existingMediaForEdit.forEach((url, idx) => {
-        const isVideo = /\.(mp4|mov|webm|avi|mkv|m4v|3gp)$/i.test(url) || url.includes('video');
         const div = document.createElement('div');
         div.className = 'existing-media-item';
-        if (isVideo) {
-            div.innerHTML = `
-                <video style="width:100%;height:100%;object-fit:cover;" muted playsinline>
-                    <source src="${url}" type="video/mp4">
-                </video>
-                <button type="button" class="delete-existing" onclick="removeExistingMedia(${idx})">&times;</button>
-                <span style="position:absolute;bottom:4px;right:28px;color:white;font-size:10px;background:rgba(0,0,0,0.5);padding:2px 6px;border-radius:3px;">🎬 Vídeo</span>
-            `;
-        } else {
-            div.innerHTML = `<img src="${url}" alt="Mídia atual ${idx + 1}" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100/2A2B30/9CA3AF?text=Erro';"><button type="button" class="delete-existing" onclick="removeExistingMedia(${idx})">&times;</button>`;
-        }
+        div.innerHTML = `<img src="${url}" alt="Foto atual ${idx + 1}" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100/2A2B30/9CA3AF?text=Erro';"><button type="button" class="delete-existing" onclick="removeExistingMedia(${idx})">&times;</button>`;
         els.existingMediaContainer.appendChild(div);
     });
 }
@@ -3653,19 +3580,8 @@ function handleFileSelect(e) { handleFiles(e.target.files); }
 
 function handleFiles(files) {
     for (const file of files) {
-        const isImage = file.type.match('image.*');
-        const isVideo = file.type.match('video.*');
-        
-        if (!isImage && !isVideo) { 
-            alert('Selecione apenas imagens ou vídeos.'); 
-            continue; 
-        }
-        
-        if (file.size > MAX_FILE_SIZE) { 
-            alert('Arquivo ' + file.name + ' é muito grande. Máximo: 100MB.'); 
-            continue; 
-        }
-        
+        if (!file.type.match('image.*')) { alert('Selecione apenas imagens.'); continue; }
+        if (file.size > 10 * 1024 * 1024) { alert('Arquivo ' + file.name + ' é muito grande. Máximo: 10MB.'); continue; }
         selectedFiles.push(file);
         createPreview(file);
     }
@@ -3677,24 +3593,7 @@ function createPreview(file) {
     reader.onload = e => {
         const item = document.createElement('div');
         item.className = 'preview-item';
-        
-        const isVideo = file.type.match('video.*');
-        
-        if (isVideo) {
-            item.innerHTML = `
-                <video style="width:100%;height:100%;object-fit:cover;" muted playsinline>
-                    <source src="${e.target.result}" type="${file.type}">
-                </video>
-                <button type="button" class="remove-btn" onclick="removePreview(this)">&times;</button>
-                <span style="position:absolute;bottom:4px;right:28px;color:white;font-size:10px;background:rgba(0,0,0,0.5);padding:2px 6px;border-radius:3px;">🎬 Vídeo</span>
-            `;
-        } else {
-            item.innerHTML = `
-                <img src="${e.target.result}" alt="Pré-visualização">
-                <button type="button" class="remove-btn" onclick="removePreview(this)">&times;</button>
-            `;
-        }
-        
+        item.innerHTML = `<img src="${e.target.result}" alt="Pré-visualização"><button type="button" class="remove-btn" onclick="removePreview(this)">&times;</button>`;
         els.previewContainer.appendChild(item);
     };
     reader.readAsDataURL(file);
@@ -3715,7 +3614,7 @@ function clearFileSelection() {
     els.fileInput.value = '';
 }
 
-function updateMediaCounter() { els.mediaCounter.textContent = `${selectedFiles.length} mídia(s) selecionada(s)`; }
+function updateMediaCounter() { els.mediaCounter.textContent = `${selectedFiles.length} nova(s) foto(s) selecionada(s)`; }
 
 // ========== DRAWER ==========
 function toggleDrawer() { els.drawer.classList.toggle('open'); els.overlay.classList.toggle('active'); }
